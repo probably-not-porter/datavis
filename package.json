@@ -1,0 +1,19 @@
+{
+  "name": "datavis",
+  "version": "1.0.0",
+  "description": "A tool for visualizing the data collected from the IFS Earlham trip",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/probably-not-porter/datavis.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/probably-not-porter/datavis/issues"
+  },
+  "homepage": "https://github.com/probably-not-porter/datavis#readme"
+}
