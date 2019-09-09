@@ -1,6 +1,9 @@
 const express = require('express');
-var path = require('path');
 const app = express();
+
+var path = require('path');
+var rest = new require('restful-api')(app);
+
 
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {

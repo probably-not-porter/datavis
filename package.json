@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/probably-not-porter/datavis#readme",
   "dependencies": {
-    "google-maps": "^3.3.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
     "restful-api": "^0.1.8"
   }
 }
