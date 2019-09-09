@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/probably-not-porter/datavis/issues"
   },
-  "homepage": "https://github.com/probably-not-porter/datavis#readme"
+  "homepage": "https://github.com/probably-not-porter/datavis#readme",
+  "dependencies": {
+    "google-maps": "^3.3.0",
+    "restful-api": "^0.1.8"
+  }
 }
