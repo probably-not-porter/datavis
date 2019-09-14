@@ -15,7 +15,7 @@ require([
         center: [-118.71511,34.09042],
         zoom: 11
     });
-    document.querySelector(".btn_topo").addEventListener("click", function(event) {
+    document.querySelector("#btn_topo").addEventListener("click", function(event) {
         if (mapstate != 0){
             mapstate = 0;
             view.map = map1;
@@ -25,7 +25,7 @@ require([
             console.log('already in state 0');
         }
     });
-    document.querySelector(".btn_sat").addEventListener("click", function(event) {
+    document.querySelector("#btn_sat").addEventListener("click", function(event) {
         if (mapstate != 1){
             mapstate = 1;
             view.map = map2;
@@ -36,3 +36,8 @@ require([
         }
     });
 });
+
+function toggleControls(){
+    console.log('test');
+    $('#controls').slideToggle();
+}

@@ -6,14 +6,25 @@
         <title>Datavis 2.0</title>
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/css/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://js.arcgis.com/4.12/"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="viewDiv"></div>
+        <div id='togglebtn'>
+            <button class='btns' onclick='toggleControls()'>
+                <img width='60px' height='60px' src="https://img.icons8.com/cotton/2x/menu.png"/>
+            </button>
+        </div>
         <div id="controls">
-            <button class='btn_sat'>Satellite</button>
-            <button class='btn_topo'>Topography</button>
+            <button class='btns' onclick='toggleControls()'>
+                <img width='30px' height='30px' src="http://cdn.onlinewebfonts.com/svg/img_125563.png"/>
+            </button>
+            </br>
+            <button class='btns' id='btn_sat'>Satellite</button>
+            </br>
+            <button class='btns' id='btn_topo'>Topography</button>
         </div>
     </body>
 </html>
