@@ -4,34 +4,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>Datavis 2.0</title>
-        <style>
-            html, body, #viewDiv {
-                padding: 0;
-                margin: 0;
-                height: 100%;
-                width: 100%;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
         <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/css/main.css">
         <script src="https://js.arcgis.com/4.12/"></script>
-        <script>
-            require([
-                "esri/Map",
-                "esri/views/MapView"
-            ], function(Map, MapView) {
-                var map = new Map({
-                    basemap: "topo-vector"
-                });
-                var view = new MapView({
-                    container: "viewDiv",
-                    map: map,
-                    center: [-118.71511,34.09042],
-                    zoom: 11
-                });
-            });
-        </script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="viewDiv"></div>
+        <div id="controls">
+            <button class='btn_sat'>Satellite</button>
+            <button class='btn_topo'>Topography</button>
+        </div>
     </body>
 </html>
