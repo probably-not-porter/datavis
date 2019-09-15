@@ -27,7 +27,16 @@ html, body, #viewDiv{
     cursor: pointer;
     padding-top: 5px;
     padding-bottom: 20px;
+    
+}
+.btn-select{
+    transition-duration: 200ms;
     text-shadow: black 1px 0 10px;
+    color: black;
+}
+.btn-unselect{
+    transition-duration: 200ms;
+    color: #333;
 }
 #togglebtn{
     display:block;
