@@ -1,9 +1,9 @@
-$( document ).ready(function() {
+function mapReady(){
     unselect("btn_sat");
     select('btn_topo');
-    toggleControls();
-    console.log( "ready!" );
-});
+    switchToMap()
+    console.log( "map view ready!" );
+}
 var mapstate = 0;
 
 require([
@@ -69,10 +69,6 @@ require([
     });
 });
 
-function toggleControls(){
-    console.log('test');
-    $('#controls').slideToggle();
-}
 function select(tag){
     console.log(tag);
     var element = document.querySelector("#" + tag)
@@ -84,4 +80,23 @@ function unselect(tag){
     var element = document.querySelector("#" + tag)
     element.classList.remove("btn-select");
     element.classList.add("btn-unselect");
+}
+
+function switchToMap(){
+    document.getElementById("dataView").style.display = "none";
+    document.getElementById("graphView").style.display = "none";
+    document.getElementById("mapView").style.display = "block";
+    console.log('switched to map view');
+}
+function switchToGraph(){
+    document.getElementById("mapView").style.display = "none";
+    document.getElementById("dataView").style.display = "none";
+    document.getElementById("graphView").style.display = "block";
+    console.log('switched to graph view');
+}
+function switchToData(){
+    document.getElementById("mapView").style.display = "none";
+    document.getElementById("graphView").style.display = "none";
+    document.getElementById("dataView").style.display = "block";
+    console.log('switched to data view');
 }

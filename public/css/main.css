@@ -1,12 +1,25 @@
-html, body, #viewDiv{
+html, body, #viewDiv, #mapView, #graphView, #dataView{
     padding: 0;
     margin: 0;
     height: 100%;
     width: 100%;
 }
-#controls{
-    background-color: white;
+#mapcontrols{
     width: 200px;
+    height: 200px;
+    margin-left: 100px;
+    display:block;
+    position: absolute;
+    z-index: 10;
+    top:0;
+    left:0;
+    right:0;
+    bottom:1;
+    text-align: center;
+}
+#navcontrols{
+    width: 200px;
+    height: 200px;
     margin-left: 12px;
     display:block;
     position: absolute;
@@ -16,18 +29,6 @@ html, body, #viewDiv{
     right:0;
     bottom:0;
     text-align: center;
-}
-.btns{
-    padding: 0;
-    border: none;
-    outline: none;
-    font: inherit;
-    color: inherit;
-    background: none;
-    cursor: pointer;
-    padding-top: 5px;
-    padding-bottom: 20px;
-    
 }
 .btn-select{
     transition-duration: 200ms;

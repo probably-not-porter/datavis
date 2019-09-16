@@ -11,20 +11,42 @@
         <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
-        <div id="viewDiv"></div>
-        <div id='togglebtn'>
-            <button class='btns' onclick='toggleControls()'>
-                <img width='60px' height='60px' src="https://img.icons8.com/cotton/2x/menu.png"/>
-            </button>
+        <div id='mapView'>
+            <div id="viewDiv"></div>
+            <div id="mapcontrols">
+                </br>
+                <button class='btns' id='btn_sat'>Satellite</button>
+                </br>
+                <button class='btns' id='btn_topo'>Topography</button>
+            </div>
+            <div id='navcontrols'>
+                <input onclick='switchToData()' type="image" src="img/data-icon.png" alt="Submit" width="32" height="32">
+                <input onclick='switchToGraph()' type="image" src="img/graph-icon.png" alt="Submit" width="32" height="32">
+            </div>
         </div>
-        <div id="controls">
-            <button class='btns' onclick='toggleControls()'>
-                <img width='30px' height='30px' src="http://cdn.onlinewebfonts.com/svg/img_125563.png"/>
-            </button>
-            </br>
-            <button class='btns' id='btn_sat'>Satellite</button>
-            </br>
-            <button class='btns' id='btn_topo'>Topography</button>
+
+        <div id='graphView'>
+            <div id='graph'>
+                graph
+            </div>
+            <div id='navcontrols'>
+                <input onclick='switchToData()' type="image" src="img/data-icon.png" alt="Submit" width="32" height="32">
+                <input onclick='switchToMap()' type="image" src="img/map-icon.png" alt="Submit" width="32" height="32">
+
+            </div>
         </div>
+
+        <div id='dataView'>
+                <div id='data'>
+                    data
+                </div>
+                <div id='navcontrols'>
+                    <input onclick='switchToMap()' type="image" src="img/map-icon.png" alt="Submit" width="32" height="32">
+                    <input onclick='switchToGraph()' type="image" src="img/graph-icon.png" alt="Submit" width="32" height="32">
+                </div>
+            </div>
+        <script>
+            mapReady();
+        </script>
     </body>
 </html>
