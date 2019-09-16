@@ -5,22 +5,22 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     width: 100%;
 }
 #mapcontrols{
-    width: 200px;
-    height: 200px;
-    margin-left: 100px;
+    margin-right: 10px;
+    margin-bottom: 20px;
     display:block;
     position: absolute;
     z-index: 10;
-    top:0;
-    left:0;
+    top:1;
+    left:1;
     right:0;
-    bottom:1;
+    bottom:0;
     text-align: center;
 }
 #navcontrols{
     width: 200px;
     height: 200px;
     margin-left: 12px;
+    margin-top: 10px;
     display:block;
     position: absolute;
     z-index: 10;
@@ -29,6 +29,11 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     right:0;
     bottom:0;
     text-align: center;
+}
+#navbtn{
+    width: 40px;
+    height: 40px;
+    background: white;
 }
 .btn-select{
     transition-duration: 200ms;
