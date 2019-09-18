@@ -4,7 +4,6 @@ const app = express();
 var path = require('path');
 var rest = new require('restful-api')(app);
 
-
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
     res.render("index",{

@@ -1,7 +1,16 @@
+/*
+#
+# Datavis 2.0
+# Porter Libby
+# 2019
+#
+*/
+
+// MAP //
 function mapReady(){
     unselect("btn_sat");
     select('btn_topo');
-    switchToMap()
+    switchToData()
     console.log( "map view ready!" );
 }
 var mapstate = 0;
@@ -69,19 +78,9 @@ require([
     });
 });
 
-function select(tag){
-    console.log(tag);
-    var element = document.querySelector("#" + tag)
-    element.classList.add("btn-select");
-    element.classList.remove("btn-unselect");
-}
-function unselect(tag){
-    console.log(tag);
-    var element = document.querySelector("#" + tag)
-    element.classList.remove("btn-select");
-    element.classList.add("btn-unselect");
-}
+// DATA // 
 
+// NAVIGATION / UTIL //
 function switchToMap(){
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
@@ -99,4 +98,16 @@ function switchToData(){
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
     console.log('switched to data view');
+}
+function select(tag){
+    console.log(tag);
+    var element = document.querySelector("#" + tag)
+    element.classList.add("btn-select");
+    element.classList.remove("btn-unselect");
+}
+function unselect(tag){
+    console.log(tag);
+    var element = document.querySelector("#" + tag)
+    element.classList.remove("btn-select");
+    element.classList.add("btn-unselect");
 }
