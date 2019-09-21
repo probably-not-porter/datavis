@@ -5,13 +5,15 @@
 # 2019
 #
 */
+const db = require('./index');
+
+
 
 // MAP //
 function mapReady(){
     unselect("btn_sat");
     select('btn_topo');
     switchToData()
-    console.log( "map view ready!" );
 }
 var mapstate = 0;
 
@@ -79,6 +81,9 @@ require([
 });
 
 // DATA // 
+
+
+
 
 // NAVIGATION / UTIL //
 function switchToMap(){

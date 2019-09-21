@@ -19,7 +19,7 @@
   "dependencies": {
     "ejs": "^2.7.1",
     "express": "^4.17.1",
-    "pg-promise": "^9.1.4",
+    "pg": "^7.12.1",
     "restful-api": "^0.1.8"
   }
 }
