@@ -8,12 +8,13 @@
 */
 
 // MAP //
-function mapReady(){
+function mapReady(){ // get things set straight for using the map
     unselect("btn_sat");
     select('btn_topo');
     switchToData()
 }
-var mapstate = 0;
+
+var mapstate = 0; // keep track of which map overlay is being used
 
 require([
     "esri/Map",
@@ -44,7 +45,8 @@ require([
         coordsWidget.innerHTML = coords;
       }
 
-    // LISTENERS //
+    // LISTENERS // (these ones show up over top of the map canvas)
+
     view.watch("stationary", function(isStationary) {
         showCoordinates(view.center);
     });
@@ -52,6 +54,8 @@ require([
     view.on("pointer-move", function(evt) {
         showCoordinates(view.toMap({ x: evt.x, y: evt.y }));
     });
+
+    // listen for switch to topography button
     document.querySelector("#btn_topo").addEventListener("click", function(event) {
         if (mapstate != 0){
             mapstate = 0;
@@ -64,6 +68,7 @@ require([
             console.log('already in state 0');
         }
     });
+    // listen for switch to satellite button
     document.querySelector("#btn_sat").addEventListener("click", function(event) {
         if (mapstate != 1){
             mapstate = 1;

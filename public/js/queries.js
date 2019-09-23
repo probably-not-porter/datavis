@@ -7,7 +7,8 @@
 # Query functions for database
 */
 
-const pool = require('./pool');
+// IMPORTANT: The pool.js file must be setup before running
+const pool = require('./pool'); // get configurations from public/js/pool.js
 
 const getTrips = (request, response) => {
     pool.query('SELECT tripName, tripID from fieldday_trip', (error, results) => {
@@ -18,6 +19,6 @@ const getTrips = (request, response) => {
     })
 }
 
-module.exports = {
+module.exports = { // export routes back to server side.
     getTrips
   }
