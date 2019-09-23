@@ -8,14 +8,15 @@
 */
 
 // MAP //
+
+var mapstate = 0; // keep track of which map overlay is being used
+var default_center = [-13.7055,65.2941]; //default starting coords for the map view
+
 function mapReady(){ // get things set straight for using the map
     unselect("btn_sat");
     select('btn_topo');
     switchToData()
 }
-
-var mapstate = 0; // keep track of which map overlay is being used
-
 require([
     "esri/Map",
     "esri/views/MapView"
@@ -29,7 +30,7 @@ require([
     var view = new MapView({ //init map
         container: "viewDiv",
         map: map1,
-        center: [-13.7055,65.2941],
+        center: default_center,
         zoom: 11
     });
     var coordsWidget = document.createElement("div"); // get coords

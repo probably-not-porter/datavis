@@ -19,6 +19,6 @@ const getTrips = (request, response) => {
     })
 }
 
-module.exports = { // export routes back to server side.
+module.exports = { // export routes to server side.
     getTrips
   }
