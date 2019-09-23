@@ -1,3 +1,12 @@
+/*
+#
+# Datavis 2.0
+# Porter Libby - 2019 - initial setup
+# pelibby16@earlham.edu
+#
+# Query functions for database
+*/
+
 const pool = require('./pool');
 
 const getTrips = (request, response) => {
