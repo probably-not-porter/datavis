@@ -89,6 +89,8 @@ tripnames = [];
 tripids = [];
 sites = []
 function getTrips(){
+    tripnames = [];
+    tripids = [];
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -122,6 +124,7 @@ function getSites(){
 // Renders
 function renderTrips(tripnames){
     var container = document.getElementById('trips');
+    container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
     for(x = 0; x < tripnames.length; x++){
         var elem = createRadioElement('trips', false, tripnames[x]); // util function
