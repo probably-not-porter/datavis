@@ -19,9 +19,9 @@ const getTrips = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
-const getDates = (request, response) => {
-    var id = req.params.id;
-    p.pool.query('select tripid from fieldday_trip where tripid=' + id, (error, results) => {
+const getSites = (request, response) => {
+    var id = 23;
+    p.pool.query('select distinct fieldday_site.sitename from fieldday_reading where fieldday_site.tripid=21', (error, results) => {
         if (error) {
             throw error
         }
@@ -31,5 +31,5 @@ const getDates = (request, response) => {
 
 module.exports = { // export routes to server side.
     getTrips,
-    getDates,
+    getSites,
   }

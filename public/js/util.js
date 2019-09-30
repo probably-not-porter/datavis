@@ -12,6 +12,8 @@ function switchToMap(){
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("mapView").style.display = "block";
+    unselect("btn_sat");
+    select('btn_topo');
     console.log('switched to map view');
 }
 function switchToGraph(){
@@ -24,6 +26,7 @@ function switchToData(){
     document.getElementById("mapView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
+    getTrips();
     console.log('switched to data view');
 }
 function select(tag){ // show button as selected

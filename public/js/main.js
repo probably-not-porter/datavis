@@ -12,9 +12,7 @@
 var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
 
-function mapReady(){ // get things set straight for using the map
-    unselect("btn_sat");
-    select('btn_topo');
+function mapReady(){ // placeholder for now
     switchToData()
 }
 require([
@@ -89,7 +87,7 @@ require([
 // Gets
 tripnames = [];
 tripids = [];
-dates = []
+sites = []
 function getTrips(){
     $.ajax({
         type: 'GET',
@@ -106,13 +104,13 @@ function getTrips(){
         }
     });
 }
-function getDates(){
+function getSites(){
     $.ajax({
         type: 'GET',
-        url: '/dates',
+        url: '/sites',
         success: function(response) { 
             for(x = 0; x < response.length; x++){
-                dates.push(response[x])
+                sites.push(response[x])
             }
         },
         error: function(xhr, status, err) {

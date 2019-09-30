@@ -16,7 +16,7 @@ app.use(express.static(__dirname + '/public'));
 
 //////////
 app.get('/trips', q.getTrips);
-app.get('/dates', q.getDates);
+app.get('/sites', q.getSites);
 //////////
 
 
