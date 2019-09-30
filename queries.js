@@ -21,8 +21,6 @@ const pool = new Pool({
     port: `${process.env.DBPORT}`,
 })
 
-
-
 const getTrips = (request, response) => {
     pool.query("SELECT tripName, tripID from fieldday_trip", (error, results) => {
         if (error) {
