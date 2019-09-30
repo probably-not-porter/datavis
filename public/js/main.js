@@ -85,3 +85,48 @@ require([
 });
 
 // DATA // 
+
+// Gets
+tripnames = [];
+tripids = [];
+dates = []
+function getTrips(){
+    $.ajax({
+        type: 'GET',
+        url: '/trips',
+        success: function(response) { 
+            for(x = 0; x < response.length; x++){
+                tripids.push(response[x].tripid);
+                tripnames.push(response[x].tripname);
+            }
+            renderTrips(tripnames);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+function getDates(){
+    $.ajax({
+        type: 'GET',
+        url: '/dates',
+        success: function(response) { 
+            for(x = 0; x < response.length; x++){
+                dates.push(response[x])
+            }
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+
+// Renders
+function renderTrips(tripnames){
+    var container = document.getElementById('trips');
+    container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
+    for(x = 0; x < tripnames.length; x++){
+        var elem = createRadioElement('trips', false, tripnames[x]); // util function
+        container.innerHTML += elem;
+    }
+}

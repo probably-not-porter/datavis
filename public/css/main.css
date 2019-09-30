@@ -53,3 +53,21 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     right:0;
     bottom:0;
 }
+#data{
+    margin-top: 40px;
+}
+h1{
+    font-size: 20px;
+}
+.data-catagory{
+    display: inline-block;
+    width: 90%;
+    margin: 20px;
+}
+.data-header{
+    border-bottom: 1px solid black;
+    width: 80%;
+}
+.elem-div{
+    margin-top: 10px;
+}

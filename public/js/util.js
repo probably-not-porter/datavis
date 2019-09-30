@@ -38,3 +38,14 @@ function unselect(tag){ // show button as unselected
     element.classList.remove("btn-select");
     element.classList.add("btn-unselect");
 }
+
+function createRadioElement( name, checked, label ) {
+    var radioHtml = '<div class="elem-div"><input class="data-radio" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+
+    return radioHtml;
+}
