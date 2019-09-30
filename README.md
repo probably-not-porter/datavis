@@ -5,7 +5,7 @@ A visualization tool for the IFS database using Node.js and the ArcGIS api. Uses
 This app is set up to be usable on both mobile and desktop platforms.
 ### Desktop Usage
 1. clone repository and enter parent directory
-2. Follow the format below to create a pool.js file.
+2. Follow the format below to create a .env file.
 3. use `npm install` to add dependencies to node_modules folder
 4. use `node index.js` to start a local development server
 5. open `localhost:3000` in your favorite browser!
@@ -17,12 +17,12 @@ a. ```pkg install git```
 b. ```pkg install nodejs```
 c. ```pkg install nano```
 4. clone the repository.
-3. Follow the format below to create a pool.js file inside the `datavis` directory.
+3. Follow the format below to create a .env file.
 4. Use `npm install` inside the directory to install dependencies.
 5. Use `node index.js` to run the server.
 6. open `localhost:3000` in your browser.
 
-## Pool.js file (public/js/pool.js) should look like:
+## .env file should look like:
 ```
 DBNAME=[database user name]
 DBHOST=[database host name]
