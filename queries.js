@@ -14,11 +14,11 @@ dotenv.config();
 const Pool = require('pg').Pool
 
 const pool = new Pool({
-    user: `${process.env.DBNAME}`,
-    host: `${process.env.DBHOST}`,
-    database: `${process.env.DATABASE}`,
-    password: `${process.env.DBPASSWORD}`,
-    port: `${process.env.DBPORT}`,
+    user: `${process.env.DB_NAME}`,
+    host: `${process.env.DB_HOST}`,
+    database: `${process.env.DB_DATABASE}`,
+    password: `${process.env.DB_PASSWORD}`,
+    port: `${process.env.DB_PORT}`,
 })
 
 const getTrips = (request, response) => {

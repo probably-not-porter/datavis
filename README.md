@@ -24,11 +24,11 @@ c. ```pkg install nano```
 
 ## .env file should look like:
 ```
-DBNAME=[database user name]
-DBHOST=[database host name]
-DATABASE=[database name]
-DBPASSWORD=[databse password]
-DBPORT=[database port]
+DB_NAME=[database user name]
+DB_HOST=[database host name]
+DB_DATABASE=[database name]
+DB_PASSWORD=[databse password]
+DB_PORT=[database port]
 ```
 
 ## Dependencies
