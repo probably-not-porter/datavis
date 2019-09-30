@@ -8,11 +8,23 @@
 */
 
 // IMPORTANT: The pool.js file must be setup before running
+const dotenv = require('dotenv');
+dotenv.config();
 
-p = require('./pool'); // get configurations from public/js/pool.js
+const Pool = require('pg').Pool
+
+const pool = new Pool({
+    user: `${process.env.NAME}`,
+    host: `${process.env.HOST}`,
+    database: `${process.env.DATABASE}`,
+    password: `${process.env.PASSWORD}`,
+    port: `${process.env.DBPORT}`,
+})
+
+
 
 const getTrips = (request, response) => {
-    p.pool.query("SELECT tripName, tripID from fieldday_trip", (error, results) => {
+    pool.query("SELECT tripName, tripID from fieldday_trip", (error, results) => {
         if (error) {
             throw error
         }
@@ -21,7 +33,7 @@ const getTrips = (request, response) => {
 }
 const getSites = (request, response) => {
     var id = 23;
-    p.pool.query('select distinct fieldday_site.sitename from fieldday_reading where fieldday_site.tripid=21', (error, results) => {
+    pool.query('select distinct fieldday_site.sitename from fieldday_reading where fieldday_site.tripid=21', (error, results) => {
         if (error) {
             throw error
         }

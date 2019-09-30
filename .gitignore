@@ -63,3 +63,4 @@ typings/
 
 #### CONTAINS SERVER INFO
 pool.js
+.env
