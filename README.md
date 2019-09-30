@@ -24,15 +24,11 @@ c. ```pkg install nano```
 
 ## Pool.js file (public/js/pool.js) should look like:
 ```
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'user',
-    host: 'host',
-    database: 'db',
-    password: 'pw',
-    port: 5432,
-})
-module.exports = {pool}
+DBNAME=[database user name]
+DBHOST=[database host name]
+DATABASE=[database name]
+DBPASSWORD=[databse password]
+DBPORT=[database port]
 ```
 
 ## Dependencies
