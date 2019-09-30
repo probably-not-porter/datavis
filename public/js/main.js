@@ -83,11 +83,13 @@ require([
 });
 
 // DATA // 
+data_selection = [null, null, null, null]
 
 // Gets
 tripnames = [];
 tripids = [];
-sites = []
+sites = [];
+
 function getTrips(){
     tripnames = [];
     tripids = [];
@@ -124,10 +126,11 @@ function getSites(){
 // Renders
 function renderTrips(tripnames){
     var container = document.getElementById('trips');
-    container.innerHTML = "";
-    container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
-    for(x = 0; x < tripnames.length; x++){
-        var elem = createRadioElement('trips', false, tripnames[x]); // util function
-        container.innerHTML += elem;
+    if (container.childElementCount == 0){
+        container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
+        for(x = 0; x < tripnames.length; x++){
+            var elem = createRadioElement('trips', false, tripnames[x]); // util function
+            container.innerHTML += elem;
+        }
     }
 }
