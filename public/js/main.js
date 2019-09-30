@@ -83,13 +83,13 @@ require([
 });
 
 // DATA // 
-data_selection = [null, null, null, null]
 
-// Gets
+// Arrays (hold on the the db information that gets fetched)
 tripnames = [];
 tripids = [];
 sites = [];
 
+// Gets
 function getTrips(){
     tripnames = [];
     tripids = [];
@@ -126,7 +126,7 @@ function getSites(){
 // Renders
 function renderTrips(tripnames){
     var container = document.getElementById('trips');
-    if (container.childElementCount == 0){
+    if (container.childElementCount == 0){ // dont override selections with navigation
         container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
         for(x = 0; x < tripnames.length; x++){
             var elem = createRadioElement('trips', false, tripnames[x]); // util function
