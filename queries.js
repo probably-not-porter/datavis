@@ -22,7 +22,7 @@ const pool = new Pool({
 })
 
 const getTrips = (request, response) => {
-    pool.query("SELECT tripName, tripID from fieldday_trip", (error, results) => {
+    pool.query("SELECT tripName, tripID from fieldday_trip;", (error, results) => {
         if (error) {
             throw error
         }
@@ -30,8 +30,7 @@ const getTrips = (request, response) => {
     })
 }
 const getSites = (request, response) => {
-    var id = 23;
-    pool.query('select distinct fieldday_site.sitename from fieldday_reading where fieldday_site.tripid=21', (error, results) => {
+    pool.query('SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';', (error, results) => {
         if (error) {
             throw error
         }

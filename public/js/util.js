@@ -42,7 +42,18 @@ function unselect(tag){ // show button as unselected
     element.classList.add("btn-unselect");
 }
 
-function createRadioElement( name, checked, label ) {
+function createRadioElementTrips( name, checked, label, id ) {
+    var radioHtml = '<div class="elem-div"><input class="data-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+
+    return radioHtml;
+}
+
+function createRadioElementSites( name, checked, label, id ) {
     var radioHtml = '<div class="elem-div"><input class="data-radio" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';

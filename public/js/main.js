@@ -87,7 +87,9 @@ require([
 // Arrays (hold on the the db information that gets fetched)
 tripnames = [];
 tripids = [];
-sites = [];
+
+sitenames = [];
+siteids = [];
 
 // Gets
 function getTrips(){
@@ -101,21 +103,27 @@ function getTrips(){
                 tripids.push(response[x].tripid);
                 tripnames.push(response[x].tripname);
             }
-            renderTrips(tripnames);
+            console.log(tripnames);
+            renderTrips(tripnames, tripids);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
         }
     });
 }
-function getSites(){
+function getSites(site_id){
+    sitenames = []
     $.ajax({
         type: 'GET',
         url: '/sites',
+        data: {id: site_id},
         success: function(response) { 
             for(x = 0; x < response.length; x++){
-                sites.push(response[x])
+                sitenames.push(response[x].sitename);
+                siteids.push(response[x].siteid);
             }
+            console.log(sitenames);
+            renderSites(sitenames, siteids);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -124,13 +132,22 @@ function getSites(){
 }
 
 // Renders
-function renderTrips(tripnames){
+function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
     if (container.childElementCount == 0){ // dont override selections with navigation
         container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
         for(x = 0; x < tripnames.length; x++){
-            var elem = createRadioElement('trips', false, tripnames[x]); // util function
+            var elem = createRadioElementTrips('trips', false, tripnames[x],tripids[x]); // util function
             container.innerHTML += elem;
         }
+    }
+}
+function renderSites(sitename, siteid){
+    var container = document.getElementById('sites');
+    container.innerHTML = "";
+    container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
+    for(x = 0; x < sitenames.length; x++){
+        var elem = createRadioElementSites('sites', false, sitenames[x],siteids[x]); // util function
+        container.innerHTML += elem;
     }
 }
