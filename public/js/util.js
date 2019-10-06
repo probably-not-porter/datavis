@@ -43,7 +43,7 @@ function unselect(tag){ // show button as unselected
 }
 
 function createRadioElementTrips( name, checked, label, id ) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
+    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
@@ -54,7 +54,7 @@ function createRadioElementTrips( name, checked, label, id ) {
 }
 
 function createRadioElementSites( name, checked, label, siteid,tripid ) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
+    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
@@ -64,7 +64,7 @@ function createRadioElementSites( name, checked, label, siteid,tripid ) {
     return radioHtml;
 }
 function createRadioElementSectors( name, checked, label) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio" type="radio" name="' + name + '" id="' + label + '"';
+    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
