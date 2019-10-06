@@ -91,6 +91,11 @@ tripids = [];
 sitenames = [];
 siteids = [];
 
+sectornames = [];
+sectorids = [];
+
+selected_trip = null;
+
 // Gets
 function getTrips(){
     tripnames = [];
@@ -103,7 +108,7 @@ function getTrips(){
                 tripids.push(response[x].tripid);
                 tripnames.push(response[x].tripname);
             }
-            console.log(tripnames);
+            console.info(tripnames,tripids);
             renderTrips(tripnames, tripids);
         },
         error: function(xhr, status, err) {
@@ -111,19 +116,40 @@ function getTrips(){
         }
     });
 }
-function getSites(site_id){
+function getSites(trip_id){
     sitenames = []
+    selected_trip = trip_id;
     $.ajax({
         type: 'GET',
         url: '/sites',
-        data: {id: site_id},
+        data: {id: trip_id},
         success: function(response) { 
             for(x = 0; x < response.length; x++){
                 sitenames.push(response[x].sitename);
                 siteids.push(response[x].siteid);
             }
-            console.log(sitenames);
+            console.info(sitenames,siteids);
             renderSites(sitenames, siteids);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+
+function getSectors(site_id, trip_id){
+    sectornames = [];
+    $.ajax({
+        type: 'GET',
+        url: '/sectors',
+        data: {siteid: site_id, tripid: trip_id},
+        success: function(response) { 
+            for(x = 0; x < response.length; x++){
+                sectornames.push(response[x].sectorname);
+                sectorids.push(response[x].sectorid);
+            }
+            console.info(sectornames,sectorids);
+            renderSectors(sectornames, sectorids);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -142,12 +168,21 @@ function renderTrips(tripnames, tripids){
         }
     }
 }
-function renderSites(sitename, siteid){
+function renderSites(sitenames, siteids){
     var container = document.getElementById('sites');
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
     for(x = 0; x < sitenames.length; x++){
-        var elem = createRadioElementSites('sites', false, sitenames[x],siteids[x]); // util function
+        var elem = createRadioElementSites('sites', false, sitenames[x],siteids[x], selected_trip); // util function
+        container.innerHTML += elem;
+    }
+}
+function renderSectors(sectornames, sectorids){
+    var container = document.getElementById('sectors');
+    container.innerHTML = "";
+    container.innerHTML += "<div class='data-header'><h1>Sectors</h1></div>";
+    for(x = 0; x < sectornames.length; x++){
+        var elem = createRadioElementSectors('sectors', false, sectornames[x]); // util function
         container.innerHTML += elem;
     }
 }

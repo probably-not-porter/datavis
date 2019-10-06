@@ -63,6 +63,7 @@ h1{
     display: inline-block;
     width: 90%;
     margin: 20px;
+    transition-duration: 200ms;
 }
 .data-header{
     border-bottom: 1px solid black;

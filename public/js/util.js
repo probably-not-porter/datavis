@@ -53,7 +53,17 @@ function createRadioElementTrips( name, checked, label, id ) {
     return radioHtml;
 }
 
-function createRadioElementSites( name, checked, label, id ) {
+function createRadioElementSites( name, checked, label, siteid,tripid ) {
+    var radioHtml = '<div class="elem-div"><input class="data-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+
+    return radioHtml;
+}
+function createRadioElementSectors( name, checked, label) {
     var radioHtml = '<div class="elem-div"><input class="data-radio" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
