@@ -15,71 +15,69 @@ var default_center = [-13.7055,65.2941]; //default starting coords for the map v
 function mapReady(){ // placeholder for now
     switchToData()
 }
-require([
-    "esri/Map",
-    "esri/views/MapView"
-], function(Map, MapView) {
-    var map1 = new Map({ //topo map
-        basemap: "topo"
+require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion" ], function(
+    Map,
+    SceneView,
+    MapView,
+    Graphic,
+    BasemapToggle,
+    CoordinateConversion
+  ) {
+    var map = new Map({
+      basemap: "topo"
     });
-    var map2 = new Map({ //sat map
-        basemap: "satellite"
-    });
-    var view = new MapView({ //init map
-        container: "viewDiv",
-        map: map1,
-        center: default_center,
-        zoom: 11
-    });
-    var coordsWidget = document.createElement("div"); // get coords
-    coordsWidget.id = "coordsWidget";
-    coordsWidget.className = "esri-widget esri-component";
-    coordsWidget.style.padding = "7px 15px 5px";
-    view.ui.add(coordsWidget, "bottom-left");
 
-    function showCoordinates(pt) {
-        var coords = "Lat/Lon " + pt.latitude.toFixed(3) + " " + pt.longitude.toFixed(3) +
-            " | Scale 1:" + Math.round(view.scale * 1) / 1 +
-            " | Zoom " + view.zoom;
-        coordsWidget.innerHTML = coords;
+    var view = new MapView({
+      center: [-13, 65],
+      container: "viewDiv",
+      map: map,
+      zoom: 11
+    });
+    var basemapToggle = new BasemapToggle({
+        viewModel: {  // autocasts as new BasemapToggleViewModel()
+            view: view,  // The view that provides access to the map's "streets" basemap
+            nextBasemap: "satellite"  // Allows for toggling to the "hybrid" basemap
+        }
+    });
+    var coordinateConversionWidget = new CoordinateConversion({
+        view: view
+    });
+    view.ui.add(basemapToggle, {
+        position: "bottom-left"
+    });
+    view.ui.add(coordinateConversionWidget, "bottom-left");
+
+    
+
+    /*************************
+     * Create a point graphic
+     *************************/
+
+    // First create a point geometry (this is the location of the Titanic)
+    var point = {
+      type: "point", // autocasts as new Point()
+      longitude: -49.97,
+      latitude: 41.73
+    };
+
+    // Create a symbol for drawing the point
+    var markerSymbol = {
+      type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+      color: [226, 119, 40],
+      outline: {
+        // autocasts as new SimpleLineSymbol()
+        color: [255, 255, 255],
+        width: 2
       }
+    };
 
-    // LISTENERS // (these ones show up over top of the map canvas)
-
-    view.watch("stationary", function(isStationary) {
-        showCoordinates(view.center);
+    // Create a graphic and add the geometry and symbol to it
+    var pointGraphic = new Graphic({
+      geometry: point,
+      symbol: markerSymbol
     });
 
-    view.on("pointer-move", function(evt) {
-        showCoordinates(view.toMap({ x: evt.x, y: evt.y }));
-    });
-
-    // listen for switch to topography button
-    document.querySelector("#btn_topo").addEventListener("click", function(event) {
-        if (mapstate != 0){
-            mapstate = 0;
-            unselect('btn_sat');
-            select('btn_topo');
-            view.map = map1;
-            console.log('switch to topo');
-        }
-        else {
-            console.log('already in state 0');
-        }
-    });
-    // listen for switch to satellite button
-    document.querySelector("#btn_sat").addEventListener("click", function(event) {
-        if (mapstate != 1){
-            mapstate = 1;
-            select('btn_sat');
-            unselect('btn_topo');
-            view.map = map2;
-            console.log('switch to sat');
-        }
-        else {
-            console.log('already in state 1');
-        }
-    });
+    view.graphics.addMany([pointGraphic]);
 });
 
 // DATA // 
