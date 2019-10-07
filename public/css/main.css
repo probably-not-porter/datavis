@@ -54,23 +54,35 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     bottom:0;
 }
 #data{
-    margin-top: 40px;
+    margin-top: 100px;
+    text-align: center;
 }
 h1{
     font-size: 20px;
 }
 .data-catagory{
-    display: inline-block;
-    width: 90%;
-    margin: 20px;
-    transition-duration: 200ms;
+    display: block;
+    width: 900px;
+    max-width: 90%;
+    margin: 50px auto;
 }
 .data-header{
     border-bottom: 1px solid black;
-    width: 80%;
+    width: 100%;
+    text-align: center;
 }
 .elem-div{
     margin-top: 10px;
+    height: 55px;
+    border-radius: 3px;
+    padding-left: 30px;
+    text-align: left;
+}
+.elem-1{
+    background-color: #fff;
+}
+.elem-0{
+    background-color: #ddd;
 }
 
 .form-radio

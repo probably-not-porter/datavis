@@ -28,8 +28,9 @@ function switchToData(){
     console.log('switched to data view');
 }
 
-function createRadioElementTrips( name, checked, label, id ) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
+// TEAMPLATES FOR DOM PIECES
+function createRadioElementTrips( mode, name, checked, label, id ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
@@ -39,8 +40,8 @@ function createRadioElementTrips( name, checked, label, id ) {
     return radioHtml;
 }
 
-function createRadioElementSites( name, checked, label, siteid,tripid ) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
+function createRadioElementSites( mode, name, checked, label, siteid,tripid ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
@@ -49,8 +50,8 @@ function createRadioElementSites( name, checked, label, siteid,tripid ) {
 
     return radioHtml;
 }
-function createRadioElementSectors( name, checked, label) {
-    var radioHtml = '<div class="elem-div"><input class="data-radio form-radio" type="radio" name="' + name + '" id="' + label + '"';
+function createRadioElementSectors( mode, name, checked, label) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }

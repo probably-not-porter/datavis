@@ -44,7 +44,8 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
         view: view
     });
     view.ui.add(basemapToggle, {
-        position: "bottom-left"
+        position: "bottom-left",
+        width: 200
     });
     view.ui.add(coordinateConversionWidget, "bottom-left");
 
@@ -89,6 +90,7 @@ sectornames = [];
 sectorids = [];
 
 selected_trip = null;
+selected_site = null;
 
 // Gets
 function getTrips(){
@@ -102,7 +104,8 @@ function getTrips(){
                 tripids.push(response[x].tripid);
                 tripnames.push(response[x].tripname);
             }
-            console.info(tripnames,tripids);
+            console.info('TRIPS');
+            console.table(tripnames);
             renderTrips(tripnames, tripids);
         },
         error: function(xhr, status, err) {
@@ -111,7 +114,13 @@ function getTrips(){
     });
 }
 function getSites(trip_id){
-    sitenames = []
+    document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
+    sitenames = [];
+    sectorids = [];
+    sectornames = [];
+    var container = document.getElementById('sectors');
+    container.innerHTML = "";
+
     selected_trip = trip_id;
     $.ajax({
         type: 'GET',
@@ -122,7 +131,8 @@ function getSites(trip_id){
                 sitenames.push(response[x].sitename);
                 siteids.push(response[x].siteid);
             }
-            console.info(sitenames,siteids);
+            console.info('SITES');
+            console.table(sitenames);
             renderSites(sitenames, siteids);
         },
         error: function(xhr, status, err) {
@@ -133,6 +143,8 @@ function getSites(trip_id){
 
 function getSectors(site_id, trip_id){
     sectornames = [];
+
+    selected_site = site_id;
     $.ajax({
         type: 'GET',
         url: '/sectors',
@@ -142,7 +154,8 @@ function getSectors(site_id, trip_id){
                 sectornames.push(response[x].sectorname);
                 sectorids.push(response[x].sectorid);
             }
-            console.info(sectornames,sectorids);
+            console.info('SECTORS');
+            console.table(sectornames);
             renderSectors(sectornames, sectorids);
         },
         error: function(xhr, status, err) {
@@ -157,7 +170,7 @@ function renderTrips(tripnames, tripids){
     if (container.childElementCount == 0){ // dont override selections with navigation
         container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
         for(x = 0; x < tripnames.length; x++){
-            var elem = createRadioElementTrips('trips', false, tripnames[x],tripids[x]); // util function
+            var elem = createRadioElementTrips((x % 2),'trips', false, tripnames[x],tripids[x]); // util function
             container.innerHTML += elem;
         }
     }
@@ -167,7 +180,7 @@ function renderSites(sitenames, siteids){
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
     for(x = 0; x < sitenames.length; x++){
-        var elem = createRadioElementSites('sites', false, sitenames[x],siteids[x], selected_trip); // util function
+        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x], selected_trip); // util function
         container.innerHTML += elem;
     }
 }
@@ -176,7 +189,7 @@ function renderSectors(sectornames, sectorids){
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sectors</h1></div>";
     for(x = 0; x < sectornames.length; x++){
-        var elem = createRadioElementSectors('sectors', false, sectornames[x]); // util function
+        var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x]); // util function
         container.innerHTML += elem;
     }
 }
