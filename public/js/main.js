@@ -15,20 +15,21 @@ var default_center = [-13.7055,65.2941]; //default starting coords for the map v
 function mapReady(){ // placeholder for now
     switchToData()
 }
-require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion" ], function(
+require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
     MapView,
     Graphic,
     BasemapToggle,
-    CoordinateConversion
+    CoordinateConversion,
+    PopupTemplate
   ) {
     var map = new Map({
       basemap: "topo"
     });
 
     var view = new MapView({
-      center: [-13, 65],
+      center: [-13.68, 65.29],
       container: "viewDiv",
       map: map,
       zoom: 11
@@ -49,15 +50,10 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 
     
 
-    /*************************
-     * Create a point graphic
-     *************************/
-
-    // First create a point geometry (this is the location of the Titanic)
     var point = {
       type: "point", // autocasts as new Point()
-      longitude: -49.97,
-      latitude: 41.73
+      longitude: -13.25,
+      latitude: 65.30
     };
 
     // Create a symbol for drawing the point
