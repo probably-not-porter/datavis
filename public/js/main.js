@@ -131,6 +131,7 @@ function getSites(trip_id){
 }
 
 function getSectors(site_id){
+    document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
     document.getElementById('spots').innerHTML = "";
 
     query_selection[1] = site_id;
@@ -156,7 +157,7 @@ function getSectors(site_id){
 }
 
 function getSpots(sector_id){
-    
+    document.getElementById('data-prompt').innerHTML = "Pick a spot."
     query_selection[2] = sector_id;
     $.ajax({
         type: 'GET',

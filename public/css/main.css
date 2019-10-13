@@ -56,6 +56,7 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
 #data{
     margin-top: 100px;
     text-align: center;
+    margin-bottom: 100px;
 }
 h1{
     font-size: 20px;
@@ -134,4 +135,15 @@ label
 } 
 .esri-coordinate-conversion{
     width: 300px;
+}
+#data-prompt-box{
+    background-color: #888;
+    color: white;
+    position: fixed;
+    bottom: 0px;
+    padding: 30px;
+    width: 100%;
+}
+#data-prompt{
+    transition-duration: 1s;
 }
