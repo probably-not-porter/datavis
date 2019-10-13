@@ -84,8 +84,6 @@ var query_selection = [null,null,null,null,null];
 
 // Gets
 function getTrips(){
-    tripnames = [];
-    tripids = [];
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -107,11 +105,8 @@ function getTrips(){
 }
 function getSites(trip_id){
     document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
-    sitenames = [];
-    sectorids = [];
-    sectornames = [];
-    var container = document.getElementById('sectors');
-    container.innerHTML = "";
+    document.getElementById('sectors').innerHTML = "";
+    document.getElementById('spots').innerHTML = "";
 
     query_selection[0] = trip_id;
     $.ajax({
@@ -136,8 +131,7 @@ function getSites(trip_id){
 }
 
 function getSectors(site_id){
-    sectornames = [];
-    sectorids = [];
+    document.getElementById('spots').innerHTML = "";
 
     query_selection[1] = site_id;
     $.ajax({
@@ -161,6 +155,28 @@ function getSectors(site_id){
     });
 }
 
+function getSpots(sector_id){
+    
+    query_selection[2] = sector_id;
+    $.ajax({
+        type: 'GET',
+        url: '/spots',
+        data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var spotids = [];
+            for(x = 0; x < response.length; x++){
+                spotids.push(response[x].spotid);
+            }
+            console.info('SPOTS');
+            console.table(response);
+            renderSpots(spotids);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+
 // Renders
 function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
@@ -177,7 +193,7 @@ function renderSites(sitenames, siteids){
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
     for(x = 0; x < sitenames.length; x++){
-        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x], query_selection[0]); // util function
+        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x]); // util function
         container.innerHTML += elem;
     }
 }
@@ -186,7 +202,16 @@ function renderSectors(sectornames, sectorids){
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sectors</h1></div>";
     for(x = 0; x < sectornames.length; x++){
-        var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x]); // util function
+        var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x], sectorids[x]); // util function
+        container.innerHTML += elem;
+    }
+}
+function renderSpots(spotids){
+    var container = document.getElementById('spots');
+    container.innerHTML = "";
+    container.innerHTML += "<div class='data-header'><h1>Spots</h1></div>";
+    for(x = 0; x < spotids.length; x++){
+        var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
         container.innerHTML += elem;
     }
 }

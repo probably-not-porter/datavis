@@ -18,6 +18,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/trips', q.getTrips);
 app.get('/sites', q.getSites);
 app.get('/sectors', q.getSectors);
+app.get('/spots', q.getSpots);
 //////////
 
 

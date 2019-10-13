@@ -35,28 +35,38 @@ function createRadioElementTrips( mode, name, checked, label, id ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '">'+ label + " : " + id +'</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong> (ID: " + id +')</label></div>';
 
     return radioHtml;
 }
 
-function createRadioElementSites( mode, name, checked, label, siteid,tripid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ',' + tripid +')" type="radio" name="' + name + '" id="' + label + '"';
+function createRadioElementSites( mode, name, checked, label, siteid ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '">'+ label +" : " + siteid +'</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + siteid +')</label></div>';
 
     return radioHtml;
 }
-function createRadioElementSectors( mode, name, checked, label) {
+function createRadioElementSectors( mode, name, checked, label,sectorid ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSpots('+ sectorid + ')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + sectorid +')</label></div>';
+
+    return radioHtml;
+}
+function createRadioElementSpots( mode, name, checked, label,spotid ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>Spot #'+ label +'</strong></label></div>';
 
     return radioHtml;
 }

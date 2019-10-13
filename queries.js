@@ -48,9 +48,19 @@ const getSectors = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
+const getSpots = (request, response) => {
+    console.info('SELECT spotid from fieldday_spot where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +';');
+    pool.query('SELECT spotid from fieldday_spot where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +';', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
 
 module.exports = { // export routes to server side.
     getTrips,
     getSites,
     getSectors,
+    getSpots
   }
