@@ -109,6 +109,8 @@ function getSites(trip_id){
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
 
+    togglediv('#trips-ls','trips-button');
+
     query_selection[0] = trip_id;
     $.ajax({
         type: 'GET',
@@ -136,6 +138,8 @@ function getSectors(site_id){
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
 
+    togglediv('#sites-ls','sites-button');
+
     query_selection[1] = site_id;
     $.ajax({
         type: 'GET',
@@ -162,6 +166,8 @@ function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = "";
 
+    togglediv('#sectors-ls','sectors-button');
+
     query_selection[2] = sector_id;
     $.ajax({
         type: 'GET',
@@ -186,41 +192,67 @@ function getSpots(sector_id){
 function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
     if (container.childElementCount == 0){ // dont override selections with navigation
-        container.innerHTML += "<div class='data-header'><h1>Trips</h1></div>";
+        container.innerHTML += "<div onclick='togglediv(" + '"#trips-ls","trips-button"' + ")' class='data-header'><h1>Trips <span id='trips-button'>-</span></h1></div>";
+        var trips_ls = document.createElement('div');
+        trips_ls.id = 'trips-ls';
+
         for(x = 0; x < tripnames.length; x++){
             var elem = createRadioElementTrips((x % 2),'trips', false, tripnames[x],tripids[x]); // util function
-            container.innerHTML += elem;
+            trips_ls.innerHTML += elem;
         }
+        container.append(trips_ls);
     }
 }
 function renderSites(sitenames, siteids){
     var container = document.getElementById('sites');
     container.innerHTML = "";
-    container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
+    container.innerHTML += "<div onclick='togglediv(" + '"#sites-ls","sites-button"' + ")' class='data-header'><h1>Sites <span id='sites-button'>-</span></h1></div>";
+    var sites_ls = document.createElement('div');
+    sites_ls.id = 'sites-ls';
+    
     for(x = 0; x < sitenames.length; x++){
         var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x]); // util function
-        container.innerHTML += elem;
+        sites_ls.innerHTML += elem;
     }
+    container.append(sites_ls);
 }
 function renderSectors(sectornames, sectorids){
     var container = document.getElementById('sectors');
     container.innerHTML = "";
-    container.innerHTML += "<div class='data-header'><h1>Sectors</h1></div>";
+    container.innerHTML += "<div onclick='togglediv(" + '"#sectors-ls","sectors-button"' + ")' class='data-header'><h1>Sectors <span id='sectors-button'>-</span></h1></div>";
+    var sectors_ls = document.createElement('div');
+    sectors_ls.id = 'sectors-ls';
+
     for(x = 0; x < sectornames.length; x++){
         var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x], sectorids[x]); // util function
-        container.innerHTML += elem;
+        sectors_ls.innerHTML += elem;
     }
+    container.append(sectors_ls);
 }
 function renderSpots(spotids){
     var container = document.getElementById('spots');
     container.innerHTML = "";
     if (spotids.length != 0){
-        container.innerHTML += "<div class='data-header'><h1>Spots</h1></div>";
+        container.innerHTML += "<div onclick='togglediv(" + '"#spots-ls","spots-button"' + ")' class='data-header'><h1>Spots <span id='spots-button'>-</span></h1></div>";
+        var spots_ls = document.createElement('div');
+        spots_ls.id = 'spots-ls';
+
         for(x = 0; x < spotids.length; x++){
             var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
-            container.innerHTML += elem;
+            spots_ls.innerHTML += elem;
         }
+        container.append(spots_ls);
     }else{
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
+}
+
+function togglediv(target_div,btn_span){
+    var btn = document.getElementById(btn_span);
+    if (btn.innerHTML == '-'){
+        btn.innerHTML = '+';
+    }else{
+        btn.innerHTML = '-';
+    }
+    $(target_div).slideToggle();
 }
