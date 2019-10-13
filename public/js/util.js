@@ -35,7 +35,7 @@ function createRadioElementTrips( mode, name, checked, label, id ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+    radioHtml += '<label for="' + label + '">'+ label + " : " + id +'</label></div>';
 
     return radioHtml;
 }
@@ -46,7 +46,7 @@ function createRadioElementSites( mode, name, checked, label, siteid,tripid ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '">'+ label +'</label></div>';
+    radioHtml += '<label for="' + label + '">'+ label +" : " + siteid +'</label></div>';
 
     return radioHtml;
 }

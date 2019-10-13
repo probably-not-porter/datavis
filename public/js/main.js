@@ -81,8 +81,6 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 
 // Arrays (hold on the the db information that gets fetched)
 var query_selection = [null,null,null,null,null];
-selected_trip = null;
-selected_site = null;
 
 // Gets
 function getTrips(){
@@ -179,7 +177,7 @@ function renderSites(sitenames, siteids){
     container.innerHTML = "";
     container.innerHTML += "<div class='data-header'><h1>Sites</h1></div>";
     for(x = 0; x < sitenames.length; x++){
-        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x], selected_trip); // util function
+        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x], query_selection[0]); // util function
         container.innerHTML += elem;
     }
 }
