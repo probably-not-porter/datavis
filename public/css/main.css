@@ -128,3 +128,6 @@ label
      -moz-osx-font-smoothing: grayscale;
      cursor: pointer;
 } 
+.esri-coordinate-conversion{
+    width: 300px;
+}

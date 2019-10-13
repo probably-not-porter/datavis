@@ -80,15 +80,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 // DATA // 
 
 // Arrays (hold on the the db information that gets fetched)
-tripnames = [];
-tripids = [];
-
-sitenames = [];
-siteids = [];
-
-sectornames = [];
-sectorids = [];
-
+var query_selection = [null,null,null,null,null];
 selected_trip = null;
 selected_site = null;
 
@@ -100,12 +92,14 @@ function getTrips(){
         type: 'GET',
         url: '/trips',
         success: function(response) { 
+            var tripnames = [];
+            var tripids = [];
             for(x = 0; x < response.length; x++){
                 tripids.push(response[x].tripid);
                 tripnames.push(response[x].tripname);
             }
             console.info('TRIPS');
-            console.table(tripnames);
+            console.table(response);
             renderTrips(tripnames, tripids);
         },
         error: function(xhr, status, err) {
@@ -121,18 +115,20 @@ function getSites(trip_id){
     var container = document.getElementById('sectors');
     container.innerHTML = "";
 
-    selected_trip = trip_id;
+    query_selection[0] = trip_id;
     $.ajax({
         type: 'GET',
         url: '/sites',
         data: {id: trip_id},
         success: function(response) { 
+            var sitenames = [];
+            var siteids = [];
             for(x = 0; x < response.length; x++){
                 sitenames.push(response[x].sitename);
                 siteids.push(response[x].siteid);
             }
             console.info('SITES');
-            console.table(sitenames);
+            console.table(response);
             renderSites(sitenames, siteids);
         },
         error: function(xhr, status, err) {
@@ -141,21 +137,24 @@ function getSites(trip_id){
     });
 }
 
-function getSectors(site_id, trip_id){
+function getSectors(site_id){
     sectornames = [];
+    sectorids = [];
 
-    selected_site = site_id;
+    query_selection[1] = site_id;
     $.ajax({
         type: 'GET',
         url: '/sectors',
-        data: {siteid: site_id, tripid: trip_id},
+        data: {siteid: site_id, tripid: query_selection[0]},
         success: function(response) { 
+            var sectornames = [];
+            var sectorids = [];
             for(x = 0; x < response.length; x++){
                 sectornames.push(response[x].sectorname);
                 sectorids.push(response[x].sectorid);
             }
             console.info('SECTORS');
-            console.table(sectornames);
+            console.table(response);
             renderSectors(sectornames, sectorids);
         },
         error: function(xhr, status, err) {

@@ -22,6 +22,7 @@ const pool = new Pool({
 })
 
 const getTrips = (request, response) => {
+    console.info("SELECT tripName, tripID from fieldday_trip;");
     pool.query("SELECT tripName, tripID from fieldday_trip;", (error, results) => {
         if (error) {
             throw error
@@ -30,6 +31,7 @@ const getTrips = (request, response) => {
     })
 }
 const getSites = (request, response) => {
+    console.info('SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';');
     pool.query('SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';', (error, results) => {
         if (error) {
             throw error
@@ -38,6 +40,7 @@ const getSites = (request, response) => {
     })
 }
 const getSectors = (request, response) => {
+    console.info('SELECT sectorname, sectorid from fieldday_sector where tripid='+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + ';');
     pool.query('SELECT sectorname, sectorid from fieldday_sector where tripid='+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + ';', (error, results) => {
         if (error) {
             throw error
