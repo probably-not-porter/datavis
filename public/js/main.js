@@ -214,13 +214,13 @@ function renderSectors(sectornames, sectorids){
 function renderSpots(spotids){
     var container = document.getElementById('spots');
     container.innerHTML = "";
-    container.innerHTML += "<div class='data-header'><h1>Spots</h1></div>";
-    for(x = 0; x < spotids.length; x++){
-        var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
-        container.innerHTML += elem;
-    }
-
-    if (spotids.length == 0){
-        container.innerHTML += '<span> No Spots found for this selection. </span>';
+    if (spotids.length != 0){
+        container.innerHTML += "<div class='data-header'><h1>Spots</h1></div>";
+        for(x = 0; x < spotids.length; x++){
+            var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
+            container.innerHTML += elem;
+        }
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
 }

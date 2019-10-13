@@ -89,7 +89,13 @@ h1{
 .elem-0{
     background-color: #ddd;
 }
-
+input[type="radio"]:checked+label{ 
+    font-weight: bold; 
+    text-decoration: underline;
+}
+input[type="radio"]:checked{ 
+    background-color: #cbf7cb;
+}
 .form-radio
 {
      -webkit-appearance: none;
@@ -141,7 +147,8 @@ label
     color: white;
     position: fixed;
     bottom: 0px;
-    padding: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     width: 100%;
 }
 #data-prompt{
