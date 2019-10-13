@@ -105,6 +105,7 @@ function getTrips(){
 }
 function getSites(trip_id){
     document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
+    document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
 
@@ -132,6 +133,7 @@ function getSites(trip_id){
 
 function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
+    document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
 
     query_selection[1] = site_id;
@@ -158,6 +160,8 @@ function getSectors(site_id){
 
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
+    document.getElementById('spots').innerHTML = "";
+
     query_selection[2] = sector_id;
     $.ajax({
         type: 'GET',
@@ -214,5 +218,9 @@ function renderSpots(spotids){
     for(x = 0; x < spotids.length; x++){
         var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
         container.innerHTML += elem;
+    }
+
+    if (spotids.length == 0){
+        container.innerHTML += '<span> No Spots found for this selection. </span>';
     }
 }
