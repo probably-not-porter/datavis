@@ -61,7 +61,7 @@ function createRadioElementSectors( mode, name, checked, label,sectorid ) {
     return radioHtml;
 }
 function createRadioElementSpots( mode, name, checked, label,spotid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" type="radio" name="' + name + '" id="' + label + '"';
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getReadings('+ spotid + ')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }

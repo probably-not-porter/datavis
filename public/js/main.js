@@ -80,7 +80,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 // DATA // 
 
 // Arrays (hold on the the db information that gets fetched)
-var query_selection = [null,null,null,null,null];
+var query_selection = [null,null,null,null];
 
 // Gets
 function getTrips(){
@@ -132,7 +132,6 @@ function getSites(trip_id){
         }
     });
 }
-
 function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
     document.getElementById('sectors').innerHTML = "";
@@ -161,7 +160,6 @@ function getSectors(site_id){
         }
     });
 }
-
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = "";
@@ -181,6 +179,50 @@ function getSpots(sector_id){
             console.info('SPOTS');
             console.table(response);
             renderSpots(spotids);
+            getStreamings(sector_id);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+function getReadings(spot_id){
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize"
+
+    togglediv('#spots-ls','spots-button');
+
+    query_selection[3] = spot_id;
+    $.ajax({
+        type: 'GET',
+        url: '/readings',
+        data: {spotid: spot_id, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var readings = [];
+            for(x = 0; x < response.length; x++){
+                readings.push(response[x]);
+            }
+            console.info('DATA - READINGS');
+            console.table(response);
+            //renderReadings(spotids);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+function getStreamings(sector_id){
+    $.ajax({
+        type: 'GET',
+        url: '/streamings',
+        data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var streamings = [];
+            for(x = 0; x < response.length; x++){
+                streamings.push(response[x]);
+            }
+            console.info('DATA - STREAMINGS');
+            console.table(response);
+            //renderStreamings(spotids);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);

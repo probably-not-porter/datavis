@@ -19,6 +19,8 @@ app.get('/trips', q.getTrips);
 app.get('/sites', q.getSites);
 app.get('/sectors', q.getSectors);
 app.get('/spots', q.getSpots);
+app.get('/readings', q.getReadings);
+app.get('/streamings', q.getStreamings);
 //////////
 
 

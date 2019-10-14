@@ -57,10 +57,30 @@ const getSpots = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
+const getReadings = (request, response) => {
+    console.info('test');
+    pool.query('SELECT tripid,siteid,sectorid,spotid,platformid,sensorid,recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + 'and spotid='+ request.query.spotid +';', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
+const getStreamings = (request, response) => {
+    console.info('test');
+    pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
 
 module.exports = { // export routes to server side.
     getTrips,
     getSites,
     getSectors,
-    getSpots
+    getSpots,
+    getReadings,
+    getStreamings
   }
