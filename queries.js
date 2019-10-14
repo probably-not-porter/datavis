@@ -58,7 +58,7 @@ const getSpots = (request, response) => {
     })
 }
 const getReadings = (request, response) => {
-    console.info('test');
+    console.info('SELECT tripid,siteid,sectorid,spotid,platformid,sensorid,recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + 'and spotid='+ request.query.spotid +';');
     pool.query('SELECT tripid,siteid,sectorid,spotid,platformid,sensorid,recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + 'and spotid='+ request.query.spotid +';', (error, results) => {
         if (error) {
             throw error
@@ -67,7 +67,7 @@ const getReadings = (request, response) => {
     })
 }
 const getStreamings = (request, response) => {
-    console.info('test');
+    console.info('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';');
     pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
         if (error) {
             throw error

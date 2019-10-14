@@ -222,7 +222,7 @@ function getStreamings(sector_id){
             }
             console.info('DATA - STREAMINGS');
             console.table(response);
-            //renderStreamings(spotids);
+            renderStreamings(streamings);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -287,6 +287,19 @@ function renderSpots(spotids){
     }else{
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
+}
+function renderStreamings(streamings){
+    array_host = [];
+    for (x = 0; x < streamings.length; x++){
+        adjusted_time = streamings[x].recordtime.split('T')[0];
+        array_host.push(streamings[x].hostid);
+    }
+    trimmed_array = [...new Set(array)]
+    console.log(trimmed_array);
+}
+
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
 }
 
 function togglediv(target_div,btn_span){

@@ -70,3 +70,6 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
 
     return radioHtml;
 }
+function createRadioElementStreamings( mode, name, checked, streaming ) {
+    
+}
