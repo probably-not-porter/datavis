@@ -12,7 +12,7 @@
 var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
 
-function mapReady(){ // placeholder for now
+function ready(){ // placeholder for now
     switchToData()
 }
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
@@ -80,10 +80,15 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 // DATA // 
 
 // Arrays (hold on the the db information that gets fetched)
-var query_selection = [null,null,null,null];
+var query_selection = [null,null,null,null]; // trip, site, sector, spot
 
 // Gets
 function getTrips(){
+    document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot."
+    document.getElementById('trips').innerHTML = "";
+    document.getElementById('sites').innerHTML = "";
+    document.getElementById('sectors').innerHTML = "";
+    document.getElementById('spots').innerHTML = "";
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -294,13 +299,10 @@ function renderStreamings(streamings){
         adjusted_time = streamings[x].recordtime.split('T')[0];
         array_host.push(streamings[x].hostid);
     }
-    trimmed_array = [...new Set(array)]
+    trimmed_array = [...new Set(array_host)]
     console.log(trimmed_array);
 }
 
-function onlyUnique(value, index, self) { 
-    return self.indexOf(value) === index;
-}
 
 function togglediv(target_div,btn_span){
     var btn = document.getElementById(btn_span);
@@ -311,3 +313,25 @@ function togglediv(target_div,btn_span){
     }
     $(target_div).slideToggle();
 }
+
+// GRAPH
+$('document').ready(function(){
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          title: {
+            
+            display: true,
+            text: 'no data'
+          }
+        }
+      });
+      
+});
+
+  

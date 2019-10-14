@@ -24,7 +24,6 @@ function switchToData(){
     document.getElementById("mapView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
-    getTrips();
     console.log('switched to data view');
 }
 
@@ -71,5 +70,5 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
     return radioHtml;
 }
 function createRadioElementStreamings( mode, name, checked, streaming ) {
-    
+
 }

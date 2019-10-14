@@ -4,6 +4,10 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     height: 100%;
     width: 100%;
 }
+#graph{
+    width: 100%;
+    height: 100%;
+}
 #mapcontrols{
     margin-right: 10px;
     margin-bottom: 20px;
