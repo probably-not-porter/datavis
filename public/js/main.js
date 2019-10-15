@@ -7,14 +7,15 @@
 # Map and Data functions
 */
 
+function ready(){ // placeholder for now
+    switchToData()
+}
+
 // MAP //
 
 var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
 
-function ready(){ // placeholder for now
-    switchToData()
-}
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
@@ -79,9 +80,19 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 
 // DATA // 
 
-// Arrays (hold on the the db information that gets fetched)
-var query_selection = [null,null,null,null]; // trip, site, sector, spot
+var query_type = null; // 0 = reading, 1 = streaming
+var query_selection = [null,null,null,null,null]; // trip, site, sector, spot, platform
+var streamings_data = [];
+var readings_data = [];
 
+function setReading(){
+    query_type = 0;
+    getTrips();
+}
+function setStreaming(){
+    query_type = 1;
+    getTrips();
+}
 // Gets
 function getTrips(){
     document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot."
@@ -89,6 +100,7 @@ function getTrips(){
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "";
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -113,6 +125,7 @@ function getSites(trip_id){
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "";
 
     togglediv('#trips-ls','trips-button');
 
@@ -141,6 +154,7 @@ function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "";
 
     togglediv('#sites-ls','sites-button');
 
@@ -168,6 +182,7 @@ function getSectors(site_id){
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "";
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -184,7 +199,6 @@ function getSpots(sector_id){
             console.info('SPOTS');
             console.table(response);
             renderSpots(spotids);
-            getStreamings(sector_id);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -192,7 +206,8 @@ function getSpots(sector_id){
     });
 }
 function getReadings(spot_id){
-    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize"
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('streaming').innerHTML = "";
 
     togglediv('#spots-ls','spots-button');
 
@@ -216,6 +231,11 @@ function getReadings(spot_id){
     });
 }
 function getStreamings(sector_id){
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('streaming').innerHTML = "";
+
+    togglediv('#sectors-ls','sectors-button');
+
     $.ajax({
         type: 'GET',
         url: '/streamings',
@@ -234,7 +254,6 @@ function getStreamings(sector_id){
         }
     });
 }
-
 // Renders
 function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
@@ -294,15 +313,34 @@ function renderSpots(spotids){
     }
 }
 function renderStreamings(streamings){
-    array_host = [];
-    for (x = 0; x < streamings.length; x++){
-        adjusted_time = streamings[x].recordtime.split('T')[0];
-        array_host.push(streamings[x].hostid);
-    }
-    trimmed_array = [...new Set(array_host)]
-    console.log(trimmed_array);
-}
+    divided_streamings = divide(streamings);
+    streamings_data = streamings;
 
+    var container = document.getElementById('streaming');
+    container.innerHTML = "";
+    container.innerHTML += "<div onclick='togglediv(" + '"#streamings-ls","streamings-button"' + ")' class='data-header'><h1>Streaming <span id='streamings-button'>-</span></h1></div>";
+    var streamings_ls = document.createElement('div');
+    streamings_ls.id = 'streamings-ls';
+
+    for(x = 0; x < divided_streamings.length; x++){
+        console.log(divided_streamings[x]);
+        var elem = createRadioElementStreamings((x % 2),'sectors', false, divided_streamings[x]); // util function
+        streamings_ls.innerHTML += elem;
+    }
+    container.append(streamings_ls);
+}
+// data selectors
+function displayStreamings(platformid){
+    display_set = [];
+    console.log(streamings_data);
+    console.log(platformid);
+    for (x=0;x<streamings_data.length;x++){
+        if (streamings_data[x].platformid == platformid){
+            display_set.push(streamings_data[x]);
+        }
+    }
+    console.log(display_set);
+}
 
 function togglediv(target_div,btn_span){
     var btn = document.getElementById(btn_span);
@@ -313,8 +351,18 @@ function togglediv(target_div,btn_span){
     }
     $(target_div).slideToggle();
 }
+function divide(data_arr){
+    const unique = [...new Set(data_arr.map(item => item.platformid))];
+    return unique
+}
 
-// GRAPH
+
+
+
+
+
+// GRAPH //
+
 $('document').ready(function(){
     new Chart(document.getElementById("line-chart"), {
         type: 'line',

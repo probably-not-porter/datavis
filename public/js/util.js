@@ -50,7 +50,15 @@ function createRadioElementSites( mode, name, checked, label, siteid ) {
     return radioHtml;
 }
 function createRadioElementSectors( mode, name, checked, label,sectorid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSpots('+ sectorid + ')" type="radio" name="' + name + '" id="' + label + '"';
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" '
+    // switch for streaming
+    if (query_type == 1){
+        radioHtml += 'onchange="getStreamings('+ sectorid + ')"';
+    }else{
+        radioHtml += 'onchange="getSpots('+ sectorid + ')"';
+    }
+
+    radioHtml += ' type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';
     }
@@ -69,6 +77,14 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
 
     return radioHtml;
 }
-function createRadioElementStreamings( mode, name, checked, streaming ) {
-
+function createRadioElementStreamings( mode, name, checked, label ) {
+    console.log(label);
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayStreamings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
+    console.log(radioHtml);
+    return radioHtml;
 }

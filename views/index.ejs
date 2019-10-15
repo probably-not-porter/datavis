@@ -72,10 +72,10 @@
             <div id='data'>
                 <div class='data-catagory'>
                     <div class='data-header' style='padding-bottom:15px; background-color: #bbb'>
-                        <input class="data-radio form-radio" onchange="getTrips();" type="radio" name="data-type" id="readings"/>
+                        <input class="data-radio form-radio" onchange="setReading();" type="radio" name="data-type" id="readings"/>
                         <label for="readings"><strong>Readings from Fieldday</strong></label>
 
-                        <input class="data-radio form-radio" onchange="getTrips();" type="radio" name="data-type" id="streamings"/>
+                        <input class="data-radio form-radio" onchange="setStreaming();" type="radio" name="data-type" id="streamings"/>
                         <label for="streamings"><strong>Stream data from Platforms</strong></label>
                     </div>
                 </div>
@@ -83,7 +83,8 @@
                 <div class='data-catagory' id='sites'></div>
                 <div class='data-catagory' id='sectors'></div>
                 <div class='data-catagory' id='spots'></div>
-                <div class='data-catagory' id='streamings'></div>
+                <div class='data-catagory' id='streaming'></div>
+                <div class='data-catagory' id='reading'></div>
                 <div id='data-prompt-box'>
                     <strong>
                         <span id='data-prompt'>Pick a trip, site, sector, and spot.</span>
