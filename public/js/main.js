@@ -15,6 +15,7 @@ function ready(){ // placeholder for now
 
 var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
+var view = null;
 
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
@@ -29,7 +30,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
       basemap: "topo"
     });
 
-    var view = new MapView({
+    view = new MapView({
       center: [-13.68, 65.29],
       container: "viewDiv",
       map: map,
@@ -49,34 +50,46 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
         width: 200
     });
     view.ui.add(coordinateConversionWidget, "bottom-left");
-
-    
-
-    var point = {
-      type: "point", // autocasts as new Point()
-      longitude: -13.25,
-      latitude: 65.30
-    };
-
-    // Create a symbol for drawing the point
-    var markerSymbol = {
-      type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-      color: [226, 119, 40],
-      outline: {
-        // autocasts as new SimpleLineSymbol()
-        color: [255, 255, 255],
-        width: 2
-      }
-    };
-
-    // Create a graphic and add the geometry and symbol to it
-    var pointGraphic = new Graphic({
-      geometry: point,
-      symbol: markerSymbol
-    });
-
-    view.graphics.addMany([pointGraphic]);
 });
+
+function createPoints(points){
+    require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
+    Map,
+    SceneView,
+    MapView,
+    Graphic,
+    BasemapToggle,
+    CoordinateConversion,
+    PopupTemplate
+    ){
+        for(x=0;x<points.length;x++){
+            var point = {
+                type: "point", // autocasts as new Point()
+                longitude: points[x].longitude,
+                latitude: points[x].latitude
+            };
+            
+                // Create a symbol for drawing the point
+            var markerSymbol = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                color: [226, 119, 40],
+                outline: {
+                    // autocasts as new SimpleLineSymbol()
+                    color: [255, 255, 255],
+                    width: 2
+                }
+            };
+            
+            // Create a graphic and add the geometry and symbol to it
+            var pointGraphic = new Graphic({
+                geometry: point,
+                symbol: markerSymbol
+            });
+            
+            view.graphics.addMany([pointGraphic]);
+        }
+    });
+}
 
 // DATA // 
 
@@ -323,8 +336,7 @@ function renderStreamings(streamings){
     streamings_ls.id = 'streamings-ls';
 
     for(x = 0; x < divided_streamings.length; x++){
-        console.log(divided_streamings[x]);
-        var elem = createRadioElementStreamings((x % 2),'sectors', false, divided_streamings[x]); // util function
+        var elem = createRadioElementStreamings((x % 2),'streamings', false, divided_streamings[x]); // util function
         streamings_ls.innerHTML += elem;
     }
     container.append(streamings_ls);
@@ -332,14 +344,13 @@ function renderStreamings(streamings){
 // data selectors
 function displayStreamings(platformid){
     display_set = [];
-    console.log(streamings_data);
-    console.log(platformid);
     for (x=0;x<streamings_data.length;x++){
         if (streamings_data[x].platformid == platformid){
             display_set.push(streamings_data[x]);
         }
     }
-    console.log(display_set);
+    createGraph(display_set);
+    //createPoints(display_set); // not working yet
 }
 
 function togglediv(target_div,btn_span){
@@ -356,30 +367,47 @@ function divide(data_arr){
     return unique
 }
 
-
-
-
-
-
 // GRAPH //
 
-$('document').ready(function(){
-    new Chart(document.getElementById("line-chart"), {
-        type: 'line',
-        data: {
+function createGraph(dataset){
+    elevation_arr = [];
+    times_arr = [];
+    for (x=0;x<dataset.length;x++){
+        elevation_arr.push(dataset[x].elevation);
+        times_arr.push(dataset[x].recordtime.split('T')[1]);
+    }
+    elevation_arr = [...new Set(elevation_arr)];
+    times_arr = [...new Set(times_arr)];
+    console.log('UNIQUE DATA')
+    console.log(elevation_arr);
+    console.log(times_arr);
 
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-          title: {
-            
-            display: true,
-            text: 'no data'
-          }
-        }
-      });
-      
-});
+
+    $('document').ready(function(){
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: times_arr,
+                datasets: [{ 
+                    data: elevation_arr,
+                    label: "Elevation",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+              title: {
+                
+                display: true,
+                text: 'no data'
+              }
+            }
+          });
+          
+    });
+}
+
 
   

@@ -68,7 +68,7 @@ const getReadings = (request, response) => {
 }
 const getStreamings = (request, response) => {
     console.info('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';');
-    pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
+    pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude,quality,elevation,accuracy,satellites,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
         if (error) {
             throw error
         }
