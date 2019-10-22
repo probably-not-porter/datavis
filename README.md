@@ -1,4 +1,6 @@
 # DATAVIS TOOL 2.0
+[![GitHub issues](https://img.shields.io/github/issues/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/issues)
+[![GitHub license](https://img.shields.io/github/license/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/blob/master/LICENSE)
 A visualization tool for the IFS database using Node.js and the ArcGIS api. Uses queries to fetch data from the Earlham Field Science database and show that data in a graph format, as well as a map format.
 
 ## Running Locally
