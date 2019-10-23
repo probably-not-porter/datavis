@@ -1,4 +1,4 @@
-# DATAVIS TOOL 2.
+# DATAVIS TOOL 2
 
 [![GitHub issues](https://img.shields.io/github/issues/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/issues)
 [![GitHub license](https://img.shields.io/github/license/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/blob/master/LICENSE)
