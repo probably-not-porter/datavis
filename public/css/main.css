@@ -35,7 +35,9 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
     text-align: center;
 }
 #nav-view-button{
+    vertical-align: top;
     padding: 10px; 
+    margin-top: 0px;
     border-radius: 10px; 
     border: 1px solid black
 }
@@ -66,14 +68,18 @@ h1 span{
     max-width: 90%;
     margin: 0px auto;
     cursor: pointer;
+    background-color: #eee;
+    border-radius: 3px;
 }
 .data-header{
-    background-color: #eee;
+    background-color: #ddd;
     padding-top: 3px;
     padding-bottom: 3px;
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 .elem-div{
     margin-top: 10px;
@@ -93,10 +99,10 @@ h1 span{
     }
 }
 .elem-1{
-    background-color: #ddd;
+    background-color: #ccc;
 }
 .elem-0{
-    background-color: #ddd;
+    background-color: #ccc;
 }
 input[type="radio"]:checked+label{ 
     font-weight: bold; 
