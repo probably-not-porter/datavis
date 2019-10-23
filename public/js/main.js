@@ -109,7 +109,7 @@ function setStreaming(){
 // Gets
 function getTrips(){
     document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot."
-    document.getElementById('trips').innerHTML = "";
+    document.getElementById('trips').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
@@ -135,7 +135,7 @@ function getTrips(){
 }
 function getSites(trip_id){
     document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
-    document.getElementById('sites').innerHTML = "";
+    document.getElementById('sites').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
@@ -165,7 +165,7 @@ function getSites(trip_id){
 }
 function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
-    document.getElementById('sectors').innerHTML = "";
+    document.getElementById('sectors').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
 
@@ -194,7 +194,7 @@ function getSectors(site_id){
 }
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
-    document.getElementById('spots').innerHTML = "";
+    document.getElementById('spots').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
     document.getElementById('streaming').innerHTML = "";
 
     togglediv('#sectors-ls','sectors-button');
@@ -245,7 +245,7 @@ function getReadings(spot_id){
 }
 function getStreamings(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
-    document.getElementById('streaming').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -270,6 +270,7 @@ function getStreamings(sector_id){
 // Renders
 function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
+    container.innerHTML = '';
     if (container.childElementCount == 0){ // dont override selections with navigation
         container.innerHTML += "<div onclick='togglediv(" + '"#trips-ls","trips-button"' + ")' class='data-header'><h1>Trips <span id='trips-button'>-</span></h1></div>";
         var trips_ls = document.createElement('div');
