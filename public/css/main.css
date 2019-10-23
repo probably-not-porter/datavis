@@ -1,25 +1,10 @@
-html, body, #viewDiv, #mapView, #graphView, #dataView{
+html, body, #viewDiv{
     padding: 0;
     margin: 0;
     height: 100%;
     width: 100%;
 }
-#graph{
-    width: 100%;
-    height: 100%;
-}
-#mapcontrols{
-    margin-right: 10px;
-    margin-bottom: 20px;
-    display:block;
-    position: absolute;
-    z-index: 10;
-    top:1;
-    left:1;
-    right:0;
-    bottom:0;
-    text-align: center;
-}
+
 #navcontrols{
     width: 200px;
     height: 200px;
@@ -49,123 +34,4 @@ html, body, #viewDiv, #mapView, #graphView, #dataView{
 }
 .nav-button-select{
     background-color: gray; 
-}
-#data{
-    margin-top: 100px;
-    text-align: center;
-    margin-bottom: 100px;
-}
-h1{
-    font-size: 20px;
-}
-h1 span{
-    color: gray;
-    text-align: right;
-}
-.data-catagory{
-    display: block;
-    width: 90%;
-    max-width: 90%;
-    margin: 0px auto;
-    cursor: pointer;
-    background-color: #eee;
-    border-radius: 3px;
-}
-.data-header{
-    background-color: #ddd;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 10px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-}
-.elem-div{
-    margin-top: 10px;
-    max-width: 40%;
-    width: 300px;
-    display: inline-block;
-    height: 55px;
-    border-radius: 3px;
-    padding-left: 30px;
-    text-align: left;
-    margin: 1%;
-}
-@media only screen and (max-width: 800px) {
-    .elem-div{
-        max-width: 80%;
-        width: 80%;
-    }
-}
-.elem-1{
-    background-color: #ccc;
-}
-.elem-0{
-    background-color: #ccc;
-}
-input[type="radio"]:checked+label{ 
-    font-weight: bold; 
-    text-decoration: underline;
-}
-input[type="radio"]:checked{ 
-    background-color: #cbf7cb;
-}
-.form-radio
-{
-     -webkit-appearance: none;
-     -moz-appearance: none;
-     appearance: none;
-     display: inline-block;
-     position: relative;
-     background-color: #f1f1f1;
-     color: #666;
-     top: 10px;
-     height: 30px;
-     width: 30px;
-     border: 0;
-     border-radius: 50px;
-     cursor: pointer;     
-     margin-right: 7px;
-     outline: none;
-}
-.form-radio:checked::before
-{
-     position: absolute;
-     font: 13px/1 'Open Sans', sans-serif;
-     left: 11px;
-     top: 7px;
-     content: '\02143';
-     transform: rotate(40deg);
-}
-.form-radio:hover
-{
-     background-color: #f7f7f7;
-}
-.form-radio:checked
-{
-     background-color: #f1f1f1;
-}
-label
-{
-     font: 15px/1.7 'Open Sans', sans-serif;
-     color: #333;
-     -webkit-font-smoothing: antialiased;
-     -moz-osx-font-smoothing: grayscale;
-     cursor: pointer;
-} 
-.esri-coordinate-conversion{
-    width: 300px;
-}
-#data-prompt-box{
-    background-color: #888;
-    color: white;
-    position: fixed;
-    bottom: 0px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    width: 100%;
-}
-#data-prompt{
-    transition-duration: 1s;
 }
