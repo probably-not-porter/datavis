@@ -259,7 +259,7 @@ function getStreamings(sector_id){
                 streamings.push(response[x]);
             }
             console.info('DATA - STREAMINGS');
-            console.table(response);
+            //console.table(response);
             renderStreamings(streamings);
         },
         error: function(xhr, status, err) {
@@ -349,7 +349,7 @@ function displayStreamings(platformid){
             display_set.push(streamings_data[x]);
         }
     }
-    createGraph(display_set);
+    createGraph(display_set,platformid);
     //createPoints(display_set); // not working yet
 }
 
@@ -368,45 +368,52 @@ function divide(data_arr){
 }
 
 // GRAPH //
+var lineChart;
+$( document ).ready(function() {
+    lineChart = new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            datasets: [{ 
+                label: "Elevation",
+                borderColor: "#3e95cd",
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'No Data Selected'
+            }
+        }
+    });
+    console.log( "ready!" );
+});
 
-function createGraph(dataset){
+function createGraph(dataset, title){
     elevation_arr = [];
     times_arr = [];
     for (x=0;x<dataset.length;x++){
-        elevation_arr.push(dataset[x].elevation);
-        times_arr.push(dataset[x].recordtime.split('T')[1]);
+        if (!(times_arr.includes(dataset[x].recordtime.split('T')[1]))){
+            elevation_arr.push(dataset[x].elevation);
+            times_arr.push(dataset[x].recordtime.split('T')[1]);
+        }
     }
-    elevation_arr = [...new Set(elevation_arr)];
-    times_arr = [...new Set(times_arr)];
+    //elevation_arr = [...new Set(elevation_arr)];
+    //times_arr = [...new Set(times_arr)];
     console.log('UNIQUE DATA')
     console.log(elevation_arr);
     console.log(times_arr);
-
-
-    $('document').ready(function(){
-        new Chart(document.getElementById("line-chart"), {
-            type: 'line',
-            data: {
-                labels: times_arr,
-                datasets: [{ 
-                    data: elevation_arr,
-                    label: "Elevation",
-                    borderColor: "#3e95cd",
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-              title: {
-                
-                display: true,
-                text: 'no data'
-              }
-            }
-          });
-          
-    });
+    addData(lineChart, times_arr, elevation_arr,title);
+}
+function addData(chart, labels, data,title) {
+    console.warn('UPDATING CHART');
+    chart.data.labels = labels;
+    chart.options.title.text = title;
+    chart.data.datasets[0].data = data
+    chart.update();
+    console.log(chart);
 }
 
 
