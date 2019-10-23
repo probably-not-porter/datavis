@@ -17,6 +17,8 @@ var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
 var view = null;
 
+
+
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
@@ -91,25 +93,41 @@ function createPoints(points){
     });
 }
 
-// DATA // 
+// DATA //
 
 var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null]; // trip, site, sector, spot, platform
 var streamings_data = [];
 var readings_data = [];
 
+var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: #bbb'>Lots of numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+ 
+/*
+Streamings/Readings
+
+The tables 'fieldday_reading' and 'fieldday_stream' require different sets of IDs. 
+Reading takes a trip, site, sector, and spot. Streaming only takes trip site and sector.
+This is the entry point so that both of these options in the descision tree can be accomodated.
+*/
 function setReading(){
     query_type = 0;
-    getTrips();
+    getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
-    getTrips();
+    getTrips(); // get top level of data and render to the next block on the form
 }
-// Gets
+/* 
+Getting data
+
+The following functions are the entry point for getting a certain level of data and rendering 
+it to the screen, or displaying it. Each makes a call to a server-side function in the 
+'queries.js' file, which gets the data from the database and returns it to the client-side,
+which then passes the data to a renderer.
+*/
 function getTrips(){
     document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot."
-    document.getElementById('trips').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+    document.getElementById('trips').innerHTML = placeholderHTML;
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
@@ -135,7 +153,7 @@ function getTrips(){
 }
 function getSites(trip_id){
     document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
-    document.getElementById('sites').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+    document.getElementById('sites').innerHTML = placeholderHTML;
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
@@ -165,7 +183,7 @@ function getSites(trip_id){
 }
 function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
-    document.getElementById('sectors').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+    document.getElementById('sectors').innerHTML = placeholderHTML;
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
 
@@ -194,7 +212,7 @@ function getSectors(site_id){
 }
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
-    document.getElementById('spots').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+    document.getElementById('spots').innerHTML = placeholderHTML;
     document.getElementById('streaming').innerHTML = "";
 
     togglediv('#sectors-ls','sectors-button');
@@ -245,7 +263,7 @@ function getReadings(spot_id){
 }
 function getStreamings(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
-    document.getElementById('streaming').innerHTML = "<div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+    document.getElementById('streaming').innerHTML = placeholderHTML;
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -267,7 +285,13 @@ function getStreamings(sector_id){
         }
     });
 }
-// Renders
+ 
+/*
+Renderers
+
+The following functions get information from a get function, and use a function from 'util.js' 
+to create a radiobutton.
+*/
 function renderTrips(tripnames, tripids){
     var container = document.getElementById('trips');
     container.innerHTML = '';
@@ -342,6 +366,7 @@ function renderStreamings(streamings){
     }
     container.append(streamings_ls);
 }
+
 // data selectors
 function displayStreamings(platformid){
     display_set = [];

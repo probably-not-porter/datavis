@@ -5,9 +5,11 @@
 # pelibby16@earlham.edu
 #
 # Query functions for database
+# This file runs on the server side, fetching specific data from the database and handing it off to the client.
 */
 
-// IMPORTANT: The pool.js file must be setup before running
+// IMPORTANT: The .ENV file must be setup before running, see README for template
+
 const dotenv = require('dotenv');
 dotenv.config();
 
