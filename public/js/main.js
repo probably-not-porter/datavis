@@ -356,20 +356,24 @@ function renderSpots(spotids){
 }
 function renderStreamings(streamings){
     console.log('renderStreamings');
-    divided_streamings = divide(streamings);
-    streamings_data = streamings;
-
-    var container = document.getElementById('streaming');
-    container.innerHTML = "";
-    container.innerHTML += "<div onclick='togglediv(" + '"#streamings-ls","streamings-button"' + ")' class='data-header'><h1>Streaming <span id='streamings-button'>-</span></h1></div>";
-    var streamings_ls = document.createElement('div');
-    streamings_ls.id = 'streamings-ls';
-
-    for(x = 0; x < divided_streamings.length; x++){
-        var elem = createRadioElementStreamings((x % 2),'streamings', false, divided_streamings[x]); // util function
-        streamings_ls.innerHTML += elem;
+    if (streamings.length != 0){
+        divided_streamings = divide(streamings);
+        streamings_data = streamings;
+        var container = document.getElementById('streaming');
+        container.innerHTML = "";
+        container.innerHTML += "<div onclick='togglediv(" + '"#streamings-ls","streamings-button"' + ")' class='data-header'><h1>Streaming <span id='streamings-button'>-</span></h1></div>";
+        var streamings_ls = document.createElement('div');
+        streamings_ls.id = 'streamings-ls';
+        for(x = 0; x < divided_streamings.length; x++){
+            var elem = createRadioElementStreamings((x % 2),'streamings', false, divided_streamings[x]); // util function
+            streamings_ls.innerHTML += elem;
+        }
+        container.append(streamings_ls);
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this sector" // if there are no streamings, default back to sector
+        document.getElementById('streaming').innerHTML = '';
+        togglediv('#sectors-ls','sectors-button');
     }
-    container.append(streamings_ls);
 }
 function renderReadings(readings){
     divided_readings = divide(readings);
@@ -460,7 +464,7 @@ function createGraph(dataset, title){
     for (x=0;x<dataset.length;x++){
         if (!(times_arr.includes(dataset[x].recordtime.split('T')[1]))){
             elevation_arr.push(dataset[x].elevation);
-            times_arr.push(dataset[x].recordtime.split('T')[1]);
+            times_arr.push( dataset[x].recordtime.split('T')[1].substring(0,8) );
         }
     }
     //elevation_arr = [...new Set(elevation_arr)];
