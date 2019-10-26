@@ -86,3 +86,12 @@ function createRadioElementStreamings( mode, name, checked, label ) {
     radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
     return radioHtml;
 }
+function createRadioElementReadings( mode, name, checked, label ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayReadings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
+    return radioHtml;
+}

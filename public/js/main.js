@@ -238,7 +238,7 @@ function getSpots(sector_id){
 }
 function getReadings(spot_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
-    document.getElementById('streaming').innerHTML = "";
+    document.getElementById('reading').innerHTML = placeholderHTML;
 
     togglediv('#spots-ls','spots-button');
 
@@ -254,7 +254,7 @@ function getReadings(spot_id){
             }
             console.info('DATA - READINGS');
             console.table(response);
-            //renderReadings(spotids);
+            renderReadings(readings);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -366,7 +366,22 @@ function renderStreamings(streamings){
     }
     container.append(streamings_ls);
 }
+function renderReadings(readings){
+    divided_readings = divide(readings);
+    readings_data = readings;
 
+    var container = document.getElementById('reading');
+    container.innerHTML = "";
+    container.innerHTML += "<div onclick='togglediv(" + '"#readings-ls","readings-button"' + ")' class='data-header'><h1>Readings <span id='readings-button'>-</span></h1></div>";
+    var readings_ls = document.createElement('div');
+    readings_ls.id = 'readings-ls';
+
+    for(x = 0; x < divided_readings.length; x++){
+        var elem = createRadioElementReadings((x % 2),'readings', false, divided_readings[x]); // util function
+        readings_ls.innerHTML += elem;
+    }
+    container.append(readings_ls);
+}
 // data selectors
 function displayStreamings(platformid){
     display_set = [];
@@ -377,6 +392,17 @@ function displayStreamings(platformid){
     }
     createGraph(display_set,platformid);
     //createPoints(display_set); // not working yet
+}
+function displayReadings(platformid){
+    display_set = []
+    for (x=0;x<readings_data.length;x++){
+        if (readings_data[x].platformid == platformid){
+            display_set.push(readings_data[x]);
+        }
+    }
+    console.log(display_set)
+    // create graph
+    // create points
 }
 
 function togglediv(target_div,btn_span){
