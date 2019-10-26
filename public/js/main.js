@@ -132,6 +132,7 @@ function getTrips(){
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById('reading').innerHTML = "";
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -157,6 +158,7 @@ function getSites(trip_id){
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById('reading').innerHTML = "";
 
     togglediv('#trips-ls','trips-button');
 
@@ -186,6 +188,7 @@ function getSectors(site_id){
     document.getElementById('sectors').innerHTML = placeholderHTML;
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById('reading').innerHTML = "";
 
     togglediv('#sites-ls','sites-button');
 
@@ -214,6 +217,7 @@ function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = placeholderHTML;
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById('reading').innerHTML = "";
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -351,6 +355,7 @@ function renderSpots(spotids){
     }
 }
 function renderStreamings(streamings){
+    console.log('renderStreamings');
     divided_streamings = divide(streamings);
     streamings_data = streamings;
 
@@ -383,20 +388,21 @@ function renderReadings(readings){
     container.append(readings_ls);
 }
 // data selectors
-function displayStreamings(platformid){
+function displayStreamings(timestamp){
+    console.log('displayStreamings');
     display_set = [];
     for (x=0;x<streamings_data.length;x++){
-        if (streamings_data[x].platformid == platformid){
+        if (streamings_data[x].recordtime.substring(0,10) == timestamp){
             display_set.push(streamings_data[x]);
         }
     }
-    createGraph(display_set,platformid);
+    createGraph(display_set,timestamp);
     //createPoints(display_set); // not working yet
 }
-function displayReadings(platformid){
+function displayReadings(timestamp){
     display_set = []
     for (x=0;x<readings_data.length;x++){
-        if (readings_data[x].platformid == platformid){
+        if (readings_data[x].recordtime.substring(0,10) == timestamp){
             display_set.push(readings_data[x]);
         }
     }
@@ -415,7 +421,12 @@ function togglediv(target_div,btn_span){
     $(target_div).slideToggle();
 }
 function divide(data_arr){
-    const unique = [...new Set(data_arr.map(item => item.platformid))];
+    console.log('DIVIDE');
+    console.log('starting with:');
+    console.log(data_arr);
+    const unique = [...new Set(data_arr.map(item => (item.recordtime.substring(0, 10))))];
+    console.log('ending with:');
+    console.log(unique);
     return unique
 }
 
