@@ -8,6 +8,7 @@
 */
 
 function ready(){ // placeholder for now
+    document.getElementById('loading').style.display = 'none';
     switchToData()
 }
 
@@ -15,8 +16,9 @@ function ready(){ // placeholder for now
 
 var mapstate = 0; // keep track of which map overlay is being used
 var default_center = [-13.7055,65.2941]; //default starting coords for the map view
-var view = null;
-
+var view;
+var map;
+var prev_points = [];
 
 
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
@@ -28,7 +30,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
     CoordinateConversion,
     PopupTemplate
   ) {
-    var map = new Map({
+    map = new Map({
       basemap: "topo"
     });
 
@@ -64,22 +66,22 @@ function createPoints(points){
     CoordinateConversion,
     PopupTemplate
     ){
+        if (prev_points.length != 0){
+            view.graphics.removeMany(prev_points);
+            prev_points = 0;
+        }
+        out_points = [];
+
+        var markerSymbol = {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            color: getRandomColor(),
+        };
+
         for(x=0;x<points.length;x++){
             var point = {
                 type: "point", // autocasts as new Point()
                 longitude: points[x].longitude,
                 latitude: points[x].latitude
-            };
-            
-                // Create a symbol for drawing the point
-            var markerSymbol = {
-                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-                color: [226, 119, 40],
-                outline: {
-                    // autocasts as new SimpleLineSymbol()
-                    color: [255, 255, 255],
-                    width: 2
-                }
             };
             
             // Create a graphic and add the geometry and symbol to it
@@ -88,8 +90,11 @@ function createPoints(points){
                 symbol: markerSymbol
             });
             
-            view.graphics.addMany([pointGraphic]);
+            out_points.push(pointGraphic);
         }
+        prev_points = prev_points.concat(out_points);
+        view.graphics.addMany(out_points);
+        console.log('points added to map');
     });
 }
 
@@ -392,17 +397,26 @@ function renderReadings(readings){
     container.append(readings_ls);
 }
 // data selectors
-function displayStreamings(timestamp){
-    console.log('displayStreamings');
-    display_set = [];
-    for (x=0;x<streamings_data.length;x++){
-        if (streamings_data[x].recordtime.substring(0,10) == timestamp){
-            display_set.push(streamings_data[x]);
-        }
-    }
-    createGraph(display_set,timestamp);
-    //createPoints(display_set); // not working yet
+function displayStreamingsLoading(callback){
+    console.log('this should run')
+    document.getElementById('loading').style.display = 'block';
+    callback();
 }
+function displayStreamings(timestamp){
+    displayStreamingsLoading(function() {
+        console.log('and then this should');
+        display_set = [];
+        for (x=0;x<streamings_data.length;x++){
+            if (streamings_data[x].recordtime.substring(0,10) == timestamp){
+                display_set.push(streamings_data[x]);
+            }
+        }
+        createGraph(display_set,timestamp);
+        createPoints(display_set);
+        document.getElementById('loading').style.display = 'none';
+    });
+}
+
 function displayReadings(timestamp){
     display_set = []
     for (x=0;x<readings_data.length;x++){
@@ -414,7 +428,10 @@ function displayReadings(timestamp){
     // create graph
     // create points
 }
-
+function showLoading(){
+    console.log('loading');
+    
+}
 function togglediv(target_div,btn_span){
     var btn = document.getElementById(btn_span);
     if (btn.innerHTML == '-'){
@@ -438,14 +455,8 @@ function divide(data_arr){
 var lineChart;
 $( document ).ready(function() {
     lineChart = new Chart(document.getElementById("line-chart"), {
-        type: 'line',
-        data: {
-            datasets: [{ 
-                label: "Elevation",
-                borderColor: "#3e95cd",
-                fill: false
-            }]
-        },
+        type: 'scatter',
+        data: {},
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -459,12 +470,25 @@ $( document ).ready(function() {
 });
 
 function createGraph(dataset, title){
+    label_arr = [];
     elevation_arr = [];
     times_arr = [];
+    bucket = -1;
     for (x=0;x<dataset.length;x++){
-        if (!(times_arr.includes(dataset[x].recordtime.split('T')[1]))){
-            elevation_arr.push(dataset[x].elevation);
-            times_arr.push( dataset[x].recordtime.split('T')[1].substring(0,8) );
+        console.log(dataset[x].platformid)
+        if ((x == 0) || (dataset[x-1].platformid != dataset[x].platformid)){
+            bucket++;
+            label_arr.push(dataset[x].platformid);
+            elevation_arr.push([]);
+            times_arr.push([]);
+            console.log(times_arr);
+            console.log(elevation_arr);
+            console.log(label_arr);
+        }
+        if (!(times_arr[bucket].includes(dataset[x].recordtime.split('T')[1]))){
+            newtime = new Date(dataset[x].recordtime).getTime()
+            elevation_arr[bucket].push({x: newtime ,y: (dataset[x].elevation)});
+            times_arr[bucket].push(dataset[x].recordtime.split('T')[1].substring(0,8));
         }
     }
     //elevation_arr = [...new Set(elevation_arr)];
@@ -472,16 +496,33 @@ function createGraph(dataset, title){
     console.log('UNIQUE DATA')
     console.log(elevation_arr);
     console.log(times_arr);
-    addData(lineChart, times_arr, elevation_arr,title);
+    addData(lineChart, times_arr, elevation_arr,label_arr);
 }
-function addData(chart, labels, data,title) {
+function addData(chart, label_arr, data, title_arr) {
     console.warn('UPDATING CHART');
-    chart.data.labels = labels;
-    chart.options.title.text = title;
-    chart.data.datasets[0].data = data
+    chart.options.title.text = 'test';
+    for (x=0; x< label_arr.length; x++){
+        chart.data.labels = chart.data.labels.concat(label_arr[x]);
+        var newDataset = {
+            label: title_arr[x],
+            borderColor: getRandomColor(),
+            borderWidth: 3,
+            fill: false,
+            data: data[x],
+        }
+        chart.data.datasets.push(newDataset);
+    }
     chart.update();
     console.log(chart);
 }
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
 
   
