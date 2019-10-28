@@ -68,7 +68,7 @@ function createPoints(points){
     ){
         if (prev_points.length != 0){
             view.graphics.removeMany(prev_points);
-            prev_points = 0;
+            prev_points = [];
         }
         out_points = [];
 
@@ -399,7 +399,7 @@ function renderReadings(readings){
 // data selectors
 function displayStreamingsLoading(callback){
     console.log('this should run')
-    document.getElementById('loading').style.display = 'block';
+    //document.getElementById('loading').style.display = 'block';
     callback();
 }
 function displayStreamings(timestamp){
@@ -413,7 +413,7 @@ function displayStreamings(timestamp){
         }
         createGraph(display_set,timestamp);
         createPoints(display_set);
-        document.getElementById('loading').style.display = 'none';
+        //document.getElementById('loading').style.display = 'none';
     });
 }
 
