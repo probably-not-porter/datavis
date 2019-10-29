@@ -4,7 +4,7 @@
 # Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
-# Starts the program
+# Starts the program + general stuff
 */
 
 function ready(){ // placeholder for now

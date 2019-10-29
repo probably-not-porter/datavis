@@ -339,6 +339,8 @@ function showLoading(){
     console.log('loading');
     
 }
+
+// some more general functions that are used specifically for data stuff
 function togglediv(target_div,btn_span){
     var btn = document.getElementById(btn_span);
     if (btn.innerHTML == '-'){

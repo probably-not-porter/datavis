@@ -95,3 +95,12 @@ function createRadioElementReadings( mode, name, checked, label ) {
     radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
     return radioHtml;
 }
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
