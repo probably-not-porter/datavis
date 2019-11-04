@@ -53,7 +53,7 @@ function createRadioElementSectors( mode, name, checked, label,sectorid ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" '
     // switch for streaming
     if (query_type == 1){
-        radioHtml += 'onchange="getStreamings('+ sectorid + ')"';
+        radioHtml += 'onchange="getStreamingsPlatforms('+ sectorid + ')"';
     }else{
         radioHtml += 'onchange="getSpots('+ sectorid + ')"';
     }
@@ -75,6 +75,27 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
     radioHtml += '/>';
     radioHtml += '<label for="' + label + '"><strong>Spot #'+ label +'</strong></label></div>';
 
+    return radioHtml;
+}
+function createRadioElementStreamingsPlatforms( mode, name, checked, id,name ) {
+    console.log(id);
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamingsDates('+ "'" +id.toString()+ "'" +')"type="radio" name="' + 'streamingplatforms' + '" id="' + name + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + name + '"><strong>'+ name + "</strong> (ID: " + id + ")" +'</label></div>';
+    
+    return radioHtml;
+}
+function createRadioElementStreamingsDates( mode, name, checked, date ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamings('+ "'" + date + "'" +')"type="radio" name="' + name + '" id="' + date + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + name + '"><strong>'+ date + '</strong> </label></div>';
+    
     return radioHtml;
 }
 function createRadioElementStreamings( mode, name, checked, label ) {

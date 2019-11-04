@@ -8,7 +8,7 @@
 */
 
 var query_type = null; // 0 = reading, 1 = streaming
-var query_selection = [null,null,null,null,null]; // trip, site, sector, spot, platform
+var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
 var streamings_data = [];
 var readings_data = [];
 
@@ -43,6 +43,8 @@ function getTrips(){
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streamingplatform').innerHTML = "";
+    document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
     $.ajax({
@@ -69,6 +71,8 @@ function getSites(trip_id){
     document.getElementById('sites').innerHTML = placeholderHTML;
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streamingplatform').innerHTML = "";
+    document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
 
@@ -99,6 +103,8 @@ function getSectors(site_id){
     document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
     document.getElementById('sectors').innerHTML = placeholderHTML;
     document.getElementById('spots').innerHTML = "";
+    document.getElementById('streamingplatform').innerHTML = "";
+    document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
 
@@ -128,6 +134,7 @@ function getSectors(site_id){
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = placeholderHTML;
+    document.getElementById('streamingplatform').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
 
@@ -177,24 +184,82 @@ function getReadings(spot_id){
         }
     });
 }
-function getStreamings(sector_id){
+function getStreamingsPlatforms(sector_id){
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('streamingplatform').innerHTML = placeholderHTML;
+    document.getElementById('streamingdates').innerHTML = "";
+    document.getElementById('streaming').innerHTML = "";
+    
+
+    togglediv('#sectors-ls','sectors-button');
+    query_selection[2] = sector_id;
+
+    $.ajax({
+        type: 'GET',
+        url: '/streamingsplatforms',
+        data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var plats = [];
+            for(x = 0; x < response.length; x++){
+                plats.push(response[x]);
+            }
+            console.info('DATA - PLATFORMS');
+            console.table(response);
+            renderStreamingsPlatforms(plats);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+function getStreamingsDates(platformid){
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('streamingdates').innerHTML = placeholderHTML;
+    document.getElementById('streaming').innerHTML = "";
+
+    togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
+    query_selection[4] = platformid;
+
+    $.ajax({
+        type: 'GET',
+        url: '/streamingsdates',
+        data: {platformid: platformid, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var dates = [];
+            for(x = 0; x < response.length; x++){
+                dates.push(response[x]);
+            }
+            console.info('DATA - DATES');
+            dates = [...new Set(dates.map(item => (item.recordtime.substring(0, 10))))];
+            console.table(dates);
+            renderStreamingsDates(dates);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+
+function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('streaming').innerHTML = placeholderHTML;
 
-    togglediv('#sectors-ls','sectors-button');
+    togglediv('#streamingsdates-ls','streamingsdates-button');
+    query_selection[5] = date;
 
     $.ajax({
         type: 'GET',
         url: '/streamings',
-        data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        data: {date: date, platformid: query_selection[4], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var streamings = [];
             for(x = 0; x < response.length; x++){
                 streamings.push(response[x]);
             }
             console.info('DATA - STREAMINGS');
+            console.log(streamings);
             //console.table(response);
-            renderStreamings(streamings);
+            //renderStreamings(streamings);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -264,6 +329,44 @@ function renderSpots(spotids){
         container.append(spots_ls);
     }else{
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
+    }
+}
+function renderStreamingsPlatforms(platforms){
+    console.log('renderStreamingsPlatforms');
+    if (streamings.length != 0){
+        var container = document.getElementById('streamingplatform');
+        container.innerHTML = "";
+        container.innerHTML += "<div onclick='togglediv(" + '"#streamingsplatforms-ls","streamingsplatforms-button"' + ")' class='data-header'><h1>Streaming Platforms<span id='streamingsplatforms-button'>-</span></h1></div>";
+        var streamingsplatforms_ls = document.createElement('div');
+        streamingsplatforms_ls.id = 'streamingsplatforms-ls';
+        for(x = 0; x < platforms.length; x++){
+            var elem = createRadioElementStreamingsPlatforms((x % 2),'platforms', false, platforms[x].platformid, platforms[x].platformname.toString()); // util function
+            streamingsplatforms_ls.innerHTML += elem;
+        }
+        container.append(streamingsplatforms_ls);
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this sector" // if there are no streamings, default back to sector
+        document.getElementById('streamingplatform').innerHTML = '';
+        togglediv('#sectors-ls','sectors-button');
+    }
+}
+function renderStreamingsDates(dates){
+    console.log('renderStreamingsDates');
+    if (dates.length != 0){
+        var container = document.getElementById('streamingdates');
+        container.innerHTML = "";
+        container.innerHTML += "<div onclick='togglediv(" + '"#streamingsdates-ls","streamingsdates-button"' + ")' class='data-header'><h1>Streaming Dates<span id='streamingsdates-button'>-</span></h1></div>";
+        var streamingsdates_ls = document.createElement('div');
+        streamingsdates_ls.id = 'streamingsdates-ls';
+        for(x = 0; x < dates.length; x++){
+            var elem = createRadioElementStreamingsDates((x % 2),'dates', false, dates[x]); // util function
+            streamingsdates_ls.innerHTML += elem;
+        }
+        container.append(streamingsdates_ls);
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this sector" // if there are no streamings, default back to sector
+        document.getElementById('streamingdates').innerHTML = '';
+        togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
     }
 }
 function renderStreamings(streamings){
