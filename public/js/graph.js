@@ -30,10 +30,9 @@ function createGraph(dataset, title){
     times_arr = [];
     bucket = -1;
     for (x=0;x<dataset.length;x++){
-        console.log(dataset[x].platformid)
         if ((x == 0) || (dataset[x-1].platformid != dataset[x].platformid)){
             bucket++;
-            label_arr.push(dataset[x].platformid);
+            label_arr.push(dataset[x].platformid + " " + dataset[x].recordtime.toString().substring(0,10));
             elevation_arr.push([]);
             times_arr.push([]);
             console.log(times_arr);
@@ -55,6 +54,20 @@ function createGraph(dataset, title){
 }
 function addData(chart, label_arr, data, title_arr) {
     console.warn('UPDATING CHART');
+    chart.destroy();
+    chart = new Chart(document.getElementById("line-chart"), {
+        type: 'scatter',
+        data: {},
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'No Data Selected'
+            }
+        }
+    });
+    chart.clear();
     chart.options.title.text = 'test';
     for (x=0; x< label_arr.length; x++){
         chart.data.labels = chart.data.labels.concat(label_arr[x]);

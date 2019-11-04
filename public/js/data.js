@@ -241,7 +241,7 @@ function getStreamingsDates(platformid){
 }
 
 function getStreamings(date){
-    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholderHTML;
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
@@ -261,6 +261,8 @@ function getStreamings(date){
             //console.table(response);
             createGraph(streamings,date);
             createPoints(streamings);
+            document.getElementById('streaming').innerHTML = "";
+            document.getElementById('data-prompt').innerHTML = "View your data in Graph or Map";
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
