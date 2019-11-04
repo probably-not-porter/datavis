@@ -91,7 +91,7 @@ const getStreamings = (request, response) => {
     +' from fieldday_streaming where tripid=' + (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid 
-    +' and platformid='+ "'"+ request.query.platformid + "'" +
+    +' and platformid='+ "'"+ request.query.platformid + "'" 
     +" and substr(recordtime::text, 0, 11) like '" + request.query.date + "'" 
     + ';')
     pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude,quality,elevation,accuracy,satellites,value_2,value_3,value_4,value_5,value_6'

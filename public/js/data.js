@@ -259,7 +259,8 @@ function getStreamings(date){
             console.info('DATA - STREAMINGS');
             console.log(streamings);
             //console.table(response);
-            //renderStreamings(streamings);
+            createGraph(streamings,date);
+            createPoints(streamings);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -369,79 +370,7 @@ function renderStreamingsDates(dates){
         togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
     }
 }
-function renderStreamings(streamings){
-    console.log('renderStreamings');
-    if (streamings.length != 0){
-        divided_streamings = divide(streamings);
-        streamings_data = streamings;
-        var container = document.getElementById('streaming');
-        container.innerHTML = "";
-        container.innerHTML += "<div onclick='togglediv(" + '"#streamings-ls","streamings-button"' + ")' class='data-header'><h1>Streaming <span id='streamings-button'>-</span></h1></div>";
-        var streamings_ls = document.createElement('div');
-        streamings_ls.id = 'streamings-ls';
-        for(x = 0; x < divided_streamings.length; x++){
-            var elem = createRadioElementStreamings((x % 2),'streamings', false, divided_streamings[x]); // util function
-            streamings_ls.innerHTML += elem;
-        }
-        container.append(streamings_ls);
-    }else{
-        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this sector" // if there are no streamings, default back to sector
-        document.getElementById('streaming').innerHTML = '';
-        togglediv('#sectors-ls','sectors-button');
-    }
-}
-function renderReadings(readings){
-    divided_readings = divide(readings);
-    readings_data = readings;
 
-    var container = document.getElementById('reading');
-    container.innerHTML = "";
-    container.innerHTML += "<div onclick='togglediv(" + '"#readings-ls","readings-button"' + ")' class='data-header'><h1>Readings <span id='readings-button'>-</span></h1></div>";
-    var readings_ls = document.createElement('div');
-    readings_ls.id = 'readings-ls';
-
-    for(x = 0; x < divided_readings.length; x++){
-        var elem = createRadioElementReadings((x % 2),'readings', false, divided_readings[x]); // util function
-        readings_ls.innerHTML += elem;
-    }
-    container.append(readings_ls);
-}
-// data selectors
-function displayStreamingsLoading(callback){
-    console.log('this should run')
-    //document.getElementById('loading').style.display = 'block';
-    callback();
-}
-function displayStreamings(timestamp){
-    displayStreamingsLoading(function() {
-        console.log('and then this should');
-        display_set = [];
-        for (x=0;x<streamings_data.length;x++){
-            if (streamings_data[x].recordtime.substring(0,10) == timestamp){
-                display_set.push(streamings_data[x]);
-            }
-        }
-        createGraph(display_set,timestamp);
-        createPoints(display_set);
-        //document.getElementById('loading').style.display = 'none';
-    });
-}
-
-function displayReadings(timestamp){
-    display_set = []
-    for (x=0;x<readings_data.length;x++){
-        if (readings_data[x].recordtime.substring(0,10) == timestamp){
-            display_set.push(readings_data[x]);
-        }
-    }
-    console.log(display_set)
-    // create graph
-    // create points
-}
-function showLoading(){
-    console.log('loading');
-    
-}
 
 // some more general functions that are used specifically for data stuff
 function togglediv(target_div,btn_span){
