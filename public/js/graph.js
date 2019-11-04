@@ -68,7 +68,7 @@ function addData(chart, label_arr, data, title_arr) {
         }
     });
     chart.clear();
-    chart.options.title.text = 'test';
+    chart.options.title.text = 'Dataset Graph';
     for (x=0; x< label_arr.length; x++){
         chart.data.labels = chart.data.labels.concat(label_arr[x]);
         var newDataset = {
