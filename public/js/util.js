@@ -9,6 +9,9 @@
 
 // NAVIGATION / UTIL //
 function switchToMap(){ 
+    var dataview = document.getElementById("dataView")
+    dataview.querySelector("#nav-button-map").classList.remove("new_data_button");
+
     setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
@@ -17,12 +20,16 @@ function switchToMap(){
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToGraph(){
+    var dataview = document.getElementById("dataView")
+    dataview.querySelector("#nav-button-graph").classList.remove("new_data_button");
+
     setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "block";
     console.log('switched to graph view');
-    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
+}
 function switchToData(){
     setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";

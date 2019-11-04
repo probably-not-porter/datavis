@@ -1,3 +1,8 @@
+:root {
+    --datacolor1: rgb(240, 92, 92);
+    --datacolor2:rgb(209, 50, 50);
+  }
+
 html, body, #viewDiv{
     padding: 0;
     margin: 0;
@@ -19,7 +24,7 @@ html, body, #viewDiv{
     bottom:0;
     text-align: center;
 }
-#nav-view-button{
+.nav-view-button{
     vertical-align: top;
     padding: 10px; 
     margin-top: 0px;
@@ -29,7 +34,7 @@ html, body, #viewDiv{
     -moz-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
     box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
 }
-#nav-view-button:hover{
+.nav-view-button:hover{
     background-color: lightgray;
 }
 .nav-button-idle{
@@ -48,3 +53,37 @@ html, body, #viewDiv{
     background-color: rgba(255,255,255,0.7);
     top:0px;
 }
+
+
+.new_data_button {
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+  }
+  @-webkit-keyframes glowing {
+    0% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; -webkit-box-shadow: 0 0 40px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @-moz-keyframes glowing {
+    0% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; -moz-box-shadow: 0 0 40px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @-o-keyframes glowing {
+    0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 40px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @keyframes glowing {
+    0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 40px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+  }

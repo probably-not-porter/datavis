@@ -274,6 +274,9 @@ function getStreamings(date){
             var color = getRandomColor();
             createGraph(streamings,date,color);
             createPoints(streamings,color);
+            var dataview = document.getElementById("dataView")
+            dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+            dataview.querySelector("#nav-button-map").classList.add("new_data_button");
             document.getElementById('streaming').innerHTML = "";
             document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
         },
