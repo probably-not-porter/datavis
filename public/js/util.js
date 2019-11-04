@@ -82,7 +82,6 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
     return radioHtml;
 }
 function createRadioElementStreamingsPlatforms( mode, name, checked, id,name ) {
-    console.log(id);
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamingsDates('+ "'" +id.toString()+ "'" +')"type="radio" name="' + 'streamingplatforms' + '" id="' + name + '"';
     if ( checked ) {
         radioHtml += ' checked="checked"';

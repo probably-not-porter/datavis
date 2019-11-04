@@ -50,6 +50,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 });
 
 function createPoints(points,color){
+    console.warn('UPDATING MAP: this might take a minute!');
     require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
@@ -88,6 +89,5 @@ function createPoints(points,color){
         }
         prev_points = prev_points.concat(out_points);
         view.graphics.addMany(out_points);
-        console.log('points added to map');
     });
 }

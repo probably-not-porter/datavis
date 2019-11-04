@@ -270,7 +270,7 @@ function getStreamings(date){
                 streamings.push(response[x]);
             }
             console.info('DATA - STREAMINGS');
-            console.log(streamings);
+            console.log(streamings.length + " points found here (no table).");
             var color = getRandomColor();
             createGraph(streamings,date,color);
             createPoints(streamings,color);
@@ -357,7 +357,6 @@ function renderSpots(spotids){
     }
 }
 function renderStreamingsPlatforms(platforms){
-    console.log('renderStreamingsPlatforms');
     if (streamings.length != 0){
         var container = document.getElementById('streamingplatform');
         container.innerHTML = "";
@@ -376,7 +375,6 @@ function renderStreamingsPlatforms(platforms){
     }
 }
 function renderStreamingsDates(dates){
-    console.log('renderStreamingsDates');
     if (dates.length != 0){
         var container = document.getElementById('streamingdates');
         container.innerHTML = "";
