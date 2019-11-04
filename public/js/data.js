@@ -38,7 +38,12 @@ it to the screen, or displaying it. Each makes a call to a server-side function 
 which then passes the data to a renderer.
 */
 function getTrips(){
-    document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot."
+    if (query_type == 0){
+        document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot to see data."
+    }else{
+        document.getElementById('data-prompt').innerHTML = "Pick a trip, site, and sector to see data."
+    }
+    
     document.getElementById('trips').innerHTML = placeholderHTML;
     document.getElementById('sites').innerHTML = "";
     document.getElementById('sectors').innerHTML = "";
@@ -67,7 +72,11 @@ function getTrips(){
     });
 }
 function getSites(trip_id){
-    document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot."
+    if (query_type == 0){
+        document.getElementById('data-prompt').innerHTML = "Pick a site, sector, and spot to see data."
+    }else{
+        document.getElementById('data-prompt').innerHTML = "Pick a site and sector to see data."
+    }
     document.getElementById('sites').innerHTML = placeholderHTML;
     document.getElementById('sectors').innerHTML = "";
     document.getElementById('spots').innerHTML = "";
@@ -100,7 +109,11 @@ function getSites(trip_id){
     });
 }
 function getSectors(site_id){
-    document.getElementById('data-prompt').innerHTML = "Pick a sector and a spot."
+    if (query_type == 0){
+        document.getElementById('data-prompt').innerHTML = "Pick a sector and spot to see data."
+    }else{
+        document.getElementById('data-prompt').innerHTML = "Pick a sector to see data."
+    }
     document.getElementById('sectors').innerHTML = placeholderHTML;
     document.getElementById('spots').innerHTML = "";
     document.getElementById('streamingplatform').innerHTML = "";
@@ -185,7 +198,7 @@ function getReadings(spot_id){
     });
 }
 function getStreamingsPlatforms(sector_id){
-    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
     document.getElementById('streamingplatform').innerHTML = placeholderHTML;
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
@@ -262,7 +275,7 @@ function getStreamings(date){
             createGraph(streamings,date);
             createPoints(streamings);
             document.getElementById('streaming').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "View your data in Graph or Map";
+            document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -309,15 +322,22 @@ function renderSites(sitenames, siteids){
 function renderSectors(sectornames, sectorids){
     var container = document.getElementById('sectors');
     container.innerHTML = "";
-    container.innerHTML += "<div onclick='togglediv(" + '"#sectors-ls","sectors-button"' + ")' class='data-header'><h1>Sectors <span id='sectors-button'>-</span></h1></div>";
-    var sectors_ls = document.createElement('div');
-    sectors_ls.id = 'sectors-ls';
 
-    for(x = 0; x < sectornames.length; x++){
-        var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x], sectorids[x]); // util function
-        sectors_ls.innerHTML += elem;
+    if (sectornames.length != 0){
+        container.innerHTML += "<div onclick='togglediv(" + '"#sectors-ls","sectors-button"' + ")' class='data-header'><h1>Sectors <span id='sectors-button'>-</span></h1></div>";
+        var sectors_ls = document.createElement('div');
+        sectors_ls.id = 'sectors-ls';
+
+        for(x = 0; x < sectornames.length; x++){
+            var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x], sectorids[x]); // util function
+            sectors_ls.innerHTML += elem;
+        }
+        container.append(sectors_ls);
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No data found in this sector"
     }
-    container.append(sectors_ls);
+    
+    
 }
 function renderSpots(spotids){
     var container = document.getElementById('spots');

@@ -9,23 +9,27 @@
 
 // NAVIGATION / UTIL //
 function switchToMap(){ 
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("mapView").style.display = "block";
     console.log('switched to map view');
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToGraph(){
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "block";
     console.log('switched to graph view');
-}
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 function switchToData(){
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
     console.log('switched to data view');
-}
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 
 // TEAMPLATES FOR DOM PIECES
 function createRadioElementTrips( mode, name, checked, label, id ) {
