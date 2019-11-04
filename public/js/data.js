@@ -271,9 +271,9 @@ function getStreamings(date){
             }
             console.info('DATA - STREAMINGS');
             console.log(streamings);
-            //console.table(response);
-            createGraph(streamings,date);
-            createPoints(streamings);
+            var color = getRandomColor();
+            createGraph(streamings,date,color);
+            createPoints(streamings,color);
             document.getElementById('streaming').innerHTML = "";
             document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
         },

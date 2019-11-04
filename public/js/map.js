@@ -49,7 +49,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
     view.ui.add(coordinateConversionWidget, "bottom-left");
 });
 
-function createPoints(points){
+function createPoints(points,color){
     require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
@@ -67,7 +67,7 @@ function createPoints(points){
 
         var markerSymbol = {
             type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-            color: getRandomColor(),
+            color: color,
         };
         view.center = [points[0].longitude, points[0].latitude]; // set center of view to the first point in the set
 

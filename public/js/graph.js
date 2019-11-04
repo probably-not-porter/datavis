@@ -24,7 +24,7 @@ $( document ).ready(function() {
     console.log( "ready!" );
 });
 
-function createGraph(dataset, title){
+function createGraph(dataset, title,color){
     label_arr = [];
     elevation_arr = [];
     times_arr = [];
@@ -50,9 +50,9 @@ function createGraph(dataset, title){
     console.log('UNIQUE DATA')
     console.log(elevation_arr);
     console.log(times_arr);
-    addData(lineChart, times_arr, elevation_arr,label_arr);
+    addData(lineChart, times_arr, elevation_arr,label_arr,color);
 }
-function addData(chart, label_arr, data, title_arr) {
+function addData(chart, label_arr, data, title_arr,color) {
     console.warn('UPDATING CHART');
     chart.destroy();
     chart = new Chart(document.getElementById("line-chart"), {
@@ -67,13 +67,13 @@ function addData(chart, label_arr, data, title_arr) {
             }
         }
     });
-    chart.clear();
+    lineChart = chart;
     chart.options.title.text = 'Dataset Graph';
     for (x=0; x< label_arr.length; x++){
         chart.data.labels = chart.data.labels.concat(label_arr[x]);
         var newDataset = {
             label: title_arr[x],
-            borderColor: getRandomColor(),
+            borderColor: color,
             borderWidth: 3,
             fill: false,
             data: data[x],
