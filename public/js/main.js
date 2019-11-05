@@ -26,4 +26,5 @@ function ready(){ // placeholder for now
     }
     
     document.getElementById('loading').style.display = 'none';
+    document.getElementById("button_permalink").disabled = true;
 }
