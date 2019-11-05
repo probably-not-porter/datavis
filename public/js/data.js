@@ -23,10 +23,12 @@ This is the entry point so that both of these options in the descision tree can 
 */
 function setReading(){
     query_type = 0;
+    document.getElementById("button_permalink").classList.remove("button_enable");
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
+    document.getElementById("button_permalink").classList.remove("button_enable");
     getTrips(); // get top level of data and render to the next block on the form
 }
 /* 
@@ -52,6 +54,8 @@ function getTrips(){
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable");
+
     $.ajax({
         type: 'GET',
         url: '/trips',
@@ -84,6 +88,7 @@ function getSites(trip_id){
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable");
 
     togglediv('#trips-ls','trips-button');
 
@@ -120,6 +125,7 @@ function getSectors(site_id){
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable");
 
     togglediv('#sites-ls','sites-button');
 
@@ -150,6 +156,7 @@ function getSpots(sector_id){
     document.getElementById('streamingplatform').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable");
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -175,6 +182,7 @@ function getSpots(sector_id){
 function getReadings(spot_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('reading').innerHTML = placeholderHTML;
+    document.getElementById("button_permalink").classList.remove("button_enable");
 
     togglediv('#spots-ls','spots-button');
 
@@ -202,6 +210,7 @@ function getStreamingsPlatforms(sector_id){
     document.getElementById('streamingplatform').innerHTML = placeholderHTML;
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable");
     
 
     togglediv('#sectors-ls','sectors-button');
@@ -229,6 +238,7 @@ function getStreamingsDates(platformid){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('streamingdates').innerHTML = placeholderHTML;
     document.getElementById('streaming').innerHTML = "";
+    document.getElementById("button_permalink").classList.remove("button_enable"); 
 
     togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
     query_selection[4] = platformid;
@@ -256,6 +266,7 @@ function getStreamingsDates(platformid){
 function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholderHTML;
+    document.getElementById("button_permalink").classList.add("button_enable"); 
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
     query_selection[5] = date;
@@ -420,6 +431,7 @@ function divide(data_arr){
 }  
 function loadQuery(params){
     console.log('loading query');
+    document.getElementById("button_permalink").classList.remove("button_enable");
     // mode, trip, site, sector, spot, platform, date
     // /?1/26/1/1/ev1/2018-06-05
     if (params.length == 7 && params[1] == 1){ // streaming query
@@ -432,18 +444,30 @@ function loadQuery(params){
     }
     console.log(query_selection);
     console.log(params);
+    document.getElementById('query_type').innerHTML = "<label><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></label>";
     getStreamings(query_selection[5]);
 }
 function buildQuery(){
-    query_string = document.location.href.split('/?')[0];
-    query_string += "?" + "query" 
-    query_string += "/" + query_type
-    if (query_type == 1){ // streaming
-        query_string += "/" + query_selection[0];
-        query_string += "/" + query_selection[1];
-        query_string += "/" + query_selection[2]; // skip spot
-        query_string += "/" + query_selection[4];
-        query_string += "/" + query_selection[5];
+    bt = document.getElementById("button_permalink")
+    if (bt.classList.contains("button_enable")){
+        query_string = document.location.href.split('/?')[0];
+        query_string += "?" + "query" 
+        query_string += "/" + query_type
+        if (query_type == 1){ // streaming
+            query_string += "/" + query_selection[0];
+            query_string += "/" + query_selection[1];
+            query_string += "/" + query_selection[2]; // skip spot
+            query_string += "/" + query_selection[4];
+            query_string += "/" + query_selection[5];
+        }
+        console.log(query_string);
+        document.getElementById('permalink_out').innerHTML = query_string;
+    }else{
+        console.warn('Incomplete Query!')
     }
-    console.log(query_string);
+}
+function removeQuery(){
+    current = document.location.href;
+    base = current.split('?')[0];
+    location.replace(base);
 }

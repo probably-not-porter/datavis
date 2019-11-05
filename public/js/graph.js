@@ -45,7 +45,9 @@ function createGraph(dataset, title,color){
 }
 function addData(chart, label_arr, data, title_arr,color) {
     console.warn('UPDATING CHART: this might take a minute!');
-    chart.destroy();
+    if (chart){
+        chart.destroy();
+    }
     chart = new Chart(document.getElementById("line-chart"), {
         type: 'scatter',
         data: {},

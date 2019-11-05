@@ -87,7 +87,7 @@
 
         <div id='dataView'>
             <div id='data'>
-                <div class='data-catagory'>
+                <div class='data-catagory' id='query_type'>
                     <div class='data-header' style='padding-bottom:15px;''>
                         <input class="data-radio form-radio" onchange="setReading();" type="radio" name="data-type" id="readings"/>
                         <label for="readings"><strong>Readings</strong></label>
@@ -106,7 +106,11 @@
                 <div class='data-catagory' id='reading'></div>
                 <div id='data-prompt-box'>
                     <strong id='prompt-text'>
+                        
                         <span id='data-prompt'>Select a data type</span>
+                        </br>
+                        <button onclick='buildQuery()' id='button_permalink'>Create Permalink</button>
+                        <span id='permalink_out'></span>
                     </strong>
                 </div>
             </div>
