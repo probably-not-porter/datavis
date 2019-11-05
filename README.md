@@ -10,6 +10,10 @@ A visualization tool for the IFS database using Node.js and the ArcGIS api. Uses
 This app is set up to be usable on both mobile and desktop platforms. Keep in mind that whatever machine is hosting the Node server might need to be connected to the same network that your Database is set up on. 
 
 It is possible to have the database and this tool running on the same machine, which would allow users to access the front-end of the tool from either the device running both programs, or any device connected to the same LAN as the host device.
+
+Here is an example input slug:
+http://localhost:3000/?query/1/26/1/1/ev1/2018-06-05
+
 ### Desktop Usage
 1. clone repository and enter parent directory
 2. Follow the format below to create a `.env` file.
