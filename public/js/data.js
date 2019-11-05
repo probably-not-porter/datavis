@@ -422,11 +422,11 @@ function loadQuery(params){
     console.log('loading query');
     // mode, trip, site, sector, spot, platform, date
     // /?1/26/1/1/ev1/2018-06-05
-    if (params.length == 7 && params[1] == 1){
+    if (params.length == 7 && params[1] == 1){ // streaming query
         query_type = params[1]
         query_selection[0] = params[2]; // load trip
         query_selection[1] = params[3]; // load site
-        query_selection[2] = params[4]; // load sector
+        query_selection[2] = params[4]; // load sector (skip spot)
         query_selection[4] = params[5]; // load platform
         query_selection[5] = params[6]; // load date
     }
@@ -435,5 +435,15 @@ function loadQuery(params){
     getStreamings(query_selection[5]);
 }
 function buildQuery(){
-    
+    query_string = document.location.href.split('/?')[0];
+    query_string += "?" + "query" 
+    query_string += "/" + query_type
+    if (query_type == 1){ // streaming
+        query_string += "/" + query_selection[0];
+        query_string += "/" + query_selection[1];
+        query_string += "/" + query_selection[2]; // skip spot
+        query_string += "/" + query_selection[4];
+        query_string += "/" + query_selection[5];
+    }
+    console.log(query_string);
 }

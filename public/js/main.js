@@ -15,15 +15,15 @@ function ready(){ // placeholder for now
     url_parts = base_url.split('?')
     url_params = null;
 
-    if (url_parts[1].length > 0){ // params exist
-        url_params = url_parts[1].split('/');
+    if (url_parts[1]){ // selection exists
+        if (url_parts[1].length > 0){ // params exist
+            url_params = url_parts[1].split('/');
+        }
+        console.log(url_params);
+        if (url_params[0] == 'query'){ // load premade query
+            loadQuery(url_params);
+        }
     }
-    console.log(url_params);
-    if (url_params[0] == 'query'){ // load premade query
-        loadQuery(url_params);
-    }
-
-
     
     document.getElementById('loading').style.display = 'none';
 }
