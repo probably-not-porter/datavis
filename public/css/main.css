@@ -1,6 +1,12 @@
 :root {
-    --datacolor1: rgb(240, 92, 92);
-    --datacolor2:rgb(209, 50, 50);
+    --datacolor1: #1D976C;
+    --datacolor2:#93F9B9;
+    --theme1: #444;
+    --theme2: #888;
+    --theme3: #bbb;
+    --theme4: #ddd;
+    --themeh: white;
+    --themep: black;
   }
 
 html, body, #viewDiv{
@@ -29,19 +35,19 @@ html, body, #viewDiv{
     padding: 10px; 
     margin-top: 0px;
     border-radius: 10px; 
-    border: 1px solid black;
+    border: 1px solid var(--theme2);
     -webkit-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
     -moz-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
     box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
 }
 .nav-view-button:hover{
-    background-color: lightgray;
+    background-color: var(--theme3);
 }
 .nav-button-idle{
-    background-color: white; 
+    background-color: var(--theme4); 
 }
 .nav-button-select{
-    background-color: gray; 
+    background-color: var(--theme2); 
 }
 #loading{
     width: 100vw;
@@ -66,24 +72,24 @@ html, body, #viewDiv{
   }
   @-webkit-keyframes glowing {
     0% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
-    50% { background-color: var(--datacolor1);; -webkit-box-shadow: 0 0 40px var(--datacolor1);; }
+    50% { background-color: var(--datacolor1);; -webkit-box-shadow: 0 0 20px var(--datacolor1);; }
     100% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
   }
   
   @-moz-keyframes glowing {
     0% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
-    50% { background-color: var(--datacolor1);; -moz-box-shadow: 0 0 40px var(--datacolor1);; }
+    50% { background-color: var(--datacolor1);; -moz-box-shadow: 0 0 20px var(--datacolor1);; }
     100% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
   }
   
   @-o-keyframes glowing {
     0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
-    50% { background-color: var(--datacolor1);; box-shadow: 0 0 40px var(--datacolor1);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 20px var(--datacolor1);; }
     100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
   }
   
   @keyframes glowing {
     0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
-    50% { background-color: var(--datacolor1);; box-shadow: 0 0 40px var(--datacolor1);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 20px var(--datacolor1);; }
     100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
   }

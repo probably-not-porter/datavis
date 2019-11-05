@@ -70,7 +70,9 @@ function createPoints(points,color){
             type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
             color: color,
         };
-        view.center = [points[0].longitude, points[0].latitude]; // set center of view to the first point in the set
+        if (points.length > 0){
+            view.center = [points[0].longitude, points[0].latitude]; // set center of view to the first point in the set
+        }
 
         for(x=0;x<points.length;x++){
             var point = {
