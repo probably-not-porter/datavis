@@ -399,13 +399,15 @@ function renderStreamingsDates(dates){
 
 // some more general functions that are used specifically for data stuff
 function togglediv(target_div,btn_span){
-    var btn = document.getElementById(btn_span);
-    if (btn.innerHTML == '-'){
-        btn.innerHTML = '+';
-    }else{
-        btn.innerHTML = '-';
+    if (document.getElementById(btn_span)){
+        var btn = document.getElementById(btn_span);
+        if (btn.innerHTML == '-'){
+            btn.innerHTML = '+';
+        }else{
+            btn.innerHTML = '-';
+        }
+        $(target_div).slideToggle();
     }
-    $(target_div).slideToggle();
 }
 function divide(data_arr){
     console.log('DIVIDE');
@@ -416,3 +418,22 @@ function divide(data_arr){
     console.log(unique);
     return unique
 }  
+function loadQuery(params){
+    console.log('loading query');
+    // mode, trip, site, sector, spot, platform, date
+    // /?1/26/1/1/ev1/2018-06-05
+    if (params.length == 7 && params[1] == 1){
+        query_type = params[1]
+        query_selection[0] = params[2]; // load trip
+        query_selection[1] = params[3]; // load site
+        query_selection[2] = params[4]; // load sector
+        query_selection[4] = params[5]; // load platform
+        query_selection[5] = params[6]; // load date
+    }
+    console.log(query_selection);
+    console.log(params);
+    getStreamings(query_selection[5]);
+}
+function buildQuery(){
+    
+}
