@@ -127,6 +127,19 @@ label
     padding-top: 30px;
     padding-bottom: 30px;
     width: 100%;
+    height: 60px;
+}
+#data-prompt-box #text{
+    height: 30px; 
+    width: 100%;
+    padding-top: -5px;
+}
+#data-prompt-box #buttons{
+    text-align: left; 
+    background-color: var(--theme2); 
+    width: 100%;
+    height: 30px;
+    padding: 10px 10px;
 }
 #data-prompt{
     transition-duration: 1s;

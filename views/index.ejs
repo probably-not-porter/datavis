@@ -105,13 +105,18 @@
                 <div class='data-catagory' id='streaming'></div>
                 <div class='data-catagory' id='reading'></div>
                 <div id='data-prompt-box'>
-                    <strong id='prompt-text'>
-                        
-                        <span id='data-prompt'>Select a data type</span>
-                        </br>
-                        <button onclick='buildQuery()' id='button_permalink'>Permalink</button>
+            
+                    <div id='text'>
+                        <strong id='prompt-text'>
+                            <span id='data-prompt'>Select a data type</span>
+                        </strong>
+                    </div>
+
+                    <div id='buttons'>
+                        <button onclick='buildQuery()' id='button_permalink'>Create Permalink</button>
                         <span id='permalink_out' style='color: blue;font-size: 14px;'></span>
-                    </strong>
+                    </div>
+
                 </div>
             </div>
             <div id='navcontrols'>
