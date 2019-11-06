@@ -421,10 +421,6 @@ function togglediv(target_div,btn_span){
         $(target_div).slideToggle();
     }
 }
-function divide(data_arr){
-    const unique = [...new Set(data_arr.map(item => (item.recordtime.substring(0, 10))))];
-    return unique
-}  
 function loadQuery(params){
     console.info('Loading query from permalink...')
     document.getElementById("button_permalink").disabled = true;;
