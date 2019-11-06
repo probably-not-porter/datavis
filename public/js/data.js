@@ -282,7 +282,7 @@ function getStreamings(date){
                 streamings.push(response[x]);
             }
             console.info('DATA - STREAMINGS');
-            console.log(streamings.length + " points found here (no table).");
+            console.info('Loaded ' + streamings.length + " points.");
             var color = getRandomColor();
             createGraph(streamings,date,color);
             createPoints(streamings,color);
@@ -422,19 +422,12 @@ function togglediv(target_div,btn_span){
     }
 }
 function divide(data_arr){
-    console.log('DIVIDE');
-    console.log('starting with:');
-    console.log(data_arr);
     const unique = [...new Set(data_arr.map(item => (item.recordtime.substring(0, 10))))];
-    console.log('ending with:');
-    console.log(unique);
     return unique
 }  
 function loadQuery(params){
-    console.log('loading query');
+    console.info('Loading query from permalink...')
     document.getElementById("button_permalink").disabled = true;;
-    // mode, trip, site, sector, spot, platform, date
-    // /?1/26/1/1/ev1/2018-06-05
     if (params.length == 7 && params[1] == 1){ // streaming query
         query_type = params[1]
         query_selection[0] = params[2]; // load trip
@@ -443,9 +436,7 @@ function loadQuery(params){
         query_selection[4] = params[5]; // load platform
         query_selection[5] = params[6]; // load date
     }
-    console.log(query_selection);
-    console.log(params);
-    document.getElementById('query_type').innerHTML = "<label><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></label>";
+    document.getElementById('query_type').innerHTML = "<label><div style='padding-top:10px;padding-bottom:10px;'><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></div></label>";
     getStreamings(query_selection[5]);
 }
 function buildQuery(){
@@ -459,11 +450,11 @@ function buildQuery(){
         query_string += "/" + query_selection[4];
         query_string += "/" + query_selection[5];
     }
-    console.log(query_string);
     document.getElementById('permalink_out').innerHTML = query_string;
-
 }
 function removeQuery(){
+    query_type = null;
+    query_selection = [null,null,null,null,null,null];
     current = document.location.href;
     base = current.split('?')[0];
     location.replace(base);

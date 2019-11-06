@@ -10,7 +10,6 @@
 function ready(){ // placeholder for now
     switchToData() // set screen to data
     base_url = document.location.href; // get base url
-    console.log(base_url);
 
     url_parts = base_url.split('?')
     url_params = null;
@@ -19,9 +18,10 @@ function ready(){ // placeholder for now
         if (url_parts[1].length > 0){ // params exist
             url_params = url_parts[1].split('/');
         }
-        console.log(url_params);
-        if (url_params[0] == 'query'){ // load premade query
+        if ((url_params[0] == 'query') && (url_params.length > 5)){ // load premade query
             loadQuery(url_params);
+        }else{
+            console.warn('Query incomplete; Ignored.');
         }
     }
     
