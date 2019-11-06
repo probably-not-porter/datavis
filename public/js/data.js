@@ -461,9 +461,11 @@ function toggleDetails(){
         if (all[i].classList.contains('data-catagory-simple')){
             all[i].classList.remove('data-catagory-simple');
             all[i].classList.add('data-catagory-detail');
+            $("#button_details").css("opacity", "1.0");
         }else{
             all[i].classList.add('data-catagory-simple');
             all[i].classList.remove('data-catagory-detail');
+            $("#button_details").css("opacity", "0.5");
         }    
     }
 }
