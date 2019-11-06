@@ -49,7 +49,7 @@ function createRadioElementTrips( mode, name, checked, label, id ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong> (ID: " + id +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong><span class='detailed_info'> (ID: " + id +')</span></label></div>';
 
     return radioHtml;
 }
@@ -60,7 +60,7 @@ function createRadioElementSites( mode, name, checked, label, siteid ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + siteid +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + siteid +')</span></label></div>';
 
     return radioHtml;
 }
@@ -78,7 +78,7 @@ function createRadioElementSectors( mode, name, checked, label,sectorid ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + sectorid +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + sectorid +')</span></label></div>';
 
     return radioHtml;
 }
@@ -98,7 +98,7 @@ function createRadioElementStreamingsPlatforms( mode, name, checked, id,name ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + name + '"><strong>'+ name + "</strong> (ID: " + id + ")" +'</label></div>';
+    radioHtml += '<label for="' + name + '"><strong>'+ name + "</strong><span class='detailed_info'> (ID: " + id + ")" +'</span></label></div>';
     
     return radioHtml;
 }

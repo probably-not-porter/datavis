@@ -169,7 +169,32 @@ label
 #button_permalink:hover{
     background-color: #bbb;
 }
-
+#button_details{
+    margin-left: 20px;
+    position: absolute;
+    bottom:0px;
+    color: gray;
+    font-size: 20px;
+    background-color: #ddd;
+    opacity:1.0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 5px;
+}
+#button_details:disabled
+{
+    background-color: #999;
+    opacity:0.1;
+}
+#button_details:hover{
+    background-color: #bbb;
+}
+.data-catagory-simple .detailed_info{
+    display: none;
+}
+.data-catagory-detail .detailed_info{
+    display: inline;
+}
 
 .lds-ellipsis {
     display: inline-block;

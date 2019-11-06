@@ -455,3 +455,15 @@ function removeQuery(){
     base = current.split('?')[0];
     location.replace(base);
 }
+function toggleDetails(){
+    var all = document.getElementsByClassName('data-catagory');
+    for (var i = 0; i < all.length; i++) {
+        if (all[i].classList.contains('data-catagory-simple')){
+            all[i].classList.remove('data-catagory-simple');
+            all[i].classList.add('data-catagory-detail');
+        }else{
+            all[i].classList.add('data-catagory-simple');
+            all[i].classList.remove('data-catagory-detail');
+        }    
+    }
+}

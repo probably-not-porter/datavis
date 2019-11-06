@@ -114,14 +114,14 @@
                         <label for="streamings"><strong>Stream Data</strong></label>
                     </div>
                 </div>
-                <div class='data-catagory' id='trips'></div>
-                <div class='data-catagory' id='sites'></div>
-                <div class='data-catagory' id='sectors'></div>
-                <div class='data-catagory' id='spots'></div>
-                <div class='data-catagory' id='streamingplatform'></div>
-                <div class='data-catagory' id='streamingdates'></div>
-                <div class='data-catagory' id='streaming'></div>
-                <div class='data-catagory' id='reading'></div>
+                <div class='data-catagory data-catagory-simple' id='trips'></div>
+                <div class='data-catagory data-catagory-simple' id='sites'></div>
+                <div class='data-catagory data-catagory-simple' id='sectors'></div>
+                <div class='data-catagory data-catagory-simple' id='spots'></div>
+                <div class='data-catagory data-catagory-simple' id='streamingplatform'></div>
+                <div class='data-catagory data-catagory-simple' id='streamingdates'></div>
+                <div class='data-catagory data-catagory-simple' id='streaming'></div>
+                <div class='data-catagory data-catagory-simple' id='reading'></div>
                 <div id='data-prompt-box'>
             
                     <div id='text'>
@@ -140,6 +140,16 @@
                                 alt="Submit" 
                                 width="32" height="32">
                                 <span class="tooltiptext">Create permalink</span>
+                        </div>
+                        <div class='tooltip' style='position:absolute; bottom: 0px;left: 80px;'>
+                            <input 
+                                id='button_details'
+                                onclick='toggleDetails()' 
+                                type="image" 
+                                src="img/detail-icon.png" 
+                                alt="Submit" 
+                                width="32" height="32">
+                                <span class="tooltiptext">Toggle Details</span>
                         </div>
                     </div>
 

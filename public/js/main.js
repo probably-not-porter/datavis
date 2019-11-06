@@ -7,8 +7,9 @@
 # Starts the program + general stuff
 */
 
-function ready(){ // placeholder for now
+function ready(){
     switchToData() // set screen to data
+
     base_url = document.location.href; // get base url
 
     url_parts = base_url.split('?')
