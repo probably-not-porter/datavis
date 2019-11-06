@@ -73,7 +73,7 @@ html, body, #viewDiv{
     padding: 5px 5px;
     width: 150px;
     margin-left: 40px;
-    margin-top: -20px;
+    margin-top: -40px;
 
     /* Position the tooltip */
     position: absolute;
