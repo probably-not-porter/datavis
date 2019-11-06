@@ -11,9 +11,6 @@
 function switchToMap(){ 
     var dataview = document.getElementById("dataView");
     var mapview = document.getElementById("mapView");
-    if (dataview.querySelector("#nav-button-map").classList.contains("new_data_button")){
-        mapview.querySelector("#nav-button-graph").classList.add("new_data_button");
-    }
     dataview.querySelector("#nav-button-map").classList.remove("new_data_button");
     dataview.querySelector("#nav-button-graph").classList.remove("new_data_button");
 
@@ -27,9 +24,6 @@ function switchToMap(){
 function switchToGraph(){
     var dataview = document.getElementById("dataView");
     var graphview = document.getElementById("graphView");
-    if (dataview.querySelector("#nav-button-map").classList.contains("new_data_button")){
-        graphview.querySelector("#nav-button-map").classList.add("new_data_button");
-    }
     dataview.querySelector("#nav-button-graph").classList.remove("new_data_button"); // set graph view to no prompt
     dataview.querySelector("#nav-button-map").classList.remove("new_data_button");
 

@@ -4,11 +4,12 @@
     height: 100%;
     width: 100%;
     font-family: 'Open Sans', sans-serif;
+    position: absolute;
 }
 #data{
-    margin-top: 100px;
+    margin-top: 120px;
     text-align: center;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
 }
 h1{
     font-size: 20px;
@@ -146,15 +147,18 @@ label
     background: -webkit-linear-gradient(white,lightgray);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 20px;
+    font-size: 17px;
 }
 #button_permalink{
     margin-left: 20px;
+    position: absolute;
+    bottom:0px;
     color: gray;
     font-size: 20px;
     background-color: #ddd;
     opacity:1.0;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     padding: 5px;
 }
 #button_permalink:disabled
