@@ -26,8 +26,8 @@
         <div id='mapView'>
             <div id="viewDiv"></div>
             <div id='navcontrols'>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip'2>
+                    <span class="tooltiptext">Map View (current)</span>
                     <input 
                         id='nav-button-map'
                         class='nav-button-select nav-view-button' 
@@ -36,8 +36,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Graph View</span>
                     <input 
                         id='nav-button-graph'
                         class='nav-button-idle nav-view-button'                    
@@ -47,8 +47,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Data Selection</span>
                     <input 
                         id='nav-button-data'
                         class='nav-button-idle nav-view-button'
@@ -67,8 +67,8 @@
                 <canvas id="line-chart"></canvas>
             </div>
             <div id='navcontrols'>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Map View</span>
                     <input 
                         id='nav-button-map'
                         class='nav-button-idle nav-view-button'
@@ -78,8 +78,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">Graph View (current)</span>
                     <input 
                         id='nav-button-graph'
                         class='nav-button-select nav-view-button'
@@ -88,8 +88,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Data Selection</span>
                     <input 
                         id='nav-button-data'
                         class='nav-button-idle nav-view-button'
@@ -131,21 +131,24 @@
                     </div>
 
                     <div id='buttons'>
-                        <input 
-                            id='button_permalink'
-                            onclick='buildQuery()' 
-                            type="image" 
-                            src="img/link-icon.png" 
-                            alt="Submit" 
-                            width="32" height="32">
-                        <span id='permalink_out' style='color: white;font-size: 14px;'></span>
+                        <div class='tooltip'>
+                            
+                            <input 
+                                id='button_permalink'
+                                onclick='buildQuery()' 
+                                type="image" 
+                                src="img/link-icon.png" 
+                                alt="Submit" 
+                                width="32" height="32">
+                                <span class="tooltiptext">Create permalink</span>
+                        </div>
                     </div>
 
                 </div>
             </div>
             <div id='navcontrols'>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Map View</span>
                     <input 
                         id='nav-button-map'
                         class='nav-button-idle nav-view-button' 
@@ -155,8 +158,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">open Graph View</span>
                     <input 
                         id='nav-button-graph'
                         class='nav-button-idle nav-view-button'
@@ -166,8 +169,8 @@
                         alt="Submit" 
                         width="24" height="24">
                 </div>
-                <div class='tooltip'>
-                    <span class="tooltiptext">Tooltip text</span>
+                <div class='tooltip2'>
+                    <span class="tooltiptext">Data Selection (current)</span>
                     <input 
                         id='nav-button-data'
                         class='nav-button-select nav-view-button' 
