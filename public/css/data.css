@@ -148,19 +148,24 @@ label
     -webkit-text-fill-color: transparent;
     font-size: 20px;
 }
-#prompt-text button{
+#button_permalink{
+    margin-left: 20px;
     color: gray;
     font-size: 20px;
+    background-color: #ddd;
+    opacity:1.0;
+    border-radius: 10px;
+    padding: 5px;
 }
-#prompt-text .button_enable{
-    color: black;
+#button_permalink:disabled
+{
+    background-color: #999;
+    opacity:0.1;
 }
-#prompt-text button:hover{
-    color: gray;
+#button_permalink:hover{
+    background-color: #bbb;
 }
-#prompt-text .button_enable:hover{
-    color: darkgray;
-}
+
 
 .lds-ellipsis {
     display: inline-block;

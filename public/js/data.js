@@ -446,7 +446,7 @@ function buildQuery(){
         query_string += "/" + query_selection[4];
         query_string += "/" + query_selection[5];
     }
-    document.getElementById('permalink_out').innerHTML = query_string;
+    document.getElementById('data-prompt').innerHTML = "Query Permalink: " + query_string;
 }
 function removeQuery(){
     query_type = null;
