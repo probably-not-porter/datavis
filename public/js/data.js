@@ -13,7 +13,8 @@ var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
- 
+var placeholder2HTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Adding points to Chart and Map...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+
 /*
 Streamings/Readings
 
@@ -265,7 +266,7 @@ function getStreamingsDates(platformid){
 
 function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
-    document.getElementById('streaming').innerHTML = placeholderHTML;
+    document.getElementById('streaming').innerHTML = placeholder2HTML;
     document.getElementById("button_permalink").disabled = false;
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
