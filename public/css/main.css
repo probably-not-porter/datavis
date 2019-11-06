@@ -72,7 +72,7 @@ html, body, #viewDiv{
     border-radius: 6px;
     padding: 5px 5px;
     width: 150px;
-    margin-left: 40px;
+    margin-left: 65px;
     margin-top: -40px;
 
     /* Position the tooltip */
@@ -95,8 +95,8 @@ html, body, #viewDiv{
     border-radius: 6px;
     padding: 5px 5px;
     width: 150px;
-    margin-left: -140px;
-    margin-top: 30px;
+    margin-left: -162px;
+    margin-top: 25px;
 
     /* Position the tooltip */
     position: absolute;
