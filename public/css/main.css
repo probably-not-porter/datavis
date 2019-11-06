@@ -59,6 +59,25 @@ html, body, #viewDiv{
     background-color: rgba(255,255,255,0.7);
     top:0px;
 }
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+  
 
 
 .new_data_button {
