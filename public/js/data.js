@@ -277,8 +277,6 @@ function getStreamingsDates(platformid){
 function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholder2HTML;
-    document.getElementById("button_permalink").disabled = false;
-    document.getElementById("button_csv").disabled = false;
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
     query_selection[5] = date;
@@ -289,20 +287,29 @@ function getStreamings(date){
         data: {date: date, platformid: query_selection[4], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var streamings = [];
+
             for(x = 0; x < response.length; x++){
                 streamings.push(response[x]);
             }
+
             console.info('DATA - STREAMINGS');
             console.info('Loaded ' + streamings.length + " points.");
+
             var color = getRandomColor();
             query_data = streamings;
+
             createGraph(streamings,date,color);
             createPoints(streamings,color);
+
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
             dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+
             document.getElementById('streaming').innerHTML = "";
             document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
+
+            document.getElementById("button_permalink").disabled = false;
+            document.getElementById("button_csv").disabled = false;
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
