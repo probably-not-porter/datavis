@@ -483,11 +483,30 @@ function toggleDetails(){
     }
 }
 function createCSV(){
-    const rows = [];
+    const rows = [["tripid","platformid","sensorid","hostid","recordtime","value_1","quality","latitude","longitude","elevation","accuracy","satellites","value_2","value_3","siteid","sectorid","value_4","value_5","value_6"]];
+    console.log(query_data[0]);
     for (x=0; x< query_data.length; x++){
-        current_row = [x.toString(), 
+        // ROW STRUCTURE
+        current_row = [ 
+            query_data[x].tripid.toString(),
+            query_data[x].platformid.toString(),
+            query_data[x].sensorid.toString(),
+            query_data[x].hostid.toString(),
             query_data[x].recordtime.toString(),
-            query_data[x].elevation.toString()
+            query_data[x].value_1 || "Null",
+            query_data[x].quality.toString(),
+            query_data[x].latitude.toString(),
+            query_data[x].longitude.toString(),
+            query_data[x].elevation.toString(),
+            query_data[x].accuracy.toString(),
+            query_data[x].satellites.toString(),
+            query_data[x].value_2 || "Null",
+            query_data[x].value_3 || "Null",
+            query_data[x].siteid.toString(),
+            query_data[x].sectorid.toString(),
+            query_data[x].value_4 || "Null",
+            query_data[x].value_5 || "Null",
+            query_data[x].value_6 || "Null",
         ];
         rows.push(current_row)
     }
@@ -496,13 +515,7 @@ function createCSV(){
     let csvContent = "data:text/csv;charset=utf-8," 
         + rows.map(e => e.join(",")).join("\n");
     
-    name = query_selection[0];
-    name += "_" + query_selection[1];
-    name += "_" + query_selection[2];
-    name += "_" + query_selection[3];
-    name += "_" + query_selection[4];
-    name += "_" + query_selection[5];
-    name += "_" + query_selection[6];
+    name = "data_" + query_selection[4] + "_" + query_selection[5];
     
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
