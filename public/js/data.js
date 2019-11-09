@@ -11,6 +11,7 @@
 
 var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
+var query_data = null;
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 var placeholder2HTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Adding points to Chart and Map...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
@@ -25,11 +26,13 @@ This is the entry point so that both of these options in the descision tree can 
 function setReading(){
     query_type = 0;
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 /* 
@@ -56,6 +59,7 @@ function getTrips(){
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     $.ajax({
         type: 'GET',
@@ -90,6 +94,7 @@ function getSites(trip_id){
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     togglediv('#trips-ls','trips-button');
 
@@ -127,6 +132,7 @@ function getSectors(site_id){
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     togglediv('#sites-ls','sites-button');
 
@@ -158,6 +164,7 @@ function getSpots(sector_id){
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     togglediv('#sectors-ls','sectors-button');
 
@@ -184,6 +191,7 @@ function getReadings(spot_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('reading').innerHTML = placeholderHTML;
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     togglediv('#spots-ls','spots-button');
 
@@ -212,6 +220,7 @@ function getStreamingsPlatforms(sector_id){
     document.getElementById('streamingdates').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
     
 
     togglediv('#sectors-ls','sectors-button');
@@ -240,6 +249,7 @@ function getStreamingsDates(platformid){
     document.getElementById('streamingdates').innerHTML = placeholderHTML;
     document.getElementById('streaming').innerHTML = "";
     document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
 
     togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
     query_selection[4] = platformid;
@@ -268,6 +278,7 @@ function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholder2HTML;
     document.getElementById("button_permalink").disabled = false;
+    document.getElementById("button_csv").disabled = false;
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
     query_selection[5] = date;
@@ -284,6 +295,7 @@ function getStreamings(date){
             console.info('DATA - STREAMINGS');
             console.info('Loaded ' + streamings.length + " points.");
             var color = getRandomColor();
+            query_data = streamings;
             createGraph(streamings,date,color);
             createPoints(streamings,color);
             var dataview = document.getElementById("dataView")
@@ -423,7 +435,8 @@ function togglediv(target_div,btn_span){
 }
 function loadQuery(params){
     console.info('Loading query from permalink...')
-    document.getElementById("button_permalink").disabled = true;;
+    document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
     if (params.length == 7 && params[1] == 1){ // streaming query
         query_type = params[1]
         query_selection[0] = params[2]; // load trip
@@ -468,4 +481,34 @@ function toggleDetails(){
             $("#button_details").css("opacity", "0.5");
         }    
     }
+}
+function createCSV(){
+    const rows = [];
+    for (x=0; x< query_data.length; x++){
+        current_row = [x.toString(), 
+            query_data[x].recordtime.toString(),
+            query_data[x].elevation.toString()
+        ];
+        rows.push(current_row)
+    }
+    console.log(rows);
+    
+    let csvContent = "data:text/csv;charset=utf-8," 
+        + rows.map(e => e.join(",")).join("\n");
+    
+    name = query_selection[0];
+    name += "_" + query_selection[1];
+    name += "_" + query_selection[2];
+    name += "_" + query_selection[3];
+    name += "_" + query_selection[4];
+    name += "_" + query_selection[5];
+    name += "_" + query_selection[6];
+    
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", name + ".csv");
+    document.body.appendChild(link); // Required for FF
+    
+    link.click(); // This will download the data file named "my_data.csv".
 }
