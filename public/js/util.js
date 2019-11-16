@@ -139,3 +139,8 @@ function getRandomColor() {
     }
     return color;
 }
+function resetElements(arr){
+    for(x=0;x<arr.length; x++){
+        document.getElementById(arr[x]).innerHTML = "";
+    }
+}

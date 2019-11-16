@@ -25,12 +25,14 @@ This is the entry point so that both of these options in the descision tree can 
 */
 function setReading(){
     query_type = 0;
+    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
+    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
@@ -49,15 +51,8 @@ function getTrips(){
     }else{
         document.getElementById('data-prompt').innerHTML = "Pick a trip, site, and sector to see data."
     }
-    
     document.getElementById('trips').innerHTML = placeholderHTML;
-    document.getElementById('sites').innerHTML = "";
-    document.getElementById('sectors').innerHTML = "";
-    document.getElementById('spots').innerHTML = "";
-    document.getElementById('streamingplatform').innerHTML = "";
-    document.getElementById('streamingdates').innerHTML = "";
-    document.getElementById('streaming').innerHTML = "";
-    document.getElementById('reading').innerHTML = "";
+    resetElements(['sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -87,12 +82,7 @@ function getSites(trip_id){
         document.getElementById('data-prompt').innerHTML = "Pick a site and sector to see data."
     }
     document.getElementById('sites').innerHTML = placeholderHTML;
-    document.getElementById('sectors').innerHTML = "";
-    document.getElementById('spots').innerHTML = "";
-    document.getElementById('streamingplatform').innerHTML = "";
-    document.getElementById('streamingdates').innerHTML = "";
-    document.getElementById('streaming').innerHTML = "";
-    document.getElementById('reading').innerHTML = "";
+    resetElements(['sectors','spots','streamingplatform','streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -126,11 +116,7 @@ function getSectors(site_id){
         document.getElementById('data-prompt').innerHTML = "Pick a sector to see data."
     }
     document.getElementById('sectors').innerHTML = placeholderHTML;
-    document.getElementById('spots').innerHTML = "";
-    document.getElementById('streamingplatform').innerHTML = "";
-    document.getElementById('streamingdates').innerHTML = "";
-    document.getElementById('streaming').innerHTML = "";
-    document.getElementById('reading').innerHTML = "";
+    resetElements(['spots','streamingplatform','streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -160,6 +146,8 @@ function getSectors(site_id){
 function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = placeholderHTML;
+
+    resetElements(['streamingplatform','streamingdates','streaming','reading']);
     document.getElementById('streamingplatform').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
@@ -217,8 +205,7 @@ function getReadings(spot_id){
 function getStreamingsPlatforms(sector_id){
     document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
     document.getElementById('streamingplatform').innerHTML = placeholderHTML;
-    document.getElementById('streamingdates').innerHTML = "";
-    document.getElementById('streaming').innerHTML = "";
+    resetElements(['streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     
@@ -247,7 +234,7 @@ function getStreamingsPlatforms(sector_id){
 function getStreamingsDates(platformid){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('streamingdates').innerHTML = placeholderHTML;
-    document.getElementById('streaming').innerHTML = "";
+    resetElements(['streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -277,6 +264,7 @@ function getStreamingsDates(platformid){
 function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholder2HTML;
+    resetElements(['reading']);
 
     togglediv('#streamingsdates-ls','streamingsdates-button');
     query_selection[5] = date;
