@@ -11,7 +11,7 @@ This app is set up to be usable on both mobile and desktop platforms. Keep in mi
 
 It is possible to have the database and this tool running on the same machine, which would allow users to access the front-end of the tool from either the device running both programs, or any device connected to the same LAN as the host device.
 
-First, the <strong>Data view</strong> will open, which can be used to select a specific set of data to view. Once a selection has been made, the user has the option to create a <strong>permalink</strong>, which can be used to return to the same query again., or switch to the <strong>Graph View</strong> or <strong>Map view</strong>.
+First, the <strong>Data view</strong> will open, which can be used to select a specific set of data to view. Once a selection has been made, the user has the option to create a <strong>permalink</strong>, which can be used to return to the same query again, or <strong>export a .csv file</strong> of the data selected, which can be used with a few other processing tools. Once a selection is complete, the <strong>Graph View</strong> and <strong>Map view</strong> will light up to show the user that there is new data to be viewed.
 
 
 ### Desktop Setup
