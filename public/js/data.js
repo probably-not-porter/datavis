@@ -260,7 +260,6 @@ function getStreamingsDates(platformid){
         }
     });
 }
-
 function getStreamings(date){
     document.getElementById('data-prompt').innerHTML = "Loading your data selection...";
     document.getElementById('streaming').innerHTML = placeholder2HTML;
@@ -415,8 +414,12 @@ function renderStreamingsDates(dates){
     }
 }
 
+/*
+Other
 
-// some more general functions that are used specifically for data stuff
+The following functions are for specific utilities in the data screen, 
+such as the export CSV and the permalink functionalities.
+*/
 function togglediv(target_div,btn_span){
     if (document.getElementById(btn_span)){
         var btn = document.getElementById(btn_span);
