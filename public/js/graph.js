@@ -29,7 +29,10 @@ function createGraph(dataset, title,color){
     data2 = [];
     data3 = [];
     data4 = [];
+    data = [[]];
+    keys = [];
     console.log(dataset);
+    /* OLD VERSION
     for (x=0;x<dataset.length;x++){
         if (!(times_arr.includes(moment(dataset[x].recordtime)))){
             times_arr.push(moment(dataset[x].recordtime));
@@ -45,6 +48,21 @@ function createGraph(dataset, title,color){
         }
     }
     addData(lineChart, times_arr, [data1,data2,data3,data4],color);
+    */
+   for (x=0;x<dataset.length;x++){
+        if (!(times_arr.includes(moment(dataset[x].recordtime)))){
+            times_arr.push(moment(dataset[x].recordtime));
+            data1.push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
+        }
+        if (keys.indIndex(dataset[x].sensortype) > -1){
+            var location = keys.indIndex(dataset[x].sensortype);
+            data[location].push(dataset[x]);
+        }else{
+            keys.push(dataset[x].sensortype);
+            data.push([]);
+        }
+   }
+   addData(lineChart, times_arr, data,color);
 }
 function addData(chart,times,data,color) {
     console.warn('UPDATING CHART: this might take a minute!');
