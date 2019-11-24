@@ -40,6 +40,7 @@ function createGraph(dataset, title,color){
             data[x].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }else{
             keys.push(dataset[x].sensortype);
+            data.push([]);
             location = keys.length - 1;
             data[location].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
