@@ -93,8 +93,9 @@ function addData(chart,times,data,types,color) {
 	    tooltips: {
             	callbacks: {
                     label: function (tti, data) {
-                    	// Here is the trick: the second argument has the dataset label
-                    	return Date(data.y);
+                        console.log(data);
+                        console.log(tti);
+                    	return 'test';
                     }
             	}
             },
