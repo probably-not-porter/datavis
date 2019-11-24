@@ -25,45 +25,26 @@ $( document ).ready(function() {
 
 function createGraph(dataset, title,color){
     times_arr = [];
-    data1 = [];
-    data2 = [];
-    data3 = [];
-    data4 = [];
     data = [[]];
     keys = [];
-    console.log(dataset);
-    /* OLD VERSION
-    for (x=0;x<dataset.length;x++){
-        if (!(times_arr.includes(moment(dataset[x].recordtime)))){
-            times_arr.push(moment(dataset[x].recordtime));
-            data1.push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
-        }
+    location = 0;
 
-        if (dataset[x].sensorid == '77a'){
-            data2.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        }else if (dataset[x].sensorid == '77b'){
-            data3.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        } else if (dataset[x].sensorid == '77c'){
-            data4.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        }
-    }
-    addData(lineChart, times_arr, [data1,data2,data3,data4],color);
-    */
-   for (x=0;x<dataset.length;x++){
+    for (x=0;x<dataset.length;x++){
+        
         if (!(times_arr.includes(moment(dataset[x].recordtime)))){
             times_arr.push(moment(dataset[x].recordtime));
-            data1.push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
+            data[0].push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
-        const target = (element) => element > dataset[x].sensortype;
-        if (keys.findIndex(target) > -1){
-            var location = keys.findIndex(target);
-            data[location].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
+        if (dataset[x].sensortype in keys){
+            location = keys.findIndex(dataset[x].sensortype);
+            data[x].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }else{
             keys.push(dataset[x].sensortype);
-            data.push([]);
+            location = keys.length - 1;
+            data[location].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
-   }
-   addData(lineChart, times_arr, data,color);
+    }
+    addData(lineChart, times_arr, data,color);
 }
 function addData(chart,times,data,color) {
     console.warn('UPDATING CHART: this might take a minute!');
