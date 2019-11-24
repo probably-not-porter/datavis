@@ -32,15 +32,15 @@ function createGraph(dataset, title,color){
     for (x=0;x<dataset.length;x++){
         if (!(times_arr.includes(dataset[x].recordtime))){
             times_arr.push(dataset[x].recordtime);
-            data1.push(dataset[x].elevation);
+            data1.push({x:dataset[x].recordtime,y:dataset[x].elevation});
         }
 
         if (dataset[x].sensorid == '77a'){
-            data2.push(dataset[x].value_1);
+            data2.push({x:dataset[x].recordtime, y:dataset[x].value_1});
         }else if (dataset[x].sensorid == '77b'){
-            data3.push(dataset[x].value_1);
+            data3.push({x:dataset[x].recordtime, y:dataset[x].value_1});
         } else if (dataset[x].sensorid == '77c'){
-            data4.push(dataset[x].value_1);
+            data4.push({x:dataset[x].recordtime, y:dataset[x].value_1});
         }
     }
     addData(lineChart, times_arr, [data1,data2,data3,data4],getRandomColor());
