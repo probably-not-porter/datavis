@@ -24,27 +24,30 @@ $( document ).ready(function() {
 });
 
 function createGraph(dataset, title,color){
-    label_arr = [];
-    data_arr = [];
-    times_arr = [];
-    bucket = -1;
+    elev_arr = [];
+    data1 = [];
+    data2 = [];
+    data3 = [];
+     = [];
     for (x=0;x<dataset.length;x++){
-        if ((x == 0) || (dataset[x-1].platformid != dataset[x].platformid)){
-            bucket++;
-            label_arr.push("Elevation (" + dataset[x].platformid + ", " + dataset[x].recordtime.toString().substring(0,10) + ")");
-            data_arr.push([]);
-            times_arr.push([]);
+        if (!(times_arr.includes(dataset[x].recordtime))){
+            times_arr.push(dataset[x].recordtime);
+            elev_arr.push(dataset[x].elevation);
         }
-        if (!(times_arr[bucket].includes(dataset[x].recordtime.split('T')[1]))){
-            newtime = new Date(dataset[x].recordtime).getTime()
-            data_arr[bucket].push({x: newtime ,y: (dataset[x].elevation)});
-            times_arr[bucket].push(dataset[x].recordtime.split('T')[1].substring(0,8));
+
+        if (dataset[x].sensorid == '77a'){
+            a77.push(dataset[x].value_1);
+        }else if (dataset[x].sensorid == '77b'){
+            b77.push(dataset[x].value_1);
+        } else if (dataset[x].sensorid == '77c'){
+            c77.push(dataset[x].value_1);
         }
     }
-    addData(lineChart, times_arr, data_arr,label_arr,color);
+    addData(lineChart, times_arr,elev_arr,a77,b77,c77,getRandomColor());
 }
-function addData(chart, label_arr, data, title_arr,color) {
+function addData(chart,times,data1,data2,data3,data4,color) {
     console.warn('UPDATING CHART: this might take a minute!');
+    
     if (chart){
         chart.destroy();
     }
@@ -62,16 +65,35 @@ function addData(chart, label_arr, data, title_arr,color) {
     });
     lineChart = chart;
     chart.options.title.text = 'Dataset Graph';
-    for (x=0; x< label_arr.length; x++){
-        chart.data.labels = chart.data.labels.concat(label_arr[x]);
-        var newDataset = {
-            label: title_arr[x],
-            borderColor: color,
-            borderWidth: 3,
-            fill: false,
-            data: data[x],
-        }
-        chart.data.datasets.push(newDataset);
+    chart.data.labels = times;
+    var dataset1 = {
+        label: 'dataset1',
+        borderColor: 'red',
+        borderWidth: 3,
+        fill: false,
+        data: data1,
     }
+    var dataset2 = {
+        label: 'dataset2',
+        borderColor: 'red',
+        borderWidth: 3,
+        fill: false,
+        data: data2,
+    }
+    var dataset3 = {
+        label: 'dataset3',
+        borderColor: 'red',
+        borderWidth: 3,
+        fill: false,
+        data: data3,
+    }
+    var dataset4 = {
+        label: 'dataset4',
+        borderColor: 'red',
+        borderWidth: 3,
+        fill: false,
+        data: data4,
+    }
+    chart.data.datasets.push(dataset1,dataset2,dataset3,dataset4);
     chart.update();
 }
