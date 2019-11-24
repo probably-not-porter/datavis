@@ -45,8 +45,10 @@ function createGraph(dataset, title,color){
         })
         if (x == 0){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        }else if(data[data.length-1][0].sensortype == dataset[x].sensortype){
-            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
+        }else if (data[data.length][0]){
+            if(data[data.length-1][0].sensortype == dataset[x].sensortype){
+                data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
+            }
         }
         else{
             data.push([]);
