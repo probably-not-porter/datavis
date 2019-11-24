@@ -43,7 +43,6 @@ function createGraph(dataset, title,color){
             data4.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
     }
-    console.log(times_arr,data1,data2);
     addData(lineChart, times_arr, [data1,data2,data3,data4],color);
 }
 function addData(chart,times,data,color) {
