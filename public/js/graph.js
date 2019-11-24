@@ -25,9 +25,8 @@ $( document ).ready(function() {
 
 function createGraph(dataset, title,color){
     times_arr = [];
-    data = [[]];
-    keys = [];
-    loc = 0;
+    data = [[],[]];
+    loc = 1;
 
     for (x=0;x<dataset.length;x++){
         
@@ -35,14 +34,20 @@ function createGraph(dataset, title,color){
             times_arr.push(moment(dataset[x].recordtime));
             data[0].push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
-        if (dataset[x].sensortype in keys){
-            loc = keys.findIndex(dataset[x].sensortype);
-            data[x].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        }else{
-            keys.push(dataset[x].sensortype);
-            data.push([]);
-            loc = keys.length - 1;
+
+        dataset.sort(function(a, b){
+            var nameA=a.sensortype, nameB=b.sensortype;
+            if (nameA < nameB) //sort string ascending
+                return -1 
+            if (nameA > nameB)
+                return 1
+            return 0 //default return value (no sorting)
+        })
+        if ((data[-1][0].sensortype == dataset[x].sensortype) || (x == 0)){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
+        }else{
+            data.push([]);
+            loc++;
         }
     }
     addData(lineChart, times_arr, data,color);
