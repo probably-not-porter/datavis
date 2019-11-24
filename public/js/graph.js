@@ -27,7 +27,7 @@ function createGraph(dataset, title,color){
     times_arr = [];
     data = [[]];
     keys = [];
-    location = 0;
+    loc = 0;
 
     for (x=0;x<dataset.length;x++){
         
@@ -36,13 +36,13 @@ function createGraph(dataset, title,color){
             data[0].push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
         if (dataset[x].sensortype in keys){
-            location = keys.findIndex(dataset[x].sensortype);
+            loc = keys.findIndex(dataset[x].sensortype);
             data[x].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }else{
             keys.push(dataset[x].sensortype);
             data.push([]);
-            location = keys.length - 1;
-            data[location].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
+            loc = keys.length - 1;
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
     }
     addData(lineChart, times_arr, data,color);
