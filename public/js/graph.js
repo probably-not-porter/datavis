@@ -27,7 +27,7 @@ function createGraph(dataset, title,color){
     times_arr = [];
     data = [[]];
     loc = 0;
-    types = ['Elevation (M)'];
+    types = [];
 
     for (x=0;x<dataset.length;x++){
         
