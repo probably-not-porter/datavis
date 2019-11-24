@@ -54,8 +54,9 @@ function createGraph(dataset, title,color){
             times_arr.push(moment(dataset[x].recordtime));
             data1.push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
-        if (keys.findIndex(dataset[x].sensortype) > -1){
-            var location = keys.findIndex(dataset[x].sensortype);
+        const target = (element) => element > dataset[x].sensortype;
+        if (keys.findIndex(target) > -1){
+            var location = keys.findIndex(target);
             data[location].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }else{
             keys.push(dataset[x].sensortype);
