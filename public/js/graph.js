@@ -25,15 +25,15 @@ $( document ).ready(function() {
 
 function createGraph(dataset, title,color){
     times_arr = [];
-    data = [[],[]];
-    loc = 1;
+    data = [[]];
+    loc = 0;
     types = ['Elevation (M)'];
 
     for (x=0;x<dataset.length;x++){
         
         if (!(times_arr.includes(moment(dataset[x].recordtime)))){
             times_arr.push(moment(dataset[x].recordtime));
-            data[0].push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
+            //data[0].push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
 
         dataset.sort(function(a, b){
