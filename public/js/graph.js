@@ -43,7 +43,7 @@ function createGraph(dataset, title,color){
             data4.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
     }
-    console.log(data1,data2);
+    console.log(times_arr,data1,data2);
     addData(lineChart, times_arr, [data1,data2,data3,data4],color);
 }
 function addData(chart,times,data,color) {
@@ -64,10 +64,21 @@ function addData(chart,times,data,color) {
             },
             scales: {
                 xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
+                    type: 'time',
+                    position: 'bottom',
+		    time: {
+			unit:'minute'
+		    }
                 }]
-            }
+            },
+	    tooltips: {
+            	callbacks: {
+                    label: function (tti, data) {
+                    	// Here is the trick: the second argument has the dataset label
+                    	return Date(data.y);
+                    }
+            	}
+            },
         }
     });
     lineChart = chart;
