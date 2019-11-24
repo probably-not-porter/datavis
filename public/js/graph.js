@@ -27,6 +27,7 @@ function createGraph(dataset, title,color){
     times_arr = [];
     data = [[],[]];
     loc = 1;
+    types = ['elevation'];
 
     for (x=0;x<dataset.length;x++){
         
@@ -44,6 +45,7 @@ function createGraph(dataset, title,color){
             return 0 //default return value (no sorting)
         })
         if (x == 0){
+            types.push(dataset[x].sensortype);
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid});
         }else if ((data[data.length - 1][0]) && (data[data.length - 1][0].sensorid == dataset[x].sensorid)){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
@@ -51,14 +53,16 @@ function createGraph(dataset, title,color){
         else{
             data.push([]);
             loc++;
+            types.push(dataset[x].sensortype);
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
         }
     }
     console.log(data);
-    addData(lineChart, times_arr, data,color);
+    addData(lineChart, times_arr, data,types,color);
 }
-function addData(chart,times,data,color) {
+function addData(chart,times,data,types,color) {
     console.warn('UPDATING CHART: this might take a minute!');
+    console.log(types);
     
     if (chart){
         chart.destroy();
@@ -97,7 +101,7 @@ function addData(chart,times,data,color) {
     chart.data.labels = times;
     for (x = 0;x<data.length;x++){
         var dataset = {
-            label: 'dataset_' + x,
+            label: types[x],
             borderColor: getRandomColor(),
             borderWidth: 3,
             fill: false,
