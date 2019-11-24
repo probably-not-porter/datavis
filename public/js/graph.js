@@ -44,17 +44,21 @@ function createGraph(dataset, title,color){
             return 0 //default return value (no sorting)
         })
         if (x == 0){
-            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-        }else if (data[data.length][0]){
-            if(data[data.length-1][0].sensortype == dataset[x].sensortype){
-                data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
-            }
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid});
+        }else if (data[data.length - 1][0]){
+            if(data[data.length - 1][0].sensorid == dataset[x].sensorid){
+                data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
+            }else{
+		data.push([]);
+		loc++;
+	    }
         }
         else{
             data.push([]);
             loc++;
         }
     }
+    console.log(data);
     addData(lineChart, times_arr, data,color);
 }
 function addData(chart,times,data,color) {
