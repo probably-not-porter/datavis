@@ -24,28 +24,28 @@ $( document ).ready(function() {
 });
 
 function createGraph(dataset, title,color){
-    elev_arr = [];
+    times_arr = [];
     data1 = [];
     data2 = [];
     data3 = [];
-     = [];
+    data4 = [];
     for (x=0;x<dataset.length;x++){
         if (!(times_arr.includes(dataset[x].recordtime))){
             times_arr.push(dataset[x].recordtime);
-            elev_arr.push(dataset[x].elevation);
+            data1.push(dataset[x].elevation);
         }
 
         if (dataset[x].sensorid == '77a'){
-            a77.push(dataset[x].value_1);
+            data2.push(dataset[x].value_1);
         }else if (dataset[x].sensorid == '77b'){
-            b77.push(dataset[x].value_1);
+            data3.push(dataset[x].value_1);
         } else if (dataset[x].sensorid == '77c'){
-            c77.push(dataset[x].value_1);
+            data4.push(dataset[x].value_1);
         }
     }
-    addData(lineChart, times_arr,elev_arr,a77,b77,c77,getRandomColor());
+    addData(lineChart, times_arr, [data1,data2,data3,data4],getRandomColor());
 }
-function addData(chart,times,data1,data2,data3,data4,color) {
+function addData(chart,times,data,color) {
     console.warn('UPDATING CHART: this might take a minute!');
     
     if (chart){
@@ -66,34 +66,15 @@ function addData(chart,times,data1,data2,data3,data4,color) {
     lineChart = chart;
     chart.options.title.text = 'Dataset Graph';
     chart.data.labels = times;
-    var dataset1 = {
-        label: 'dataset1',
-        borderColor: 'red',
-        borderWidth: 3,
-        fill: false,
-        data: data1,
+    for (x = 0;x<data.length;x++){
+        var dataset = {
+            label: 'dataset_' + x,
+            borderColor: color,
+            borderWidth: 3,
+            fill: false,
+            data: data[x],
+        }
+        chart.data.datasets.push(dataset);
     }
-    var dataset2 = {
-        label: 'dataset2',
-        borderColor: 'red',
-        borderWidth: 3,
-        fill: false,
-        data: data2,
-    }
-    var dataset3 = {
-        label: 'dataset3',
-        borderColor: 'red',
-        borderWidth: 3,
-        fill: false,
-        data: data3,
-    }
-    var dataset4 = {
-        label: 'dataset4',
-        borderColor: 'red',
-        borderWidth: 3,
-        fill: false,
-        data: data4,
-    }
-    chart.data.datasets.push(dataset1,dataset2,dataset3,dataset4);
     chart.update();
 }
