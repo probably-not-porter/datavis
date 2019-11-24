@@ -29,6 +29,7 @@ function createGraph(dataset, title,color){
     data2 = [];
     data3 = [];
     data4 = [];
+    console.log(dataset);
     for (x=0;x<dataset.length;x++){
         if (!(times_arr.includes(moment(dataset[x].recordtime)))){
             times_arr.push(moment(dataset[x].recordtime));
