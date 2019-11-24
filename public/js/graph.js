@@ -30,17 +30,17 @@ function createGraph(dataset, title,color){
     data3 = [];
     data4 = [];
     for (x=0;x<dataset.length;x++){
-        if (!(times_arr.includes(Date.parse(dataset[x].recordtime)))){
-            times_arr.push(Date.parse(dataset[x].recordtime));
-            data1.push({x:Date.parse(dataset[x].recordtime),y:dataset[x].elevation});
+        if (!(times_arr.includes(moment(dataset[x].recordtime)))){
+            times_arr.push(moment(dataset[x].recordtime));
+            data1.push({x:moment(dataset[x].recordtime),y:dataset[x].elevation});
         }
 
         if (dataset[x].sensorid == '77a'){
-            data2.push({x:Date.parse(dataset[x].recordtime), y:dataset[x].value_1});
+            data2.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }else if (dataset[x].sensorid == '77b'){
-            data3.push({x:Date.parse(dataset[x].recordtime), y:dataset[x].value_1});
+            data3.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         } else if (dataset[x].sensorid == '77c'){
-            data4.push({x:Date.parse(dataset[x].recordtime), y:dataset[x].value_1});
+            data4.push({x:moment(dataset[x].recordtime), y:dataset[x].value_1});
         }
     }
     console.log(data1,data2);
@@ -63,12 +63,9 @@ function addData(chart,times,data,color) {
                 text: 'No Data Selected'
             },
             scales: {
-                yAxes: [{
-                    ticks: {
-                        callback: function(value) { 
-                            return new Date(value).toLocaleDateString('de-DE', {month:'short', year:'numeric'}); 
-                        },
-                    },
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
                 }]
             }
         }
