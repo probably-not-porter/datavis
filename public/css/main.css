@@ -1,3 +1,18 @@
+:root {
+    /*
+        These are the themes for the program. Modifying these here should affect the color scheme of the whole tool
+    */
+    --datacolor1: #1D976C;
+    --datacolor2:#93F9B9;
+    
+    --theme1: #444;
+    --theme2: #888;
+    --theme3: #bbb;
+    --theme4: #ddd;
+    --themeh: white;
+    --themep: black;
+  }
+
 html, body, #viewDiv{
     padding: 0;
     margin: 0;
@@ -7,7 +22,7 @@ html, body, #viewDiv{
 
 #navcontrols{
     width: 200px;
-    height: 200px;
+    height: 75px;
     margin-left: 12px;
     margin-top: 10px;
     display:block;
@@ -19,19 +34,127 @@ html, body, #viewDiv{
     bottom:0;
     text-align: center;
 }
-#nav-view-button{
+.nav-view-button{
     vertical-align: top;
     padding: 10px; 
     margin-top: 0px;
     border-radius: 10px; 
-    border: 1px solid black
+    border: 1px solid var(--theme2);
+    -webkit-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
+    -moz-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
+    box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.35);
 }
-#nav-view-button:hover{
-    background-color: lightgray;
+.nav-view-button:hover{
+    background-color: var(--theme3);
 }
 .nav-button-idle{
-    background-color: white; 
+    background-color: var(--theme4); 
 }
 .nav-button-select{
-    background-color: gray; 
+    background-color: var(--theme2); 
 }
+#loading{
+    width: 100vw;
+    height: 100vh;
+    float:left;
+    position: fixed;
+    text-align: center;
+    z-index:12;
+    background-color: rgba(255,255,255,0.7);
+    top:0px;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: rgba(0,0,0,0.4);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    width: 150px;
+    margin-left: 65px;
+    margin-top: -40px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 4;
+}
+.tooltip:hover .tooltiptext {
+    visibility: initial;
+}
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+}
+  
+.tooltip2 .tooltiptext {
+    visibility: hidden;
+    background-color: rgba(0,0,0,0.4);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    width: 150px;
+    margin-left: -162px;
+    margin-top: 25px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 4;
+}
+.tooltip2:hover .tooltiptext {
+    visibility: initial;
+}
+@media only screen and (max-width: 800px) {
+    .tooltip .tooltiptext{
+        visibility: hidden;
+    }
+    .tooltip:hover .tooltiptext{
+        visibility: hidden;
+    }
+    .tooltip2 .tooltiptext{
+        visibility: hidden;
+    }
+    .tooltip2:hover .tooltiptext{
+        visibility: hidden;
+    }
+}
+  
+
+
+.new_data_button {
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+  }
+  @-webkit-keyframes glowing {
+    0% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; -webkit-box-shadow: 0 0 20px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; -webkit-box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @-moz-keyframes glowing {
+    0% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; -moz-box-shadow: 0 0 20px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; -moz-box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @-o-keyframes glowing {
+    0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 20px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+  }
+  
+  @keyframes glowing {
+    0% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+    50% { background-color: var(--datacolor1);; box-shadow: 0 0 20px var(--datacolor1);; }
+    100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
+  }

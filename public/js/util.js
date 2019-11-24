@@ -9,23 +9,38 @@
 
 // NAVIGATION / UTIL //
 function switchToMap(){ 
+    var dataview = document.getElementById("dataView");
+    var mapview = document.getElementById("mapView");
+    dataview.querySelector("#nav-button-map").classList.remove("new_data_button");
+    dataview.querySelector("#nav-button-graph").classList.remove("new_data_button");
+
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("mapView").style.display = "block";
     console.log('switched to map view');
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToGraph(){
+    var dataview = document.getElementById("dataView");
+    var graphview = document.getElementById("graphView");
+    dataview.querySelector("#nav-button-graph").classList.remove("new_data_button"); // set graph view to no prompt
+    dataview.querySelector("#nav-button-map").classList.remove("new_data_button");
+
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "block";
     console.log('switched to graph view');
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToData(){
+    setTimeout(function(){ document.getElementById("loading").style.display = "block"; }, 10);
     document.getElementById("mapView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
     console.log('switched to data view');
-}
+    setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 
 // TEAMPLATES FOR DOM PIECES
 function createRadioElementTrips( mode, name, checked, label, id ) {
@@ -34,7 +49,7 @@ function createRadioElementTrips( mode, name, checked, label, id ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong> (ID: " + id +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong><span class='detailed_info'> (ID: " + id +')</span></label></div>';
 
     return radioHtml;
 }
@@ -45,7 +60,7 @@ function createRadioElementSites( mode, name, checked, label, siteid ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + siteid +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + siteid +')</span></label></div>';
 
     return radioHtml;
 }
@@ -53,7 +68,7 @@ function createRadioElementSectors( mode, name, checked, label,sectorid ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" '
     // switch for streaming
     if (query_type == 1){
-        radioHtml += 'onchange="getStreamings('+ sectorid + ')"';
+        radioHtml += 'onchange="getStreamingsPlatforms('+ sectorid + ')"';
     }else{
         radioHtml += 'onchange="getSpots('+ sectorid + ')"';
     }
@@ -63,7 +78,7 @@ function createRadioElementSectors( mode, name, checked, label,sectorid ) {
         radioHtml += ' checked="checked"';
     }
     radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong> (ID: " + sectorid +')</label></div>';
+    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + sectorid +')</span></label></div>';
 
     return radioHtml;
 }
@@ -77,6 +92,26 @@ function createRadioElementSpots( mode, name, checked, label,spotid ) {
 
     return radioHtml;
 }
+function createRadioElementStreamingsPlatforms( mode, name, checked, id,name ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamingsDates('+ "'" +id.toString()+ "'" +')"type="radio" name="' + 'streamingplatforms' + '" id="' + name + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + name + '"><strong>'+ name + "</strong><span class='detailed_info'> (ID: " + id + ")" +'</span></label></div>';
+    
+    return radioHtml;
+}
+function createRadioElementStreamingsDates( mode, name, checked, date ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamings('+ "'" + date + "'" +')"type="radio" name="' + name + '" id="' + date + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + name + '"><strong>'+ date + '</strong> </label></div>';
+    
+    return radioHtml;
+}
 function createRadioElementStreamings( mode, name, checked, label ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayStreamings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
     if ( checked ) {
@@ -85,4 +120,27 @@ function createRadioElementStreamings( mode, name, checked, label ) {
     radioHtml += '/>';
     radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
     return radioHtml;
+}
+function createRadioElementReadings( mode, name, checked, label ) {
+    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayReadings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
+    if ( checked ) {
+        radioHtml += ' checked="checked"';
+    }
+    radioHtml += '/>';
+    radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
+    return radioHtml;
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+function resetElements(arr){
+    for(x=0;x<arr.length; x++){
+        document.getElementById(arr[x]).innerHTML = "";
+    }
 }

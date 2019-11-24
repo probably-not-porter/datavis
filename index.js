@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const q = require('./queries');
@@ -20,7 +19,10 @@ app.get('/sites', q.getSites);
 app.get('/sectors', q.getSectors);
 app.get('/spots', q.getSpots);
 app.get('/readings', q.getReadings);
+app.get('/streamingsplatforms', q.getStreamingsPlatforms);
+app.get('/streamingsdates', q.getStreamingsDates);
 app.get('/streamings', q.getStreamings);
+
 //////////
 
 
