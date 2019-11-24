@@ -44,7 +44,7 @@ function createGraph(dataset, title,color){
         }
     }
     console.log(data1,data2);
-    addData(lineChart, times_arr, [data1,data2,data3,data4],getRandomColor());
+    addData(lineChart, times_arr, [data1,data2,data3,data4],color);
 }
 function addData(chart,times,data,color) {
     console.warn('UPDATING CHART: this might take a minute!');
@@ -61,6 +61,15 @@ function addData(chart,times,data,color) {
             title: {
                 display: true,
                 text: 'No Data Selected'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function(value) { 
+                            return new Date(value).toLocaleDateString('de-DE', {month:'short', year:'numeric'}); 
+                        },
+                    },
+                }]
             }
         }
     });
@@ -70,7 +79,7 @@ function addData(chart,times,data,color) {
     for (x = 0;x<data.length;x++){
         var dataset = {
             label: 'dataset_' + x,
-            borderColor: color,
+            borderColor: getRandomColor(),
             borderWidth: 3,
             fill: false,
             data: data[x],
