@@ -27,7 +27,7 @@ function createGraph(dataset, title,color){
     times_arr = [];
     data = [[],[]];
     loc = 1;
-    types = ['elevation'];
+    types = ['Elevation (M)'];
 
     for (x=0;x<dataset.length;x++){
         
@@ -45,7 +45,7 @@ function createGraph(dataset, title,color){
             return 0 //default return value (no sorting)
         })
         if (x == 0){
-            types.push(dataset[x].sensortype);
+            types.push(dataset[x].sensortype + ' (' + dataset[x].sensorunits + ')');
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid});
         }else if ((data[data.length - 1][0]) && (data[data.length - 1][0].sensorid == dataset[x].sensorid)){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
@@ -53,7 +53,7 @@ function createGraph(dataset, title,color){
         else{
             data.push([]);
             loc++;
-            types.push(dataset[x].sensortype);
+            types.push(dataset[x].sensortype + ' (' + dataset[x].sensorunits + ')');
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
         }
     }
