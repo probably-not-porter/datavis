@@ -46,15 +46,15 @@ function createGraph(dataset, title,color){
         })
         if (x == 0){
             types.push(dataset[x].sensortype + ' (' + dataset[x].sensorunits + ')');
-            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid});
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid, sensorunits:dataset[x].sensorunits});
         }else if ((data[data.length - 1][0]) && (data[data.length - 1][0].sensorid == dataset[x].sensorid)){
-            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid, sensorunits:dataset[x].sensorunits});
         }
         else{
             data.push([]);
             loc++;
             types.push(dataset[x].sensortype + ' (' + dataset[x].sensorunits + ')');
-            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid, sensorunits:dataset[x].sensorunits});
         }
     }
     console.log(data);
@@ -90,7 +90,7 @@ function addData(chart,times,data,types,color) {
             	callbacks: {
                     label: function (tti, data) {
                     	// Here is the trick: the second argument has the dataset label
-                    	return Date(data.y);
+                    	return Date(data.y + ', ' + data.x + ' (' + data.sensorunits + ')');
                     }
             	}
             },
