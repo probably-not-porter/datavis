@@ -51,6 +51,7 @@ function createGraph(dataset, title,color){
         else{
             data.push([]);
             loc++;
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
         }
     }
     console.log(data);
