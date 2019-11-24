@@ -90,7 +90,7 @@ function addData(chart,times,data,types,color) {
             	callbacks: {
                     label: function (tti, data) {
                     	// Here is the trick: the second argument has the dataset label
-                    	return Date(data.y + ', ' + data.x + ' (' + data.sensorunits + ')');
+                    	return (Date(data.y) + ', ' + data.x + ' (' + data.sensorunits + ')');
                     }
             	}
             },
