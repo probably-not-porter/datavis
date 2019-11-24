@@ -93,9 +93,8 @@ function addData(chart,times,data,types,color) {
 	    tooltips: {
             	callbacks: {
                     label: function (tti, data) {
-                        console.log(data);
-                        console.log(tti);
-                    	return 'test';
+                        var lab = tti.yLabel + " (" + (new Date(tti.xLabel).toLocaleTimeString()) + ")";
+                    	return lab;
                     }
             	}
             },
