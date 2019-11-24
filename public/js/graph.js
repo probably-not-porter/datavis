@@ -43,6 +43,7 @@ function createGraph(dataset, title,color){
             data4.push({x:dataset[x].recordtime, y:dataset[x].value_1});
         }
     }
+    print(data1,data2);
     addData(lineChart, times_arr, [data1,data2,data3,data4],getRandomColor());
 }
 function addData(chart,times,data,color) {
