@@ -45,13 +45,8 @@ function createGraph(dataset, title,color){
         })
         if (x == 0){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1,sensorid:dataset[x].sensorid});
-        }else if (data[data.length - 1][0]){
-            if(data[data.length - 1][0].sensorid == dataset[x].sensorid){
-                data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
-            }else{
-		data.push([]);
-		loc++;
-	    }
+        }else if ((data[data.length - 1][0]) && (data[data.length - 1][0].sensorid == dataset[x].sensorid)){
+            data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid});
         }
         else{
             data.push([]);
