@@ -26,10 +26,14 @@ $( document ).ready(function() {
 });
 
 function createGraph(dataset, title,color){
+    title = ''
     times_arr = []; // x axis ticks (timestamps)
     data = [[]]; // this array will each set of data (split by sensor)
     loc = 0; // set tracking
     types = []; // type tracking
+
+    // create title
+    title += dataset[0].platformname + ' (' + dataset[0].recordtime + ')';
 
     // sort dataset according to sensortype value
     dataset.sort(function(a, b){
@@ -59,9 +63,9 @@ function createGraph(dataset, title,color){
             data[loc].push({x:moment(dataset[x].recordtime), y:dataset[x].value_1, sensorid:dataset[x].sensorid, sensorunits:dataset[x].sensorunits});
         }
     }
-    addData(lineChart, times_arr, data,types,color);
+    addData(lineChart, times_arr, data,types,color,title);
 }
-function addData(chart,times,data,types,color) {
+function addData(chart,times,data,types,color,title) {
     console.warn('UPDATING CHART: this might take a minute!');
     
     if (chart){
@@ -101,7 +105,7 @@ function addData(chart,times,data,types,color) {
         }
     });
     lineChart = chart;
-    chart.options.title.text = 'Dataset Graph'; // graph title
+    chart.options.title.text = title; // graph title
     chart.data.labels = times;
 
     for (x = 0;x<data.length;x++){ // create plot for each set of data [elevation,pressure,etc...]
