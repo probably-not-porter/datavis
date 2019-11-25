@@ -1,14 +1,18 @@
-# Database Guide
-The purpose of this readme is to outline the IFS field_science database, and describe the tables which are used in processing Fieldday information. The database is hosted on the Earlham College cluster.
+# Docs: Database Guide
+The purpose of this readme is to outline the IFS **field_science** database, and describe the tables which are used in processing Fieldday information. The database is hosted on the Earlham College cluster, using postgreSQL.
+
 ## Tables
-### fieldday_platform
+the **field_science** database contains the following tables which are necissary for the datavis tool to function. If the tables in your database are different, then the **queries.js** file will need to be tweaked to accomodate your data.
+
+This section also includes an example for each table, showing how data might be aquired from the database.
+### *fieldday_platform*
 | column | type | example |
 |---|---|---|
 | platformid | char(8) | "4ef" |
 | platformtype | char(16) | "Ambiance" |
 | platformname | char(16) | "Grace" |
 
-### fieldday_sensor
+### *fieldday_sensor*
 | column | type | example |
 |---|---|---|
 | platformid | char(8) | "4ef" |
@@ -16,13 +20,15 @@ The purpose of this readme is to outline the IFS field_science database, and des
 | sensortype | char(30) | "Reletive Humidity" |
 | sensorunits | char(8) | "%" |
 
-### fieldday_trip
+### *fieldday_trip*
+***example:*** `SELECT * from fieldday_trip;`
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
 | tripname | char(128) | "Iceland 2016" |
 
-### fieldday_site
+### *fieldday_site*
+***example:*** `SELECT * from fieldday_site where tripid=23;`
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -30,7 +36,8 @@ The purpose of this readme is to outline the IFS field_science database, and des
 | sitename | char(128) | "Pingvellir" |
 | sitenotes | text | "Notes about site" |
 
-### fieldday_sector
+### *fieldday_sector*
+***example:*** `SELECT * from fieldday_sector where tripid=23 and siteid=2;`
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -39,7 +46,8 @@ The purpose of this readme is to outline the IFS field_science database, and des
 | sectorname | char(128) | "Pingvellir" |
 | sectornotes | text | "Notes about sector" |
 
-### fieldday_spot
+### *fieldday_spot*
+***example:*** `SELECT * from fieldday_spot where tripid=23 and siteid=2 and sectorid=1;`
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -49,7 +57,7 @@ The purpose of this readme is to outline the IFS field_science database, and des
 | spotiamgefolder | char(128) | dir_name |
 | spotnotes | text | "Notes about sector" |
 
-### fieldday_streaming
+### *fieldday_streaming*
 | column | type | example |
 |---|---|---|
 | tripid | int | 24 |
@@ -72,7 +80,7 @@ The purpose of this readme is to outline the IFS field_science database, and des
 | value_5 | numeric | 0.0 |
 | value_6 | numeric | 0.0 |
 
-### fieldday_reading
+### *fieldday_reading*
 | column | type | example |
 |---|---|---|
 | tripid | int | 24 |
