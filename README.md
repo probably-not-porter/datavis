@@ -1,4 +1,4 @@
-# DATAVIS TOOL 2
+# Datavis Tool 2
 
 Porter Libby
 
