@@ -45,6 +45,7 @@ it to the screen, or displaying it. Each makes a call to a server-side function 
 'queries.js' file, which gets the data from the database and returns it to the client-side,
 which then passes the data to a renderer.
 */
+// General routes
 function getTrips(){
     if (query_type == 0){
         document.getElementById('data-prompt').innerHTML = "Pick a trip, site, sector, and spot to see data."
@@ -175,6 +176,67 @@ function getSpots(sector_id){
         }
     });
 }
+// Reading-specific routes
+// NOT SET UP YET
+function getReadingsPlatforms(sector_id){
+    document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
+    document.getElementById('streamingplatform').innerHTML = placeholderHTML;
+    resetElements(['streamingdates','streaming','reading']);
+    document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
+    
+
+    togglediv('#sectors-ls','sectors-button');
+    query_selection[2] = sector_id;
+
+    $.ajax({
+        type: 'GET',
+        url: '/streamingsplatforms',
+        data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var plats = [];
+            for(x = 0; x < response.length; x++){
+                plats.push(response[x]);
+            }
+            console.info('DATA - PLATFORMS');
+            console.table(response);
+            renderStreamingsPlatforms(plats);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+// NOT SET UP YET
+function getReadingsDates(platformid){
+    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
+    document.getElementById('streamingdates').innerHTML = placeholderHTML;
+    resetElements(['streaming','reading']);
+    document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
+
+    togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
+    query_selection[4] = platformid;
+
+    $.ajax({
+        type: 'GET',
+        url: '/streamingsdates',
+        data: {platformid: platformid, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var dates = [];
+            for(x = 0; x < response.length; x++){
+                dates.push(response[x]);
+            }
+            console.info('DATA - DATES');
+            dates = [...new Set(dates.map(item => (item.recordtime.substring(0, 10))))];
+            console.table(dates);
+            renderStreamingsDates(dates);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
 function getReadings(spot_id){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('reading').innerHTML = placeholderHTML;
@@ -202,6 +264,7 @@ function getReadings(spot_id){
         }
     });
 }
+// Streaming-specific routes
 function getStreamingsPlatforms(sector_id){
     document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
     document.getElementById('streamingplatform').innerHTML = placeholderHTML;
