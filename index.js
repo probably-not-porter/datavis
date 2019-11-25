@@ -1,3 +1,7 @@
+console.log("\n==================================");
+console.log("|         IFS DATAVIS 2          |");
+console.log("==================================\n");
+
 const express = require('express');
 const app = express();
 const q = require('./queries');
@@ -27,7 +31,6 @@ app.get('/streamings', q.getStreamings);
 
 // LISTEN
 app.listen(process.env.PORT || 9900, function(){
-    console.log("Server: Running Datavis 2 v1.0");
     console.log("Server: Running on port %d in %s mode", this.address().port, app.settings.env);
 });
 
