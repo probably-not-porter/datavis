@@ -21,7 +21,7 @@ This section also includes an example for each table, showing how data might be 
 | sensorunits | char(8) | "%" |
 
 ### *fieldday_trip*
-***example:*** `SELECT * from fieldday_trip;`
+***example:*** `SELECT * FROM fieldday_trip;`
 
 | column | type | example |
 |---|---|---|
@@ -29,7 +29,7 @@ This section also includes an example for each table, showing how data might be 
 | tripname | char(128) | "Iceland 2016" |
 
 ### *fieldday_site*
-***example:*** `SELECT * from fieldday_site where tripid=23;`
+***example:*** `SELECT * FROM fieldday_site WHERE tripid=23;`
 
 | column | type | example |
 |---|---|---|
@@ -39,7 +39,7 @@ This section also includes an example for each table, showing how data might be 
 | sitenotes | text | "Notes about site" |
 
 ### *fieldday_sector*
-***example:*** `SELECT * from fieldday_sector where tripid=23 and siteid=2;`
+***example:*** `SELECT * FROM fieldday_sector WHERE tripid=23 AND siteid=2;`
 
 | column | type | example |
 |---|---|---|
@@ -50,7 +50,7 @@ This section also includes an example for each table, showing how data might be 
 | sectornotes | text | "Notes about sector" |
 
 ### *fieldday_spot*
-***example:*** `SELECT * from fieldday_spot where tripid=23 and siteid=2 and sectorid=1;`
+***example:*** `SELECT * FROM fieldday_spot WHERE tripid=23 AND siteid=2 AND sectorid=1;`
 
 | column | type | example |
 |---|---|---|
