@@ -22,6 +22,7 @@ This section also includes an example for each table, showing how data might be 
 
 ### *fieldday_trip*
 ***example:*** `SELECT * from fieldday_trip;`
+
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -29,6 +30,7 @@ This section also includes an example for each table, showing how data might be 
 
 ### *fieldday_site*
 ***example:*** `SELECT * from fieldday_site where tripid=23;`
+
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -38,6 +40,7 @@ This section also includes an example for each table, showing how data might be 
 
 ### *fieldday_sector*
 ***example:*** `SELECT * from fieldday_sector where tripid=23 and siteid=2;`
+
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
@@ -48,6 +51,7 @@ This section also includes an example for each table, showing how data might be 
 
 ### *fieldday_spot*
 ***example:*** `SELECT * from fieldday_spot where tripid=23 and siteid=2 and sectorid=1;`
+
 | column | type | example |
 |---|---|---|
 | tripid | int | 23 |
