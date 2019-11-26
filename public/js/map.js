@@ -13,6 +13,10 @@ var view;
 var map;
 var prev_points = [];
 
+// Set map types
+maptype1 = "topo";
+maptype2 = "satellite";
+
 
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
@@ -24,7 +28,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
     PopupTemplate
   ) {
     map = new Map({
-      basemap: "topo"
+      basemap: maptype1
     });
 
     view = new MapView({
@@ -36,7 +40,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
     var basemapToggle = new BasemapToggle({
         viewModel: {  // autocasts as new BasemapToggleViewModel()
             view: view,  // The view that provides access to the map's "streets" basemap
-            nextBasemap: "satellite"  // Allows for toggling to the "hybrid" basemap
+            nextBasemap: maptype2  // Allows for toggling to the "hybrid" basemap
         }
     });
     var coordinateConversionWidget = new CoordinateConversion({

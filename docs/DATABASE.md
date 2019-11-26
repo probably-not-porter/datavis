@@ -1,4 +1,6 @@
 # Docs: Database Guide
+[[ Main README ]](../README.md)
+
 The purpose of this readme is to outline the IFS **field_science** database, and describe the tables which are used in processing Fieldday information. The database is hosted on the Earlham College cluster, using postgreSQL.
 
 ## Tables
