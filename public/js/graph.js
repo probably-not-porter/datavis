@@ -94,7 +94,7 @@ function addData(chart,times,data,types,color,title) {
                     }
                 }]
             },
-	    tooltips: { 
+	        tooltips: { 
             	callbacks: {
                     label: function (tti, data) { // callback to set tooltips
                         var lab = tti.yLabel + " (" + (new Date(tti.xLabel).toLocaleTimeString()) + ")";
@@ -102,6 +102,36 @@ function addData(chart,times,data,types,color,title) {
                     }
             	}
             },
+            legend: {
+                position: 'top',
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                },
+                onHover: function(event, legendItem) {
+                    document.getElementById("canvas").style.cursor = 'pointer';
+                },
+                onClick: function(e, legendItem) {
+                    var index = legendItem.datasetIndex;
+                    var ci = this.chart;
+                    var alreadyHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;
+        
+                    ci.data.datasets.forEach(function(e, i) {
+                        var meta = ci.getDatasetMeta(i);
+        
+                        if (i !== index) {
+                            if (!alreadyHidden) {
+                                meta.hidden = meta.hidden === null ? !meta.hidden : null;
+                            } else if (meta.hidden === null) {
+                                meta.hidden = true;
+                            }
+                        } else if (i === index) {
+                            meta.hidden = null;
+                        }
+                    });
+        
+                  ci.update();
+                }
+            }
         }
     });
     lineChart = chart;
