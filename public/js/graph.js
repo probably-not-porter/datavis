@@ -107,9 +107,6 @@ function addData(chart,times,data,types,color,title) {
                 labels: {
                     fontColor: 'rgb(255, 99, 132)'
                 },
-                onHover: function(event, legendItem) {
-                    document.getElementById("canvas").style.cursor = 'pointer';
-                },
                 onClick: function(e, legendItem) {
                     var index = legendItem.datasetIndex;
                     var ci = this.chart;
@@ -145,9 +142,6 @@ function addData(chart,times,data,types,color,title) {
             borderWidth: 3,
             fill: false,
             data: data[x],
-        }
-        if (x > 0){
-            dataset.hidden = true;
         }
         chart.data.datasets.push(dataset);
     }
