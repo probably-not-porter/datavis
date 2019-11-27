@@ -11,9 +11,11 @@ Porter Libby
 
 A visualization tool for the IFS database using Node.js and the ArcGIS api. Uses queries to fetch data from the Earlham Field Science database and show that data in a graph format, as well as a map format. The goal of this application is to be useful for both information purposes, as well as for field work purposes. This requires that the app be usable on an android device, so that field data can be visualized in real time, but the tool must also be user-friendly enough that someone unfamiliar with the work could use it to look at data from a particular IFS trip.
 
-<image width='30%' src="https://i.ibb.co/XYzb6Gh/Screenshot-20191126-193944.jpg">
-<image width='30%' src="https://i.ibb.co/3CSJsL8/Screenshot-20191126-193902.jpg">
-<image width='30%' src="https://i.ibb.co/HNJ51Hz/Screenshot-20191126-193845.jpg">
+<div style='display: inline'>
+    <image width='30%' src="https://i.ibb.co/XYzb6Gh/Screenshot-20191126-193944.jpg"></image>
+    <image width='30%' src="https://i.ibb.co/3CSJsL8/Screenshot-20191126-193902.jpg"></image>
+    <image width='30%' src="https://i.ibb.co/HNJ51Hz/Screenshot-20191126-193845.jpg"></image>
+</div>
 
 **Map view**, **Graph view**, and **Data view** shown respectively.
 
