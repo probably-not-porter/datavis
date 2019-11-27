@@ -90,7 +90,7 @@ function addData(chart,times,data,types,color,title) {
                     },
                     ticks: {
                         autoSkip: true,
-                        maxTicksLimit: 50
+                        maxTicksLimit: ($(window).width() / 50)
                     }
                 }]
             },
