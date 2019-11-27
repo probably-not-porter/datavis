@@ -146,6 +146,9 @@ function addData(chart,times,data,types,color,title) {
             fill: false,
             data: data[x],
         }
+        if (x > 0){
+            dataset.hidden = true;
+        }
         chart.data.datasets.push(dataset);
     }
     chart.update();
