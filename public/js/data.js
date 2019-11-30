@@ -25,14 +25,14 @@ This is the entry point so that both of these options in the descision tree can 
 */
 function setReading(){
     query_type = 0;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
@@ -53,7 +53,7 @@ function getTrips(){
         document.getElementById('data-prompt').innerHTML = "Pick a trip, site, and sector to see data."
     }
     document.getElementById('trips').innerHTML = placeholderHTML;
-    resetElements(['sites','sectors','spots','streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -83,7 +83,7 @@ function getSites(trip_id){
         document.getElementById('data-prompt').innerHTML = "Pick a site and sector to see data."
     }
     document.getElementById('sites').innerHTML = placeholderHTML;
-    resetElements(['sectors','spots','streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -117,7 +117,7 @@ function getSectors(site_id){
         document.getElementById('data-prompt').innerHTML = "Pick a sector to see data."
     }
     document.getElementById('sectors').innerHTML = placeholderHTML;
-    resetElements(['spots','streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -148,7 +148,7 @@ function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = placeholderHTML;
 
-    resetElements(['streamingplatform','streamingdates','streaming','reading']);
+    resetElements(['streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById('streamingplatform').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
@@ -178,20 +178,20 @@ function getSpots(sector_id){
 }
 // Reading-specific routes
 // NOT SET UP YET
-function getReadingsPlatforms(sector_id){
+function getReadingsPlatforms(spot_id){
     document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
-    document.getElementById('streamingplatform').innerHTML = placeholderHTML;
-    resetElements(['streamingdates','streaming','reading']);
+    document.getElementById('readingplatform').innerHTML = placeholderHTML;
+    resetElements(['streamingdates','streaming','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     
 
-    togglediv('#sectors-ls','sectors-button');
-    query_selection[2] = sector_id;
+    togglediv('#spots-ls','spots-button');
+    query_selection[3] = spot_id;
 
     $.ajax({
         type: 'GET',
-        url: '/streamingsplatforms',
+        url: '/readingsplatforms',
         data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var plats = [];
@@ -210,17 +210,17 @@ function getReadingsPlatforms(sector_id){
 // NOT SET UP YET
 function getReadingsDates(platformid){
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
-    document.getElementById('streamingdates').innerHTML = placeholderHTML;
+    document.getElementById('readingdates').innerHTML = placeholderHTML;
     resetElements(['streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
-    togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
+    togglediv('#readingsplatforms-ls','readingsplatforms-button');
     query_selection[4] = platformid;
 
     $.ajax({
         type: 'GET',
-        url: '/streamingsdates',
+        url: '/readingsdates',
         data: {platformid: platformid, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var dates = [];
