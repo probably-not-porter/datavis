@@ -3,7 +3,7 @@
 
 ## Styles for front-end
 The main style file, found at `/public/css/main.css`. This file contains the definition for most of the mutabile colors in the front-end, and is made to be easy to access and modify. The structure for this defined as follows:
-```
+```css
 :root {
     --datacolor1: #1D976C;
     --datacolor2:#93F9B9;
@@ -26,7 +26,7 @@ These two colors define default text colors for header size and paragraph size t
 
 ## Customizing the map
 In `/public/js/map.js`, the following control variables can be found:
-```
+```javascript
 maptype1 = "topo";
 maptype2 = "satellite";
 ```
