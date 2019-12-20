@@ -1,6 +1,6 @@
 {
-  "name": "datavis",
-  "version": "1.0.0",
+  "name": "IFS Datavis Tool 2",
+  "version": "0.2.4",
   "description": "A tool for visualizing the data collected from the IFS Earlham trip",
   "main": "index.js",
   "scripts": {
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/probably-not-porter/datavis.git"
+    "url": "https://gitlab.cluster.earlham.edu/field-science/datavis.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Porter Libby",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/probably-not-porter/datavis/issues"
+    "url": "https://gitlab.cluster.earlham.edu/field-science/datavis/issues"
   },
-  "homepage": "https://github.com/probably-not-porter/datavis#readme",
+  "homepage": "https://gitlab.cluster.earlham.edu/field-science/datavis",
   "dependencies": {
     "dotenv": "^8.1.0",
     "ejs": "^2.7.1",
