@@ -1,5 +1,5 @@
 {
-  "name": "IFS Datavis Tool 2",
+  "name": "datavis",
   "version": "0.2.4",
   "description": "A tool for visualizing the data collected from the IFS Earlham trip",
   "main": "index.js",
