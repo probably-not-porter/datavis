@@ -54,7 +54,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 });
 
 function createPoints(points,color){
-    new_points = [];
+    new_points = [points[0]];
     prunes = 0;
     for(x=1;x<points.length;x++){
         if ((points[x].latitude == points[x-1].latitude) && (points[x].longitude == points[x-1].longitude) && (points[x].recordtime == points[x-1].recordtime)){

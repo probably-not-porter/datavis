@@ -24,7 +24,6 @@ $( document ).ready(function() {
         }
     });
 });
-
 function createGraph(dataset, title,color){
     title = ''
     times_arr = []; // x axis ticks (timestamps)
