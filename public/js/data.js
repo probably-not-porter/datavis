@@ -364,8 +364,14 @@ function getStreamings(date){
             var color = getRandomColor();
             query_data = streamings;
 
-            createGraph(streamings,date,color);
-            createPoints(streamings,color);
+            if (streamings.length != 0){
+                createGraph(streamings,date,color);
+                createPoints(streamings,color);
+            }
+            else{
+                console.error('ERR: empty set');
+            }
+            
 
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
