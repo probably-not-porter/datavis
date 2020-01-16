@@ -367,21 +367,25 @@ function getStreamings(date){
             if (streamings.length != 0){
                 createGraph(streamings,date,color);
                 createPoints(streamings,color);
+
+                var dataview = document.getElementById("dataView")
+                dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+                dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+
+                document.getElementById('streaming').innerHTML = "";
+                document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
+
+                document.getElementById("button_permalink").disabled = false;
+                document.getElementById("button_csv").disabled = false;
             }
             else{
                 console.error('ERR: empty set');
+                document.getElementById('streaming').innerHTML = "";
+                document.getElementById('data-prompt').innerHTML = "Selected set contains no valid points";
             }
             
 
-            var dataview = document.getElementById("dataView")
-            dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
-            dataview.querySelector("#nav-button-map").classList.add("new_data_button");
-
-            document.getElementById('streaming').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
-
-            document.getElementById("button_permalink").disabled = false;
-            document.getElementById("button_csv").disabled = false;
+            
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
