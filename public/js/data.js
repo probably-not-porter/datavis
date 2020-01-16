@@ -251,26 +251,27 @@ function getReadings(spot_id){
         url: '/readings',
         data: {spotid: spot_id, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
-            var streamings = [];
+            var readings = [];
 
             for(x = 0; x < response.length; x++){
-                streamings.push(response[x]);
+                readings.push(response[x]);
             }
 
-            console.info('DATA - STREAMINGS');
-            console.info('Loaded ' + streamings.length + " points.");
+            console.info('DATA - readings');
+            console.info('Loaded ' + readings.length + " points.");
 
             var color = getRandomColor();
-            query_data = streamings;
+            query_data = readings;
 
-            createReading(streamings,'test',color);
+            createPoints([readings[0]], color);
+            createGraphReading(readings, "DATE",  color);
 
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
             dataview.querySelector("#nav-button-map").classList.add("new_data_button");
 
             document.getElementById('reading').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+streamings.length+" points to the graph and map!";
+            document.getElementById('data-prompt').innerHTML = "Loaded "+readings.length+" points to the graph and map!";
 
             document.getElementById("button_permalink").disabled = false;
             document.getElementById("button_csv").disabled = false;
@@ -365,7 +366,7 @@ function getStreamings(date){
             query_data = streamings;
 
             if (streamings.length != 0){
-                createGraph(streamings,date,color);
+                createGraphStreaming(streamings,date,color);
                 createPoints(streamings,color);
 
                 var dataview = document.getElementById("dataView")
@@ -502,14 +503,6 @@ function renderStreamingsDates(dates){
         togglediv('#streamingsplatforms-ls','streamingsplatforms-button');
     }
 }
-
-function createReading(data,title,color){
-    createPoints([data[0]], color);
-    for(x=0;x<data.length;x++){
-        console.log(data[x]);
-    }
-}
-
 /*
 Other
 

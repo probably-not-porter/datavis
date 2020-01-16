@@ -24,7 +24,29 @@ $( document ).ready(function() {
         }
     });
 });
-function createGraph(dataset, title,color){
+function createGraphReading(dataset, title, color){
+    //reset containers
+    document.getElementById('readingStats').style.display = 'block';
+    document.getElementById('line-chart').style.display = 'none';
+
+    //prepare active container
+    var parent = document.getElementById('readingStats');
+    parent.innerHTML = "";
+
+    //fill with content
+    for (x=0;x<dataset.length;x++){
+        console.log(dataset[x]);
+        var textElem = document.createElement('p');
+        textElem.innerHTML = dataset[x].sensorid + ": " + dataset[x].value;
+        parent.append(textElem);
+    }
+    
+}
+function createGraphStreaming(dataset, title,color){
+    // reset some containers
+    document.getElementById('line-chart').style.display = 'block';
+    document.getElementById('readingStats').style.display = 'none';
+
     title = ''
     times_arr = []; // x axis ticks (timestamps)
     data = [[]]; // this array will each set of data (split by sensor)
@@ -70,6 +92,7 @@ function addData(chart,times,data,types,color,title) {
     if (chart){
         chart.destroy(); // clear old information so it doesnt overflow
     }
+
     chart = new Chart(document.getElementById("line-chart"), { // create new chart structure for streaming data
         type: 'scatter',
         data: {},
