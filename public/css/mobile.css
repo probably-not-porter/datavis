@@ -1,0 +1,5 @@
+@media only screen and (max-width: 600px) {
+    #navcontrols{
+        top:15px;
+    }
+}
