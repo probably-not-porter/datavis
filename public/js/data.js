@@ -264,7 +264,7 @@ function getReadings(spot_id){
             query_data = readings;
 
             createPoints([readings[0]], color);
-            createGraphReading(readings, "DATE",  color);
+            createGraphReading(readings, query_selection,  color);
 
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");

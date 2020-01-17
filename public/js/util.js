@@ -43,6 +43,8 @@ function switchToData(){
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 
 // TEAMPLATES FOR DOM PIECES
+
+// generalized formula
 function createRadioElement(name, id, label, f){
     console.log(name,id,label);
     var radioHtml = '<div class="elem-div elem-0">'
@@ -60,6 +62,8 @@ function createRadioElement(name, id, label, f){
 
     return radioHtml;
 }
+
+// take information from data.js and write it into html
 function createRadioElementTrips( mode, name, checked, label, id ) {
     var f = "getSites";
     return createRadioElement(name, id, label, f);
@@ -69,9 +73,10 @@ function createRadioElementSites( mode, name, checked, label, id ) {
     var f = "getSectors";
     return createRadioElement(name, id, label, f);
 }
+// this one is different since it changes for reading and streaming
 function createRadioElementSectors( mode, name, checked, label, id ) {
-    var f = "getSpots";
-    if (query_type == 1){
+    var f = "getSpots"; // if reading
+    if (query_type == 1){ // if streaming
         f = "getStreamingsPlatforms";
     }
     return createRadioElement(name, id, label, f);
@@ -85,6 +90,7 @@ function createRadioElementStreamingsPlatforms( mode, name, checked, id, label )
     var f = "getStreamingsDates";   
     return createRadioElement(name, id, label, f);
 }
+// this one doesnt use the general formula.
 function createRadioElementStreamingsDates( mode, name, checked, date ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamings('+ "'" + date + "'" +')"type="radio" name="' + name + '" id="' + date + '"';
     if ( checked ) {
