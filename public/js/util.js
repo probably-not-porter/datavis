@@ -43,65 +43,54 @@ function switchToData(){
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 
 // TEAMPLATES FOR DOM PIECES
-function createRadioElementTrips( mode, name, checked, label, id ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSites(' + id + ')" type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label + "</strong><span class='detailed_info'> (ID: " + id +')</span></label></div>';
 
-    return radioHtml;
-}
-
-function createRadioElementSites( mode, name, checked, label, siteid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getSectors('+ siteid + ')" type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + siteid +')</span></label></div>';
-
-    return radioHtml;
-}
-function createRadioElementSectors( mode, name, checked, label,sectorid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" '
-    // switch for streaming
-    if (query_type == 1){
-        radioHtml += 'onchange="getStreamingsPlatforms('+ sectorid + ')"';
+// generalized formula
+function createRadioElement(name, id, label, f){
+    console.log(name,id,label);
+    var radioHtml = '<div class="elem-div elem-0">'
+    if (typeof id === 'string' || id instanceof String){
+        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
+        radioHtml += "'" + id + "'";
+        radioHtml +=')" type="radio" name="' + name + '" id="' + label + '" />';
     }else{
-        radioHtml += 'onchange="getSpots('+ sectorid + ')"';
+        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(' + id + ')" type="radio" name="' + name + '" id="' + label + '" />';
     }
-
-    radioHtml += ' type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>'+ label +"</strong><span class='detailed_info'> (ID: " + sectorid +')</span></label></div>';
+    radioHtml += '<label for="' + label + '">';
+    radioHtml += '<strong>'+ label + "</strong>";
+    radioHtml += '<span class="detailed_info"> (ID: ' + id +')</span>';
+    radioHtml += '</label></div>';
 
     return radioHtml;
 }
-function createRadioElementSpots( mode, name, checked, label,spotid ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getReadings('+ spotid + ')" type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>Spot #'+ label +'</strong></label></div>';
 
-    return radioHtml;
+// take information from data.js and write it into html
+function createRadioElementTrips( mode, name, checked, label, id ) {
+    var f = "getSites";
+    return createRadioElement(name, id, label, f);
 }
-function createRadioElementStreamingsPlatforms( mode, name, checked, id,name ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamingsDates('+ "'" +id.toString()+ "'" +')"type="radio" name="' + 'streamingplatforms' + '" id="' + name + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
+
+function createRadioElementSites( mode, name, checked, label, id ) {
+    var f = "getSectors";
+    return createRadioElement(name, id, label, f);
+}
+// this one is different since it changes for reading and streaming
+function createRadioElementSectors( mode, name, checked, label, id ) {
+    var f = "getSpots"; // if reading
+    if (query_type == 1){ // if streaming
+        f = "getStreamingsPlatforms";
     }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + name + '"><strong>'+ name + "</strong><span class='detailed_info'> (ID: " + id + ")" +'</span></label></div>';
+    return createRadioElement(name, id, label, f);
+}
+function createRadioElementSpots( mode, name, checked, label,id ) {
+    var f = "getReadings";
+    return createRadioElement(name, id, label, f);
     
-    return radioHtml;
 }
+function createRadioElementStreamingsPlatforms( mode, name, checked, id, label ) {
+    var f = "getStreamingsDates";   
+    return createRadioElement(name, id, label, f);
+}
+// this one doesnt use the general formula.
 function createRadioElementStreamingsDates( mode, name, checked, date ) {
     var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onchange="getStreamings('+ "'" + date + "'" +')"type="radio" name="' + name + '" id="' + date + '"';
     if ( checked ) {
@@ -113,22 +102,12 @@ function createRadioElementStreamingsDates( mode, name, checked, date ) {
     return radioHtml;
 }
 function createRadioElementStreamings( mode, name, checked, label ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayStreamings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
-    return radioHtml;
+    var f = "displayStreamings";
+    return createRadioElement(name, name, label, f);
 }
 function createRadioElementReadings( mode, name, checked, label ) {
-    var radioHtml = '<div class="elem-div elem-' + mode + '"><input class="data-radio form-radio" onclick="displayReadings(' + "'" + label + "'" + ')" type="radio" name="' + name + '" id="' + label + '"';
-    if ( checked ) {
-        radioHtml += ' checked="checked"';
-    }
-    radioHtml += '/>';
-    radioHtml += '<label for="' + label + '"><strong>Set '+ label +'</strong></label></div>';
-    return radioHtml;
+    var f = "displayReadings";
+    return createRadioElement(name, label, label, f);
 }
 
 function getRandomColor() {

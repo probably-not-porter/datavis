@@ -24,7 +24,54 @@ $( document ).ready(function() {
         }
     });
 });
-function createGraph(dataset, title,color){
+function createGraphReading(dataset, q_arr, color){
+    //reset containers
+    document.getElementById('readingStats').style.display = 'block';
+    document.getElementById('line-chart').style.display = 'none';
+
+    //prepare active container
+    var parent = document.getElementById('readingStats');
+    parent.innerHTML = "";
+
+    // create title
+    var trip = q_arr[0];
+    var site = q_arr[1];
+    var sector = q_arr[2];
+    var spot = q_arr[3];
+
+    var title = document.createElement('h');
+    title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector + ", Spot " + spot; 
+    parent.append(title);
+
+    //fill with content
+    var textElem = document.createElement('p');
+    textElem.innerHTML = "Latitude: " + dataset[x].latitude;
+    parent.append(textElem);
+
+    var textElem = document.createElement('p');
+    textElem.innerHTML = "Longitude: " + dataset[x].longitude;
+    parent.append(textElem);
+
+    var textElem = document.createElement('p');
+    textElem.innerHTML = "Elevation: " + dataset[x].elevation;
+    parent.append(textElem);
+
+    var textElem = document.createElement('p');
+    textElem.innerHTML = "Accuracy: " + dataset[x].accuracy;
+    parent.append(textElem);
+    
+    for (x=0;x<dataset.length;x++){
+        var textElem = document.createElement('p');
+        textElem.innerHTML = dataset[x].sensorid + ": " + dataset[x].value;
+        parent.append(textElem);
+    }
+    
+}
+function createGraphStreaming(dataset, title,color){
+    // reset some containers
+    document.getElementById('line-chart').style.display = 'block';
+    document.getElementById('readingStats').style.display = 'none';
+
     title = ''
     times_arr = []; // x axis ticks (timestamps)
     data = [[]]; // this array will each set of data (split by sensor)
@@ -70,6 +117,7 @@ function addData(chart,times,data,types,color,title) {
     if (chart){
         chart.destroy(); // clear old information so it doesnt overflow
     }
+
     chart = new Chart(document.getElementById("line-chart"), { // create new chart structure for streaming data
         type: 'scatter',
         data: {},

@@ -35,7 +35,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
       center: [-13.68, 65.29],
       container: "viewDiv",
       map: map,
-      zoom: 11
+      zoom: 15
     });
     var basemapToggle = new BasemapToggle({
         viewModel: {  // autocasts as new BasemapToggleViewModel()

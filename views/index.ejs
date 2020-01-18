@@ -20,6 +20,7 @@
         <link rel="stylesheet" type="text/css" href="css/graph.css" />
         <link rel="stylesheet" type="text/css" href="css/data.css" />
         <link rel="stylesheet" type="text/css" href="css/map.css" />
+        <link rel="stylesheet" type="text/css" href="css/mobile.css" />
     </head>
     <body>
         <div id='loading'>
@@ -67,6 +68,7 @@
         <div id='graphView'>
             <div id='graph'>
                 <canvas id="line-chart"></canvas>
+                <div id='readingStats' style='position:absolute;z-index: 10;width: 100%; height: 100%;'></div>
             </div>
             <div id='navcontrols'>
                 <div class='tooltip2'>
@@ -107,8 +109,7 @@
 
         <div id='dataView'>
             <div id='title'>
-                <span style='font-size:30px;'>IFS Datavis Tool</span><br>
-                <span style='font-size:15px;'>Additional Info</span>
+                <span style='font-size:20px;'>IFS Datavis Tool</span><br>
             </div>
             <div id='data'>
                 <div class='data-catagory' id='query_type'>
