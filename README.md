@@ -8,7 +8,7 @@ Porter Libby
 [![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://cluster.earlham.edu:9900/)
 
 **Docs:**
-[ [ Database Map ] ](docs/DATABASE.md) [ [ Customization ] ](docs/CUSTOM.md)
+[ [ Database Map ] ](docs/DATABASE.md) [ [ Customization ] ](docs/CUSTOM.md) [ [ Mobile App ] ](docs/CUSTOM.md)
 
 
 [ Live Demo Version ](http://cluster.earlham.edu:9900/)
