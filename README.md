@@ -1,11 +1,11 @@
 # IFS Datavis Tool 2
 
-Porter Libby
+Contributors: Porter Libby
 
-[![GitHub issues](https://img.shields.io/github/issues/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/issues)
-[![GitHub license](https://img.shields.io/github/license/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/blob/master/LICENSE)
-![GitHub repo size](https://img.shields.io/github/repo-size/probably-not-porter/datavis)
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://cluster.earlham.edu:9900/)
+[![GitHub issues](https://img.shields.io/github/issues/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/issues)<br>
+[![GitHub license](https://img.shields.io/github/license/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/blob/master/LICENSE)<br>
+![GitHub repo size](https://img.shields.io/github/repo-size/probably-not-porter/datavis)<br>
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://cluster.earlham.edu:9900/)<br>
 
 **Docs:**
 [ [ Database Map ] ](docs/DATABASE.md) [ [ Customization ] ](docs/CUSTOM.md) [ [ Mobile App ] ](docs/CUSTOM.md)
