@@ -243,12 +243,11 @@ function getReadings(spot_id){
     if (!current_spots.includes(spot_id)){
         current_spots.push(spot_id);
     }
-    document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
-    document.getElementById('reading').innerHTML = placeholderHTML;
+    document.getElementById('data-prompt').innerHTML = "Pick some spots to compare";
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
-    togglediv('#spots-ls','spots-button');
+    //togglediv('#spots-ls','spots-button');
 
     query_selection[3] = current_spots;
     $.ajax({
