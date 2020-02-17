@@ -49,7 +49,6 @@ function createGraphReading(dataset, q_arr, color){
         tableHTML += createTableHeader(keys);
 
         for ( x = 0 ; x < dataset.length ; x++){
-            console.log(dataset[x]);
             prop_arr = [];
             for (y=0;y<keys.length;y++){
                 if (keys[y] == "Date"){
