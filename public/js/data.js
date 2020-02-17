@@ -147,6 +147,7 @@ function getSectors(site_id){
     });
 }
 function getSpots(sector_id){
+    current_spots = [];
     document.getElementById('data-prompt').innerHTML = "Pick a spot."
     document.getElementById('spots').innerHTML = placeholderHTML;
 
@@ -239,10 +240,19 @@ function getReadingsDates(platformid){
         }
     });
 }
-function getReadings(spot_id){
-    if (!current_spots.includes(spot_id)){
-        current_spots.push(spot_id);
+function getReadings(spot_id,value){
+    if (value == true){ // add spot to list
+        if (!current_spots.includes(spot_id)){
+            current_spots.push(spot_id);
+        }
+    }else{
+        if (current_spots.includes(spot_id)){
+            var index = current_spots.indexOf(spot_id);
+            if (index !== -1) current_spots.splice(index, 1);
+        }
     }
+    console.log("CURRENT SPOTS: " + current_spots);
+    
     document.getElementById('data-prompt').innerHTML = "Pick some spots to compare";
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
@@ -267,8 +277,8 @@ function getReadings(spot_id){
             var color = getRandomColor();
             query_data = processReadings(readings);
 
-            //createPoints([readings[0]], color);
-            //createGraphReading(readings, query_selection,  color);
+            //createPoints(query_data, color);
+            createGraphReading(query_data, query_selection,  color);
 
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");

@@ -26,7 +26,7 @@ $( document ).ready(function() {
 });
 function createGraphReading(dataset, q_arr, color){
     console.log("TABLE INFO");
-    console.log(dataset,q_arr);
+    console.log(dataset);
     //reset containers
     document.getElementById('readingStats').style.display = 'block';
     document.getElementById('line-chart').style.display = 'none';
@@ -39,49 +39,40 @@ function createGraphReading(dataset, q_arr, color){
     var trip = q_arr[0];
     var site = q_arr[1];
     var sector = q_arr[2];
-    var spot = q_arr[3];
 
     var title = document.createElement('h');
     title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
     parent.append(title);
 
     const table = document.createElement('table');
+    var tableHTML = "";
+    var keys = Object.keys(dataset[0]);
+    tableHTML += createTableRow(keys);
 
-    // create headings
-    var table_arr = [['spot','latitude','longitude','elevation','accuracy']];
-    for (x=0;x<dataset[0].length;x++){
-        if (!table_arr.includes(dataset[0][x].sensortype)){
-            table_arr[0].push(dataset[0][x].sensortype);
+    console.log(dataset);
+    for ( x = 0 ; x < dataset.length ; x++){
+        console.log(x);
+        prop_arr = [];
+        for (y=0;y<keys.length;y++){
+            prop_arr.push(dataset[x][keys[y]]);
         }
+        tableHTML += createTableRow(prop_arr);
     }
-    
-    for (x=0;x<dataset.length;x++){
-        current_dataset = dataset[x];
-        new_row = [];
-        new_row.push(current_dataset[0].spotid);
-        new_row.push(current_dataset[0].latitude);
-        new_row.push(current_dataset[0].longitude);
-        new_row.push(current_dataset[0].elevation);
-        new_row.push(current_dataset[0].accuracy);
-        for (y=0;y<current_dataset.length;y++){
-            current_record = current_dataset[y];
-            for(t in table_arr[0]){
-                if (current_record.sensortype == table_arr[0][t] && !new_row[t]){
-                    new_row.push(current_record.value);
-                }
-            }
-        }
-        
-        table_arr.push(new_row);
-    }
-    console.log('data to render')
-    console.log(table_arr);
-    
 
     // append table to parent
-    //table.innerHTML = tableHTML;
-    //parent.append(table);
+    console.log(tableHTML);
+    table.innerHTML = tableHTML;
+    parent.append(table);
     
+}
+function createTableRow(arr){
+    console.log(arr);
+    text = '<tr>';
+    for (j=0;j<arr.length;j++){
+        text += "<td>" + arr[j] + "</td>"
+    }
+    text += '</tr>';
+    return text;
 }
 function createGraphStreaming(dataset, title,color){
     // reset some containers

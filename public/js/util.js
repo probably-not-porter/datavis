@@ -91,7 +91,7 @@ function createRadioElementSpots( mode, name, checked, label,id ) {
         radioHtml += "'" + id + "'";
         radioHtml +=')" type="checkbox" name="' + name + '" id="' + label + '" />';
     }else{
-        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(' + id + ')" type="checkbox" name="' + name + '" id="' + label + '" />';
+        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(' + id + ',this.checked)" type="checkbox" name="' + name + '" id="' + label + '" />';
     }
     radioHtml += '<label for="' + label + '">';
     radioHtml += '<strong>'+ label + "</strong>";
