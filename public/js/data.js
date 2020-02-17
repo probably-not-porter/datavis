@@ -273,7 +273,7 @@ function getReadings(spot_id,value){
                 var color = getRandomColor();
                 query_data = processReadings(readings);
     
-                //createPoints(query_data, color);
+                createPoints(query_data, color);
                 createGraphReading(query_data, query_selection,  color);
     
                 var dataview = document.getElementById("dataView")
