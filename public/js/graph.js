@@ -25,8 +25,6 @@ $( document ).ready(function() {
     });
 });
 function createGraphReading(dataset, q_arr, color){
-    console.log("TABLE INFO");
-    console.log(dataset);
     //reset containers
     document.getElementById('readingStats').style.display = 'block';
     document.getElementById('line-chart').style.display = 'none';
@@ -49,24 +47,19 @@ function createGraphReading(dataset, q_arr, color){
     var keys = Object.keys(dataset[0]);
     tableHTML += createTableHeader(keys);
 
-    console.log(dataset);
     for ( x = 0 ; x < dataset.length ; x++){
-        console.log(x);
         prop_arr = [];
         for (y=0;y<keys.length;y++){
             prop_arr.push(dataset[x][keys[y]]);
         }
         tableHTML += createTableRow(prop_arr);
     }
-
     // append table to parent
-    console.log(tableHTML);
     table.innerHTML = tableHTML;
     parent.append(table);
     
 }
 function createTableRow(arr){
-    console.log(arr);
     text = '<tr>';
     for (j=0;j<arr.length;j++){
         text += "<td>" + arr[j] + "</td>"
@@ -75,7 +68,6 @@ function createTableRow(arr){
     return text;
 }
 function createTableHeader(arr){
-    console.log(arr);
     text = '<tr>';
     for (j=0;j<arr.length;j++){
         text += "<th>" + arr[j] + "</th>"

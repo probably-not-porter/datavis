@@ -46,7 +46,6 @@ function switchToData(){
 
 // generalized formula
 function createRadioElement(name, id, label, f){
-    console.log(name,id,label);
     var radioHtml = '<div class="elem-div elem-0">'
     if (typeof id === 'string' || id instanceof String){
         radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
@@ -84,7 +83,6 @@ function createRadioElementSectors( mode, name, checked, label, id ) {
 function createRadioElementSpots( mode, name, checked, label,id ) {
     var f = "getReadings";
     //return createRadioElement(name, id, label, f);
-    console.log(name,id,label);
     var radioHtml = '<div class="elem-div elem-0">'
     if (typeof id === 'string' || id instanceof String){
         radioHtml += '<input class="data-radio form-check" onchange="'+ f +'(';

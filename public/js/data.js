@@ -267,8 +267,7 @@ function getReadings(spot_id,value){
             }
 
             console.info('DATA - readings');
-            console.info(query_selection);
-            console.info('Loaded ' + readings.length + " points.");
+            console.info('Loaded ' + readings.length + " data points.");
 
             var color = getRandomColor();
             query_data = processReadings(readings);
@@ -531,9 +530,7 @@ function togglediv(target_div,btn_span){
     }
 }
 function processReadings(readings){
-    console.log(readings);
     spotids = query_selection[3];
-    console.log(spotids);
     spots_out = [];
     for (x=0;x<spotids.length;x++){
         current_data = [];
@@ -543,7 +540,6 @@ function processReadings(readings){
             }
         }
         if (current_data.length != 0){
-            console.log(current_data);
             const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
             var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
     
