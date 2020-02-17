@@ -87,11 +87,11 @@ function createRadioElementSpots( mode, name, checked, label,id ) {
     console.log(name,id,label);
     var radioHtml = '<div class="elem-div elem-0">'
     if (typeof id === 'string' || id instanceof String){
-        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
+        radioHtml += '<input class="data-radio form-check" onchange="'+ f +'(';
         radioHtml += "'" + id + "'";
         radioHtml +=')" type="checkbox" name="' + name + '" id="' + label + '" />';
     }else{
-        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(' + id + ',this.checked)" type="checkbox" name="' + name + '" id="' + label + '" />';
+        radioHtml += '<input class="data-radio form-check" onchange="'+ f +'(' + id + ',this.checked)" type="checkbox" name="' + name + '" id="' + label + '" />';
     }
     radioHtml += '<label for="' + label + '">';
     radioHtml += '<strong>'+ label + "</strong>";

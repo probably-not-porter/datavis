@@ -47,7 +47,7 @@ function createGraphReading(dataset, q_arr, color){
     const table = document.createElement('table');
     var tableHTML = "";
     var keys = Object.keys(dataset[0]);
-    tableHTML += createTableRow(keys);
+    tableHTML += createTableHeader(keys);
 
     console.log(dataset);
     for ( x = 0 ; x < dataset.length ; x++){
@@ -70,6 +70,15 @@ function createTableRow(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
         text += "<td>" + arr[j] + "</td>"
+    }
+    text += '</tr>';
+    return text;
+}
+function createTableHeader(arr){
+    console.log(arr);
+    text = '<tr>';
+    for (j=0;j<arr.length;j++){
+        text += "<th>" + arr[j] + "</th>"
     }
     text += '</tr>';
     return text;

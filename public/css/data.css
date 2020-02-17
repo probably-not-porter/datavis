@@ -117,6 +117,68 @@ input[type="radio"]:checked{
 {
      background-color: #f1f1f1;
 }
+
+
+
+
+
+
+
+
+
+input[type="checkbox"]:checked+label{ 
+  font-weight: bold; 
+  text-decoration: underline;
+}
+input[type="checkbox"]:checked{ 
+  background-color: white;
+  color: green;
+  font-size: 20px;
+}
+.form-check
+{
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   display: inline-block;
+   position: relative;
+   background-color: #f1f1f1;
+   color: var(--themeh);
+   top: 10px;
+   height: 30px;
+   width: 30px;
+   border: 0;
+   border-radius: 2px;
+   cursor: pointer;     
+   margin-right: 7px;
+   outline: none;
+}
+.form-check:checked::before
+{
+   position: absolute;
+   font: 13px/1 'Open Sans', sans-serif;
+   left: 11px;
+   top: 7px;
+   content: '\02143';
+   transform: rotate(40deg);
+}
+.form-check:hover
+{
+   background-color: var(--theme4);
+}
+.form-check:checked
+{
+   background-color: #f1f1f1;
+}
+
+
+
+
+
+
+
+
+
 label
 {
      font: 15px/1.7 'Open Sans', sans-serif;

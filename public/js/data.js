@@ -148,7 +148,7 @@ function getSectors(site_id){
 }
 function getSpots(sector_id){
     current_spots = [];
-    document.getElementById('data-prompt').innerHTML = "Pick a spot."
+    document.getElementById('data-prompt').innerHTML = "Pick some spots to compare!"
     document.getElementById('spots').innerHTML = placeholderHTML;
 
     resetElements(['streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
@@ -253,7 +253,7 @@ function getReadings(spot_id,value){
     }
     console.log("CURRENT SPOTS: " + current_spots);
     
-    document.getElementById('data-prompt').innerHTML = "Pick some spots to compare";
+    
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -285,7 +285,7 @@ function getReadings(spot_id,value){
             dataview.querySelector("#nav-button-map").classList.add("new_data_button");
 
             document.getElementById('reading').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+readings.length+" points to the graph and map!";
+            document.getElementById('data-prompt').innerHTML = "Loaded "+current_spots.length+" spots to the graph and map! <br> Pick some more?";
 
             document.getElementById("button_permalink").disabled = false;
             document.getElementById("button_csv").disabled = false;
@@ -550,12 +550,12 @@ function processReadings(readings){
         out_node = {};
         for(j=0;j<current_data.length;j++){
             if (current_data[j].recordtime = min || !out_node.recordtime){
+                out_node.Spot = current_data[j].spotid;
                 out_node.recordtime = current_data[j].recordtime;
                 out_node.elevation = current_data[j].elevation;
                 out_node.longitude = current_data[j].longitude;
                 out_node.latitude = current_data[j].latitude;
                 out_node.accuracy = current_data[j].accuracy;
-                out_node.spotid = current_data[j].spotid;
                 if (!out_node[current_data[j].sensortype]){
                     out_node[current_data[j].sensortype] = current_data[j].value;
                 }
