@@ -33,32 +33,34 @@ function createGraphReading(dataset, q_arr, color){
     var parent = document.getElementById('readingStats');
     parent.innerHTML = "";
 
-    // create title
-    var trip = q_arr[0];
-    var site = q_arr[1];
-    var sector = q_arr[2];
+    if (dataset != null){
+        // create title
+        var trip = q_arr[0];
+        var site = q_arr[1];
+        var sector = q_arr[2];
 
-    var title = document.createElement('h');
-    title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
-    parent.append(title);
+        var title = document.createElement('h');
+        title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
+        parent.append(title);
 
-    const table = document.createElement('table');
-    var tableHTML = "";
-    var keys = Object.keys(dataset[0]);
-    tableHTML += createTableHeader(keys);
+        const table = document.createElement('table');
+        var tableHTML = "";
+        var keys = Object.keys(dataset[0]);
+        tableHTML += createTableHeader(keys);
 
-    for ( x = 0 ; x < dataset.length ; x++){
-        prop_arr = [];
-        for (y=0;y<keys.length;y++){
-            prop_arr.push(dataset[x][keys[y]]);
+        for ( x = 0 ; x < dataset.length ; x++){
+            prop_arr = [];
+            for (y=0;y<keys.length;y++){
+                prop_arr.push(dataset[x][keys[y]]);
+            }
+            tableHTML += createTableRow(prop_arr);
         }
-        tableHTML += createTableRow(prop_arr);
+        // append table to parent
+        table.innerHTML = tableHTML;
+        parent.append(table);
     }
-    // append table to parent
-    table.innerHTML = tableHTML;
-    parent.append(table);
-    
 }
+
 function createTableRow(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
