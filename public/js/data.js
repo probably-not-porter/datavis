@@ -13,7 +13,6 @@ var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
 var query_data = null;
 
-var current_spots = [];
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 var placeholder2HTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Adding points to Chart and Map...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
@@ -147,7 +146,7 @@ function getSectors(site_id){
     });
 }
 function getSpots(sector_id){
-    current_spots = [];
+    query_selection[3] = [];
     document.getElementById('data-prompt').innerHTML = "Pick some spots to compare!"
     document.getElementById('spots').innerHTML = placeholderHTML;
 
@@ -190,7 +189,7 @@ function getReadingsPlatforms(spot_id){
     
 
     togglediv('#spots-ls','spots-button');
-    query_selection[3] = spot_id;
+    //query_selection[3] = spot_id;
 
     $.ajax({
         type: 'GET',
@@ -242,28 +241,24 @@ function getReadingsDates(platformid){
 }
 function getReadings(spot_id,value){
     if (value == true){ // add spot to list
-        if (!current_spots.includes(spot_id)){
-            current_spots.push(spot_id);
+        if (!query_selection[3].includes(spot_id)){
+            query_selection[3].push(spot_id);
         }
     }else{
-        if (current_spots.includes(spot_id)){
-            var index = current_spots.indexOf(spot_id);
-            if (index !== -1) current_spots.splice(index, 1);
+        if (query_selection[3].includes(spot_id)){
+            var index = query_selection[3].indexOf(spot_id);
+            if (index !== -1) query_selection[3].splice(index, 1);
         }
     }
-    console.log("CURRENT SPOTS: " + current_spots);
-    
     
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
     //togglediv('#spots-ls','spots-button');
-
-    query_selection[3] = current_spots;
     $.ajax({
         type: 'GET',
         url: '/readings',
-        data: {spotids: current_spots, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        data: {spotids: query_selection[3], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var readings = [];
 
@@ -272,6 +267,7 @@ function getReadings(spot_id,value){
             }
 
             console.info('DATA - readings');
+            console.info(query_selection);
             console.info('Loaded ' + readings.length + " points.");
 
             var color = getRandomColor();
@@ -285,7 +281,7 @@ function getReadings(spot_id,value){
             dataview.querySelector("#nav-button-map").classList.add("new_data_button");
 
             document.getElementById('reading').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+current_spots.length+" spots to the graph and map! <br> Pick some more?";
+            document.getElementById('data-prompt').innerHTML = "Loaded "+query_selection[3].length+" spots to the graph and map! <br> Pick some more?";
 
             document.getElementById("button_permalink").disabled = false;
             document.getElementById("button_csv").disabled = false;
@@ -535,7 +531,9 @@ function togglediv(target_div,btn_span){
     }
 }
 function processReadings(readings){
+    console.log(readings);
     spotids = query_selection[3];
+    console.log(spotids);
     spots_out = [];
     for (x=0;x<spotids.length;x++){
         current_data = [];
@@ -544,25 +542,29 @@ function processReadings(readings){
                 current_data.push(readings[y]);
             }
         }
-        const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
-        var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
-
-        out_node = {};
-        for(j=0;j<current_data.length;j++){
-            if (current_data[j].recordtime = min || !out_node.recordtime){
-                out_node.Spot = current_data[j].spotid;
-                out_node.recordtime = current_data[j].recordtime;
-                out_node.elevation = current_data[j].elevation;
-                out_node.longitude = current_data[j].longitude;
-                out_node.latitude = current_data[j].latitude;
-                out_node.accuracy = current_data[j].accuracy;
-                if (!out_node[current_data[j].sensortype]){
+        if (current_data.length != 0){
+            console.log(current_data);
+            const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
+            var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
+    
+            out_node = {};
+            for(j=0;j<current_data.length;j++){
+                if (current_data[j].recordtime = min || !out_node.recordtime){
+                    out_node.Spot = current_data[j].spotid;
+                    out_node.recordtime = current_data[j].recordtime;
+                    out_node.elevation = current_data[j].elevation;
+                    out_node.longitude = current_data[j].longitude;
+                    out_node.latitude = current_data[j].latitude;
+                    out_node.accuracy = current_data[j].accuracy;
+                    if (!out_node[current_data[j].sensortype]){
+                        out_node[current_data[j].sensortype] = current_data[j].value;
+                    }
+                }else if (!out_node[current_data[j].sensortype]){
                     out_node[current_data[j].sensortype] = current_data[j].value;
                 }
-            }else if (!out_node[current_data[j].sensortype]){
-                out_node[current_data[j].sensortype] = current_data[j].value;
             }
         }
+        
         spots_out.push(out_node);
     }
     return spots_out;
@@ -578,11 +580,25 @@ function loadQuery(params){
         query_selection[2] = params[4]; // load sector (skip spot)
         query_selection[4] = params[5]; // load platform
         query_selection[5] = params[6]; // load date
+
+        document.getElementById('query_type').innerHTML = "<label><div style='padding-top:10px;padding-bottom:10px;'><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></div></label>";
+        getStreamings(query_selection[5]);
+    }else if (params.length == 6 && params[1] == 0){ //reading query
+        query_type = params[1]
+        query_selection[0] = params[2]; // load trip
+        query_selection[1] = params[3]; // load site
+        query_selection[2] = params[4]; // load sector (skip spot)
+        query_selection[3] = params[5].split('$'); // load spots
+
+        console.log(query_selection[3]);
+        console.log(query_selection);
+        document.getElementById('query_type').innerHTML = "<label><div style='padding-top:10px;padding-bottom:10px;'><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></div></label>";
+        getReadings(query_selection[0],true);
     }
-    document.getElementById('query_type').innerHTML = "<label><div style='padding-top:10px;padding-bottom:10px;'><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></div></label>";
-    getStreamings(query_selection[5]);
+    
 }
 function buildQuery(){
+    console.log(query_selection);
     query_string = document.location.href.split('/?')[0];
     query_string += "?" + "query" 
     query_string += "/" + query_type
@@ -592,6 +608,17 @@ function buildQuery(){
         query_string += "/" + query_selection[2]; // skip spot
         query_string += "/" + query_selection[4];
         query_string += "/" + query_selection[5];
+    }else{
+        query_string += "/" + query_selection[0];
+        query_string += "/" + query_selection[1];
+        query_string += "/" + query_selection[2];
+        query_string += "/" 
+        for (x in query_selection[3]){
+            if (x > 0){
+                query_string += "$";
+            }
+            query_string += query_selection[3][x];
+        }
     }
     document.getElementById('data-prompt').innerHTML = "Query Permalink: " + query_string;
 }

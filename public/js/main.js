@@ -18,6 +18,7 @@ function ready(){
     if (url_parts[1]){ // selection exists
         if (url_parts[1].length > 0){ // params exist
             url_params = url_parts[1].split('/');
+            console.log(url_params);
         }
         if ((url_params[0] == 'query') && (url_params.length > 5)){ // load premade query
             loadQuery(url_params);
