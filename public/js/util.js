@@ -83,8 +83,22 @@ function createRadioElementSectors( mode, name, checked, label, id ) {
 }
 function createRadioElementSpots( mode, name, checked, label,id ) {
     var f = "getReadings";
-    return createRadioElement(name, id, label, f);
-    
+    //return createRadioElement(name, id, label, f);
+    console.log(name,id,label);
+    var radioHtml = '<div class="elem-div elem-0">'
+    if (typeof id === 'string' || id instanceof String){
+        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
+        radioHtml += "'" + id + "'";
+        radioHtml +=')" type="checkbox" name="' + name + '" id="' + label + '" />';
+    }else{
+        radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(' + id + ')" type="checkbox" name="' + name + '" id="' + label + '" />';
+    }
+    radioHtml += '<label for="' + label + '">';
+    radioHtml += '<strong>'+ label + "</strong>";
+    radioHtml += '<span class="detailed_info"> (ID: ' + id +')</span>';
+    radioHtml += '</label></div>';
+
+    return radioHtml;
 }
 function createRadioElementStreamingsPlatforms( mode, name, checked, id, label ) {
     var f = "getStreamingsDates";   

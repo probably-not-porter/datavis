@@ -78,7 +78,24 @@ const getReadingsDates = (request, response) => {
 }
 const getReadings = (request, response) => {
     console.info("Database: SELECT tripid,siteid,sectorid,spotid,platformid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and spotid='+ request.query.spotid +';');
-    pool.query("SELECT tripid,siteid,sectorid,spotid,platformid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and spotid='+ request.query.spotid +';', (error, results) => {
+    
+    var query = "SELECT tripid,siteid,sectorid,spotid,platformid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and ';
+    if (request.query.spotids.length > 1){
+        query += "(";
+    }
+    for(x=0;x<request.query.spotids.length;x++){
+        if (x > 0){
+            query += " OR ";
+        }
+        query += 'spotid='+ request.query.spotids[x];
+    }
+    if (request.query.spotids.length > 1){
+        query += ")";
+    }
+    query += ';';
+    console.info("Database:" + query);
+
+    pool.query(query, (error, results) => {
         if (error) {
             throw error
         }

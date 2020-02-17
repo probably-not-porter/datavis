@@ -48,22 +48,39 @@ function createGraphReading(dataset, q_arr, color){
     const table = document.createElement('table');
 
     // create headings
-    var tableHTML = "<tr><th> Spot </th><th>Latitude </th><th> Longitude </th><th> Elevation </th><th> Accuracy </th>";
-    for (x=0;x<dataset.length;x++){
-        tableHTML += "<th>" + dataset[x].sensortype + "</th>";
+    var table_arr = [['spot','latitude','longitude','elevation','accuracy']];
+    for (x=0;x<dataset[0].length;x++){
+        if (!table_arr.includes(dataset[0][x].sensortype)){
+            table_arr[0].push(dataset[0][x].sensortype);
+        }
     }
-    tableHTML += "</tr>";
-
-    // create values
-    tableHTML += "<tr><th>" + spot + "</th><th>" + dataset[0].latitude + "</th><th>" + dataset[0].longitude + "</th><th>" + dataset[0].elevation + "</th><th>" + dataset[0].accuracy + "</th>";
+    
     for (x=0;x<dataset.length;x++){
-        tableHTML += "<th> " + dataset[x].value + "</th>";
+        current_dataset = dataset[x];
+        new_row = [];
+        new_row.push(current_dataset[0].spotid);
+        new_row.push(current_dataset[0].latitude);
+        new_row.push(current_dataset[0].longitude);
+        new_row.push(current_dataset[0].elevation);
+        new_row.push(current_dataset[0].accuracy);
+        for (y=0;y<current_dataset.length;y++){
+            current_record = current_dataset[y];
+            for(t in table_arr[0]){
+                if (current_record.sensortype == table_arr[0][t] && !new_row[t]){
+                    new_row.push(current_record.value);
+                }
+            }
+        }
+        
+        table_arr.push(new_row);
     }
-    tableHTML += "</tr>";
+    console.log('data to render')
+    console.log(table_arr);
+    
 
     // append table to parent
-    table.innerHTML = tableHTML;
-    parent.append(table);
+    //table.innerHTML = tableHTML;
+    //parent.append(table);
     
 }
 function createGraphStreaming(dataset, title,color){

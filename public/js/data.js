@@ -13,6 +13,8 @@ var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
 var query_data = null;
 
+var current_spots = [];
+
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 var placeholder2HTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Adding points to Chart and Map...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 
@@ -238,6 +240,9 @@ function getReadingsDates(platformid){
     });
 }
 function getReadings(spot_id){
+    if (!current_spots.includes(spot_id)){
+        current_spots.push(spot_id);
+    }
     document.getElementById('data-prompt').innerHTML = "Pick a set of data to visualize";
     document.getElementById('reading').innerHTML = placeholderHTML;
     document.getElementById("button_permalink").disabled = true;
@@ -245,11 +250,11 @@ function getReadings(spot_id){
 
     togglediv('#spots-ls','spots-button');
 
-    query_selection[3] = spot_id;
+    query_selection[3] = current_spots;
     $.ajax({
         type: 'GET',
         url: '/readings',
-        data: {spotid: spot_id, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        data: {spotids: current_spots, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var readings = [];
 
@@ -261,10 +266,10 @@ function getReadings(spot_id){
             console.info('Loaded ' + readings.length + " points.");
 
             var color = getRandomColor();
-            query_data = readings;
+            query_data = processReadings(readings);
 
-            createPoints([readings[0]], color);
-            createGraphReading(readings, query_selection,  color);
+            //createPoints([readings[0]], color);
+            //createGraphReading(readings, query_selection,  color);
 
             var dataview = document.getElementById("dataView")
             dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
@@ -519,6 +524,39 @@ function togglediv(target_div,btn_span){
         }
         $(target_div).slideToggle();
     }
+}
+function processReadings(readings){
+    spotids = query_selection[3];
+    spots_out = [];
+    for (x=0;x<spotids.length;x++){
+        current_data = [];
+        for(y=0;y<readings.length;y++){
+            if (readings[y].spotid == spotids[x]){
+                current_data.push(readings[y]);
+            }
+        }
+        const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
+        var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
+
+        out_node = {};
+        for(j=0;j<current_data.length;j++){
+            if (current_data[j].recordtime = min || !out_node.recordtime){
+                out_node.recordtime = current_data[j].recordtime;
+                out_node.elevation = current_data[j].elevation;
+                out_node.longitude = current_data[j].longitude;
+                out_node.latitude = current_data[j].latitude;
+                out_node.accuracy = current_data[j].accuracy;
+                out_node.spotid = current_data[j].spotid;
+                if (!out_node[current_data[j].sensortype]){
+                    out_node[current_data[j].sensortype] = current_data[j].value;
+                }
+            }else if (!out_node[current_data[j].sensortype]){
+                out_node[current_data[j].sensortype] = current_data[j].value;
+            }
+        }
+        spots_out.push(out_node);
+    }
+    return spots_out;
 }
 function loadQuery(params){
     console.info('Loading query from permalink...')
