@@ -25,6 +25,8 @@ $( document ).ready(function() {
     });
 });
 function createGraphReading(dataset, q_arr, color){
+    console.log("TABLE INFO");
+    console.log(dataset,q_arr);
     //reset containers
     document.getElementById('readingStats').style.display = 'block';
     document.getElementById('line-chart').style.display = 'none';
@@ -40,31 +42,28 @@ function createGraphReading(dataset, q_arr, color){
     var spot = q_arr[3];
 
     var title = document.createElement('h');
-    title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector + ", Spot " + spot; 
+    title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
     parent.append(title);
 
-    //fill with content
-    var textElem = document.createElement('p');
-    textElem.innerHTML = "Latitude: " + dataset[x].latitude;
-    parent.append(textElem);
+    const table = document.createElement('table');
 
-    var textElem = document.createElement('p');
-    textElem.innerHTML = "Longitude: " + dataset[x].longitude;
-    parent.append(textElem);
-
-    var textElem = document.createElement('p');
-    textElem.innerHTML = "Elevation: " + dataset[x].elevation;
-    parent.append(textElem);
-
-    var textElem = document.createElement('p');
-    textElem.innerHTML = "Accuracy: " + dataset[x].accuracy;
-    parent.append(textElem);
-    
+    // create headings
+    var tableHTML = "<tr><th> Spot </th><th>Latitude </th><th> Longitude </th><th> Elevation </th><th> Accuracy </th>";
     for (x=0;x<dataset.length;x++){
-        var textElem = document.createElement('p');
-        textElem.innerHTML = dataset[x].sensortype + ": " + dataset[x].value;
-        parent.append(textElem);
+        tableHTML += "<th>" + dataset[x].sensortype + "</th>";
     }
+    tableHTML += "</tr>";
+
+    // create values
+    tableHTML += "<tr><th>" + spot + "</th><th>" + dataset[0].latitude + "</th><th>" + dataset[0].longitude + "</th><th>" + dataset[0].elevation + "</th><th>" + dataset[0].accuracy + "</th>";
+    for (x=0;x<dataset.length;x++){
+        tableHTML += "<th> " + dataset[x].value + "</th>";
+    }
+    tableHTML += "</tr>";
+
+    // append table to parent
+    table.innerHTML = tableHTML;
+    parent.append(table);
     
 }
 function createGraphStreaming(dataset, title,color){
