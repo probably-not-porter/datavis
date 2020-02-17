@@ -553,6 +553,9 @@ function processReadings(readings){
                 if (current_data[j].recordtime = min || !out_node.recordtime){
                     out_node.Spot = current_data[j].spotid;
                     out_node.recordtime = current_data[j].recordtime;
+                    out_node.tripname = current_data[j].tripname;
+                    out_node.sitename = current_data[j].sitename;
+                    out_node.sectorname = current_data[j].sectorname;
                     out_node.elevation = current_data[j].elevation;
                     out_node.longitude = current_data[j].longitude;
                     out_node.latitude = current_data[j].latitude;

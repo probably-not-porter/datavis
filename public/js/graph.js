@@ -35,23 +35,32 @@ function createGraphReading(dataset, q_arr, color){
 
     if (dataset != null){
         // create title
-        var trip = q_arr[0];
-        var site = q_arr[1];
-        var sector = q_arr[2];
+        var trip = dataset[0].tripname;
+        var site = dataset[0].sitename;
+        var sector = dataset[0].sectorname;
 
         var title = document.createElement('h');
-        title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
+        title.innerHTML = "Spots from " + trip + ", " + site + ", " + sector; 
         parent.append(title);
 
         const table = document.createElement('table');
         var tableHTML = "";
-        var keys = Object.keys(dataset[0]);
+        var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy","Accelerometer","Magnetic Field", "Pressure", "Step Counter", "Light"];
         tableHTML += createTableHeader(keys);
 
         for ( x = 0 ; x < dataset.length ; x++){
+            console.log(dataset[x]);
             prop_arr = [];
             for (y=0;y<keys.length;y++){
-                prop_arr.push(dataset[x][keys[y]]);
+                if (keys[y] == "Date"){
+                    date = new Date(dataset[x]["recordtime"]);
+                    prop_arr.push(date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate());
+                    prop_arr.push(date.toLocaleTimeString('en-US'));
+                    y++;
+
+                }else{
+                    prop_arr.push(dataset[x][keys[y]]);
+                }
             }
             tableHTML += createTableRow(prop_arr);
         }

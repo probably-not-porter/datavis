@@ -77,9 +77,16 @@ const getReadingsDates = (request, response) => {
     })
 }
 const getReadings = (request, response) => {
-    console.info("Database: SELECT tripid,siteid,sectorid,spotid,platformid,sensorid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and spotid='+ request.query.spotid +';');
+    console.info("Database: SELECT tripid,(SELECT tripname from fieldday_trip where tripid=fieldday_reading.tripid),siteid,sectorid,spotid,platformid,sensorid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and spotid='+ request.query.spotid +';');
     
-    var query = "SELECT tripid,siteid,sectorid,spotid,platformid,sensorid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and ';
+    var query = "SELECT tripid,"+
+    "(SELECT tripname from fieldday_trip where tripid=fieldday_reading.tripid),"+
+    "(SELECT sitename from fieldday_site where tripid=fieldday_reading.tripid and siteid=fieldday_reading.siteid),"+
+    "(SELECT sectorname from fieldday_sector where tripid=fieldday_reading.tripid and siteid=fieldday_reading.siteid and sectorid=fieldday_reading.sectorid),"+
+    "siteid,sectorid,spotid,platformid,sensorid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid)"+
+    ",recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where "+
+    "tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and ';
+    
     if (request.query.spotids.length > 1){
         query += "(";
     }
