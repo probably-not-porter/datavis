@@ -62,7 +62,7 @@ function createGraphReading(dataset, q_arr, color){
     
     for (x=0;x<dataset.length;x++){
         var textElem = document.createElement('p');
-        textElem.innerHTML = dataset[x].sensorid + ": " + dataset[x].value;
+        textElem.innerHTML = dataset[x].sensortype + ": " + dataset[x].value;
         parent.append(textElem);
     }
     
