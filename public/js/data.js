@@ -559,7 +559,8 @@ function processReadings(readings){
                     out_node.elevation = current_data[j].elevation;
                     out_node.longitude = current_data[j].longitude;
                     out_node.latitude = current_data[j].latitude;
-                    out_node.accuracy = current_data[j].accuracy;
+                    out_node.accuracy = current_data[j].accuracy; // 0 to 8
+
                     if (!out_node[current_data[j].sensortype]){
                         out_node[current_data[j].sensortype] = current_data[j].value;
                     }

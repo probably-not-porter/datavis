@@ -45,8 +45,13 @@ function createGraphReading(dataset, q_arr, color){
 
         const table = document.createElement('table');
         var tableHTML = "";
-        var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy","Accelerometer","Magnetic Field", "Pressure", "Step Counter", "Light"];
+        var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy"];
+        for(x=9;x<Object.keys(dataset[0]).length;x++){
+            keys.push(Object.keys(dataset[0])[x]);
+        }
+
         tableHTML += createTableHeader(keys);
+        
 
         for ( x = 0 ; x < dataset.length ; x++){
             prop_arr = [];
@@ -72,7 +77,11 @@ function createGraphReading(dataset, q_arr, color){
 function createTableRow(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
-        text += "<td>" + arr[j] + "</td>"
+        if(j==0){
+            text += "<th>Spot " + arr[j] + "</th>"
+        }else{
+            text += "<td>" + arr[j] + "</td>"
+        }
     }
     text += '</tr>';
     return text;
@@ -80,7 +89,11 @@ function createTableRow(arr){
 function createTableHeader(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
-        text += "<th>" + arr[j] + "</th>"
+        if(j==0){
+            text += "<th>" + "" + "</th>"
+        }else{
+            text += "<th>" + arr[j] + "</th>"
+        }
     }
     text += '</tr>';
     return text;
