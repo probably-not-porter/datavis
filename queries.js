@@ -164,7 +164,8 @@ const getStreamingsDates = (request, response) => {
     var query = 'SELECT DISTINCT recordtime FROM fieldday_streaming where tripid='+ (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid 
-    + " and platformid='" + request.query.platformid + "';";
+    + " and platformid='" + request.query.platformid + "'"
+    +" and hostid='"+ request.query.hostid + "';";
     serverOut(query);
 
     pool.query(query, (error, results) => {
@@ -183,6 +184,7 @@ const getStreamings = (request, response) => {
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid 
     +' and platformid='+ "'"+ request.query.platformid + "'" 
+    +" and hostid='"+ request.query.hostid + "'"
     +" and substr(recordtime::text, 0, 11) like '" + request.query.date + "'" + ';';
     serverOut(query);
 
