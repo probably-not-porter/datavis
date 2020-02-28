@@ -517,7 +517,7 @@ function renderStreamingsHosts(hosts){
         var streamingshosts_ls = document.createElement('div');
         streamingshosts_ls.id = 'streamingshosts-ls';
         for(x = 0; x < hosts.length; x++){
-            var hostname = "Unknown";
+            var hostname = "Unknown Host";
             if (hosts[x].hostname){
                 hostname = hosts[x].hostname.toString()
             }
