@@ -33,36 +33,55 @@ function createGraphReading(dataset, q_arr, color){
     var parent = document.getElementById('readingStats');
     parent.innerHTML = "";
 
-    // create title
-    var trip = q_arr[0];
-    var site = q_arr[1];
-    var sector = q_arr[2];
+    if (dataset != null){
+        // create title
+        var trip = dataset[0].tripname;
+        var site = dataset[0].sitename;
+        var sector = dataset[0].sectorname;
 
-    var title = document.createElement('h');
-    title.innerHTML = "Trip " + trip + ", Site " + site + ", Sector " + sector; 
-    parent.append(title);
+        var title = document.createElement('h');
+        title.innerHTML = "Spots from " + trip + ", " + site + ", " + sector; 
+        parent.append(title);
 
-    const table = document.createElement('table');
-    var tableHTML = "";
-    var keys = Object.keys(dataset[0]);
-    tableHTML += createTableHeader(keys);
-
-    for ( x = 0 ; x < dataset.length ; x++){
-        prop_arr = [];
-        for (y=0;y<keys.length;y++){
-            prop_arr.push(dataset[x][keys[y]]);
+        const table = document.createElement('table');
+        var tableHTML = "";
+        var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy"];
+        for(x=9;x<Object.keys(dataset[0]).length;x++){
+            keys.push(Object.keys(dataset[0])[x]);
         }
-        tableHTML += createTableRow(prop_arr);
+
+        tableHTML += createTableHeader(keys);
+        
+
+        for ( x = 0 ; x < dataset.length ; x++){
+            prop_arr = [];
+            for (y=0;y<keys.length;y++){
+                if (keys[y] == "Date"){
+                    date = new Date(dataset[x]["recordtime"]);
+                    prop_arr.push(date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate());
+                    prop_arr.push(date.toLocaleTimeString('en-US'));
+                    y++;
+
+                }else{
+                    prop_arr.push(dataset[x][keys[y]]);
+                }
+            }
+            tableHTML += createTableRow(prop_arr);
+        }
+        // append table to parent
+        table.innerHTML = tableHTML;
+        parent.append(table);
     }
-    // append table to parent
-    table.innerHTML = tableHTML;
-    parent.append(table);
-    
 }
+
 function createTableRow(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
-        text += "<td>" + arr[j] + "</td>"
+        if(j==0){
+            text += "<th>Spot " + arr[j] + "</th>"
+        }else{
+            text += "<td>" + arr[j] + "</td>"
+        }
     }
     text += '</tr>';
     return text;
@@ -70,7 +89,11 @@ function createTableRow(arr){
 function createTableHeader(arr){
     text = '<tr>';
     for (j=0;j<arr.length;j++){
-        text += "<th>" + arr[j] + "</th>"
+        if(j==0){
+            text += "<th>" + "" + "</th>"
+        }else{
+            text += "<th>" + arr[j] + "</th>"
+        }
     }
     text += '</tr>';
     return text;

@@ -255,40 +255,44 @@ function getReadings(spot_id,value){
     document.getElementById("button_csv").disabled = true;
 
     //togglediv('#spots-ls','spots-button');
-    $.ajax({
-        type: 'GET',
-        url: '/readings',
-        data: {spotids: query_selection[3], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
-        success: function(response) { 
-            var readings = [];
-
-            for(x = 0; x < response.length; x++){
-                readings.push(response[x]);
+    if (query_selection[3].length > 0){
+        $.ajax({
+            type: 'GET',
+            url: '/readings',
+            data: {spotids: query_selection[3], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+            success: function(response) { 
+                var readings = [];
+    
+                for(x = 0; x < response.length; x++){
+                    readings.push(response[x]);
+                }
+    
+                console.info('DATA - readings');
+                console.info('Loaded ' + readings.length + " data points.");
+    
+                var color = getRandomColor();
+                query_data = processReadings(readings);
+    
+                createPoints(query_data, color);
+                createGraphReading(query_data, query_selection,  color);
+    
+                var dataview = document.getElementById("dataView")
+                dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+                dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+    
+                document.getElementById('reading').innerHTML = "";
+                document.getElementById('data-prompt').innerHTML = "Loaded "+query_selection[3].length+" spots to the graph and map! <br> Pick some more?";
+    
+                document.getElementById("button_permalink").disabled = false;
+                document.getElementById("button_csv").disabled = false;
+            },
+            error: function(xhr, status, err) {
+                console.log(xhr.responseText);
             }
-
-            console.info('DATA - readings');
-            console.info('Loaded ' + readings.length + " data points.");
-
-            var color = getRandomColor();
-            query_data = processReadings(readings);
-
-            //createPoints(query_data, color);
-            createGraphReading(query_data, query_selection,  color);
-
-            var dataview = document.getElementById("dataView")
-            dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
-            dataview.querySelector("#nav-button-map").classList.add("new_data_button");
-
-            document.getElementById('reading').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+query_selection[3].length+" spots to the graph and map! <br> Pick some more?";
-
-            document.getElementById("button_permalink").disabled = false;
-            document.getElementById("button_csv").disabled = false;
-        },
-        error: function(xhr, status, err) {
-            console.log(xhr.responseText);
-        }
-    });
+        });
+    }else{
+        createGraphReading(null, null,  null);
+    }
 }
 // Streaming-specific routes
 function getStreamingsHosts(sector_id){
@@ -588,6 +592,7 @@ function processReadings(readings){
         }
         if (current_data.length != 0){
             const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
+            console.log(timestamps);
             var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
     
             out_node = {};
@@ -595,10 +600,14 @@ function processReadings(readings){
                 if (current_data[j].recordtime = min || !out_node.recordtime){
                     out_node.Spot = current_data[j].spotid;
                     out_node.recordtime = current_data[j].recordtime;
+                    out_node.tripname = current_data[j].tripname;
+                    out_node.sitename = current_data[j].sitename;
+                    out_node.sectorname = current_data[j].sectorname;
                     out_node.elevation = current_data[j].elevation;
                     out_node.longitude = current_data[j].longitude;
                     out_node.latitude = current_data[j].latitude;
-                    out_node.accuracy = current_data[j].accuracy;
+                    out_node.accuracy = current_data[j].accuracy; // 0 to 8
+
                     if (!out_node[current_data[j].sensortype]){
                         out_node[current_data[j].sensortype] = current_data[j].value;
                     }
