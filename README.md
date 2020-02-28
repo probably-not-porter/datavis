@@ -1,5 +1,5 @@
 # IFS Datavis Tool 2
-## v0.1.1
+## v0.1.2
 Contributors: Porter Libby
 
 [![GitHub issues](https://img.shields.io/github/issues/probably-not-porter/datavis)](https://github.com/probably-not-porter/datavis/issues)<br>
