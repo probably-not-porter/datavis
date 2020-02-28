@@ -517,7 +517,11 @@ function renderStreamingsHosts(hosts){
         var streamingshosts_ls = document.createElement('div');
         streamingshosts_ls.id = 'streamingshosts-ls';
         for(x = 0; x < hosts.length; x++){
-            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', false, hosts[x].hostid, hosts[x].hostname.toString()); // util function
+            var hostname = "Unknown Host";
+            if (hosts[x].hostname){
+                hostname = hosts[x].hostname.toString()
+            }
+            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', false, hosts[x].hostid, hostname ); // util function
             streamingshosts_ls.innerHTML += elem;
         }
         container.append(streamingshosts_ls);
