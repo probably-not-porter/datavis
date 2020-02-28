@@ -24,6 +24,7 @@ app.get('/spots', q.getSpots);
 app.get('/readingsplatforms', q.getReadingsPlatforms);
 app.get('/readingsdates', q.getReadingsDates);
 app.get('/readings', q.getReadings);
+app.get('/streamingshosts', q.getStreamingsHosts);
 app.get('/streamingsplatforms', q.getStreamingsPlatforms);
 app.get('/streamingsdates', q.getStreamingsDates);
 app.get('/streamings', q.getStreamings);

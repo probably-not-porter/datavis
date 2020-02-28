@@ -76,7 +76,7 @@ function createRadioElementSites( mode, name, checked, label, id ) {
 function createRadioElementSectors( mode, name, checked, label, id ) {
     var f = "getSpots"; // if reading
     if (query_type == 1){ // if streaming
-        f = "getStreamingsPlatforms";
+        f = "getStreamingsHosts";
     }
     return createRadioElement(name, id, label, f);
 }
@@ -97,6 +97,10 @@ function createRadioElementSpots( mode, name, checked, label,id ) {
     radioHtml += '</label></div>';
 
     return radioHtml;
+}
+function createRadioElementStreamingsHosts( mode, name, checked, id, label ) {
+    var f = "getStreamingsPlatforms";   
+    return createRadioElement(name, id, label, f);
 }
 function createRadioElementStreamingsPlatforms( mode, name, checked, id, label ) {
     var f = "getStreamingsDates";   

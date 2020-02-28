@@ -10,7 +10,7 @@
 // GET trips -> RENDER trips -> SELECT trip -> GET sites -> RENDER sites -> SELECT site ...
 
 var query_type = null; // 0 = reading, 1 = streaming
-var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot, platform, date
+var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot/host, platform, date
 var query_data = null;
 
 
@@ -291,9 +291,9 @@ function getReadings(spot_id,value){
     });
 }
 // Streaming-specific routes
-function getStreamingsPlatforms(sector_id){
+function getStreamingsHosts(sector_id){
     document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
-    document.getElementById('streamingplatform').innerHTML = placeholderHTML;
+    document.getElementById('streaminghost').innerHTML = placeholderHTML;
     resetElements(['streamingdates','streaming','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
@@ -304,8 +304,37 @@ function getStreamingsPlatforms(sector_id){
 
     $.ajax({
         type: 'GET',
-        url: '/streamingsplatforms',
+        url: '/streamingshosts',
         data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
+        success: function(response) { 
+            var hosts = [];
+            for(x = 0; x < response.length; x++){
+                hosts.push(response[x]);
+            }
+            console.info('DATA - HOSTS');
+            console.table(response);
+            renderStreamingsHosts(hosts);
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+function getStreamingsPlatforms(host_id){
+    document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
+    document.getElementById('streamingplatform').innerHTML = placeholderHTML;
+    resetElements(['streamingdates','streaming','reading']);
+    document.getElementById("button_permalink").disabled = true;
+    document.getElementById("button_csv").disabled = true;
+    
+
+    togglediv('#streamingshosts-ls','streamingshosts-button');
+    query_selection[3] = host_id;
+
+    $.ajax({
+        type: 'GET',
+        url: '/streamingsplatforms',
+        data: {hostid: host_id, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var plats = [];
             for(x = 0; x < response.length; x++){
@@ -476,6 +505,24 @@ function renderSpots(spotids){
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
 }
+function renderStreamingsHosts(hosts){
+    if (streamings.length != 0){
+        var container = document.getElementById('streaminghost');
+        container.innerHTML = "";
+        container.innerHTML += "<div onclick='togglediv(" + '"#streamingshosts-ls","streamingshosts-button"' + ")' class='data-header'><h1>Streaming Hosts<span id='streamingshosts-button'>-</span></h1></div>";
+        var streamingshosts_ls = document.createElement('div');
+        streamingshosts_ls.id = 'streamingshosts-ls';
+        for(x = 0; x < hosts.length; x++){
+            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', false, hosts[x].hostid, hosts[x].hostname.toString()); // util function
+            streamingshosts_ls.innerHTML += elem;
+        }
+        container.append(streamingshosts_ls);
+    }else{
+        document.getElementById('data-prompt').innerHTML = "No Platforms found for this host" // if there are no streamings, default back to sector
+        document.getElementById('streaminghosts').innerHTML = '';
+        togglediv('#sectors-ls','sectors-button');
+    }
+}
 function renderStreamingsPlatforms(platforms){
     if (streamings.length != 0){
         var container = document.getElementById('streamingplatform');
@@ -489,9 +536,9 @@ function renderStreamingsPlatforms(platforms){
         }
         container.append(streamingsplatforms_ls);
     }else{
-        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this sector" // if there are no streamings, default back to sector
+        document.getElementById('data-prompt').innerHTML = "No Streaming data found for this platform" // if there are no streamings, default back to sector
         document.getElementById('streamingplatform').innerHTML = '';
-        togglediv('#sectors-ls','sectors-button');
+        togglediv('#streamingshosts-ls','streaminshosts-button');
     }
 }
 function renderStreamingsDates(dates){
@@ -573,7 +620,7 @@ function loadQuery(params){
         query_type = params[1]
         query_selection[0] = params[2]; // load trip
         query_selection[1] = params[3]; // load site
-        query_selection[2] = params[4]; // load sector (skip spot)
+        query_selection[2] = params[4]; // load sector
         query_selection[4] = params[5]; // load platform
         query_selection[5] = params[6]; // load date
 

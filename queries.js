@@ -23,7 +23,6 @@ const pool = new Pool({
 })
 
 const getTrips = (request, response) => {
-    console.info("Database: SELECT tripName, tripID from fieldday_trip;");
     pool.query("SELECT tripName, tripID from fieldday_trip;", (error, results) => {
         if (error) {
             throw error
@@ -32,7 +31,6 @@ const getTrips = (request, response) => {
     })
 }
 const getSites = (request, response) => {
-    console.info('Database: SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';');
     pool.query('SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';', (error, results) => {
         if (error) {
             throw error
@@ -41,7 +39,6 @@ const getSites = (request, response) => {
     })
 }
 const getSectors = (request, response) => {
-    console.info('Database: SELECT sectorname, sectorid from fieldday_sector where tripid='+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + ';');
     pool.query('SELECT sectorname, sectorid from fieldday_sector where tripid='+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + ';', (error, results) => {
         if (error) {
             throw error
@@ -50,7 +47,6 @@ const getSectors = (request, response) => {
     })
 }
 const getSpots = (request, response) => {
-    console.info('Database: SELECT spotid from fieldday_spot where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +';');
     pool.query('SELECT spotid from fieldday_spot where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +';', (error, results) => {
         if (error) {
             throw error
@@ -59,7 +55,6 @@ const getSpots = (request, response) => {
     })
 }
 const getReadingsPlatforms = (request, response) => {
-    console.info('Database: SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';');
     pool.query('SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
         if (error) {
             throw error
@@ -68,7 +63,6 @@ const getReadingsPlatforms = (request, response) => {
     })
 }
 const getReadingsDates = (request, response) => {
-    console.info('Database: SELECT DISTINCT recordtime FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + " and platformid='" + request.query.platformid + "';");
     pool.query('SELECT DISTINCT recordtime FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + " and platformid='" + request.query.platformid + "';", (error, results) => {
         if (error) {
             throw error
@@ -76,9 +70,7 @@ const getReadingsDates = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
-const getReadings = (request, response) => {
-    console.info("Database: SELECT tripid,siteid,sectorid,spotid,platformid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and spotid='+ request.query.spotid +';');
-    
+const getReadings = (request, response) => {    
     var query = "SELECT tripid,siteid,sectorid,spotid,platformid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid),recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2,value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ' and ';
     if (request.query.spotids.length > 1){
         query += "(";
@@ -93,6 +85,7 @@ const getReadings = (request, response) => {
         query += ")";
     }
     query += ';';
+
     console.info("Database:" + query);
 
     pool.query(query, (error, results) => {
@@ -102,9 +95,18 @@ const getReadings = (request, response) => {
         response.status(200).json(results.rows)
     })
 }
+const getStreamingsHosts = (request, response) => {
+    pool.query('SELECT DISTINCT hostid, (SELECT DISTINCT hostname FROM fieldday_host_temp where hostid=fieldday_streaming.hostid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).json(results.rows)
+    })
+}
 const getStreamingsPlatforms = (request, response) => {
-    console.info('Database: SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';');
-    pool.query('SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + ';', (error, results) => {
+    console.log('SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +' and hostid='+ request.query.hostid + ';');
+
+    pool.query('SELECT DISTINCT platformid, (SELECT DISTINCT platformname FROM fieldday_platform where platformid=fieldday_streaming.platformid) FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid +" and hostid='"+ request.query.hostid + "';", (error, results) => {
         if (error) {
             throw error
         }
@@ -112,7 +114,6 @@ const getStreamingsPlatforms = (request, response) => {
     })
 }
 const getStreamingsDates = (request, response) => {
-    console.info('Database: SELECT DISTINCT recordtime FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + " and platformid='" + request.query.platformid + "';");
     pool.query('SELECT DISTINCT recordtime FROM fieldday_streaming where tripid='+ (request.query.tripid) +' and siteid='+ (request.query.siteid) +' and sectorid='+ request.query.sectorid + " and platformid='" + request.query.platformid + "';", (error, results) => {
         if (error) {
             throw error
@@ -121,13 +122,6 @@ const getStreamingsDates = (request, response) => {
     })
 }
 const getStreamings = (request, response) => {
-    console.log('Database: SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,recordtime,longitude,latitude,quality,elevation,accuracy,satellites,value_2,value_3,value_4,value_5,value_6'
-    +' from fieldday_streaming where tripid=' + (request.query.tripid) 
-    +' and siteid='+ (request.query.siteid) 
-    +' and sectorid='+ request.query.sectorid 
-    +' and platformid='+ "'"+ request.query.platformid + "'" 
-    +" and substr(recordtime::text, 0, 11) like '" + request.query.date + "'" 
-    + ';')
     pool.query('SELECT tripid,siteid,sectorid,hostid,platformid,sensorid,(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_streaming.sensorid),(SELECT sensorunits FROM fieldday_sensor where sensorid=fieldday_streaming.sensorid),recordtime,longitude,latitude,quality,elevation,accuracy,satellites,value_1,value_2,value_3,value_4,value_5,value_6'
     +' from fieldday_streaming where tripid=' + (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
@@ -164,6 +158,7 @@ module.exports = { // export routes to server side.
     getReadingsPlatforms,
     getReadingsDates,
     getReadings,
+    getStreamingsHosts,
     getStreamingsPlatforms,
     getStreamingsDates,
     getStreamings
