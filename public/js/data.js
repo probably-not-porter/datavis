@@ -366,7 +366,7 @@ function getStreamingsDates(platformid){
     $.ajax({
         type: 'GET',
         url: '/streamingsdates',
-        data: {platformid: platformid, sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        data: {platformid: platformid, hostid:query_selection[3] ,sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var dates = [];
             for(x = 0; x < response.length; x++){
@@ -393,7 +393,7 @@ function getStreamings(date){
     $.ajax({
         type: 'GET',
         url: '/streamings',
-        data: {date: date, platformid: query_selection[4], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
+        data: {date: date, platformid: query_selection[4],hostid:query_selection[3], sectorid: query_selection[2], siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var streamings = [];
 
