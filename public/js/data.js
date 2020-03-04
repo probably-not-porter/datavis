@@ -269,6 +269,7 @@ function getReadings(spot_id,value){
     
                 console.info('DATA - readings');
                 console.info('Loaded ' + readings.length + " data points.");
+                console.table(readings);
     
                 var color = getRandomColor();
                 query_data = processReadings(readings);
@@ -619,9 +620,8 @@ function processReadings(readings){
                     out_node[current_data[j].sensortype] = current_data[j].value_1;
                 }
             }
+            spots_out.push(out_node);
         }
-        
-        spots_out.push(out_node);
     }
     return spots_out;
 }

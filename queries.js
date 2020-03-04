@@ -100,7 +100,10 @@ const getReadingsDates = (request, response) => {
 }
 const getReadings = (request, response) => {    
     var query = "SELECT tripid,siteid,sectorid,spotid,platformid,"
-    +"(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid)"
+    +"(SELECT DISTINCT tripname FROM fieldday_trip where tripid=fieldday_reading.tripid), "
+    +"(SELECT DISTINCT sitename FROM fieldday_site where siteid=fieldday_reading.siteid AND tripid=fieldday_reading.tripid), "
+    +"(SELECT DISTINCT sectorname FROM fieldday_sector where sectorid=fieldday_reading.sectorid AND siteid=fieldday_reading.siteid AND tripid=fieldday_reading.tripid), "
+    +"(SELECT DISTINCT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid)"
     +",recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value_1,value_2"
     +",value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 

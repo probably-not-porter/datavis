@@ -25,6 +25,7 @@ $( document ).ready(function() {
     });
 });
 function createGraphReading(dataset, q_arr, color){
+    console.log(dataset);
     //reset containers
     document.getElementById('readingStats').style.display = 'block';
     document.getElementById('line-chart').style.display = 'none';
