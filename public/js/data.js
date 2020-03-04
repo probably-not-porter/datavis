@@ -613,10 +613,10 @@ function processReadings(readings){
                     out_node.accuracy = current_data[j].accuracy; // 0 to 8
 
                     if (!out_node[current_data[j].sensortype]){
-                        out_node[current_data[j].sensortype] = current_data[j].value;
+                        out_node[current_data[j].sensortype] = current_data[j].value_1;
                     }
                 }else if (!out_node[current_data[j].sensortype]){
-                    out_node[current_data[j].sensortype] = current_data[j].value;
+                    out_node[current_data[j].sensortype] = current_data[j].value_1;
                 }
             }
         }

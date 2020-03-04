@@ -101,7 +101,7 @@ const getReadingsDates = (request, response) => {
 const getReadings = (request, response) => {    
     var query = "SELECT tripid,siteid,sectorid,spotid,platformid,"
     +"(SELECT sensortype FROM fieldday_sensor where sensorid=fieldday_reading.sensorid)"
-    +",recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value,value_2"
+    +",recordtime,latitude,longitude,elevation,accuracy,satellites,quality,value_1,value_2"
     +",value_3,value_4,value_5,value_6 from fieldday_reading where tripid="+ (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid + ' and ';
