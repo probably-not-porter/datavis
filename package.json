@@ -1,6 +1,6 @@
 {
   "name": "datavis",
-  "version": "0.2.4",
+  "version": "0.1.5",
   "description": "A tool for visualizing the data collected from the IFS Earlham trip",
   "main": "index.js",
   "scripts": {

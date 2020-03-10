@@ -151,11 +151,38 @@ function addData(chart,times,data,types,color,title) {
     }
 
     chart = new Chart(document.getElementById("line-chart"), { // create new chart structure for streaming data
-        type: 'scatter',
+        type: 'line',
         data: {},
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                zoom: {
+                    // Container for pan options
+                    pan: {
+                        enabled: true,
+                        mode: 'x',
+            
+                        // Function called while the user is panning
+                        onPan: function({chart}) { console.log(`I'm panning!!!`); },
+                        // Function called once panning is completed
+                        onPanComplete: function({chart}) { console.log(`I was panned!!!`); }
+                    },
+            
+                    // Container for zoom options
+                    zoom: {
+                        enabled: true,
+                        drag: false,
+                        mode: 'x',
+                        speed: 0.1,
+            
+                        // Function called while the user is zooming
+                        onZoom: function({chart}) { console.log(`I'm zooming!!!`); },
+                        // Function called once zooming is completed
+                        onZoomComplete: function({chart}) { console.log(`I was zoomed!!!`); }
+                    }
+                }
+            },
             title: {
                 display: true,
                 text: 'No Data Selected'
