@@ -45,7 +45,7 @@ function switchToData(){
 // TEAMPLATES FOR DOM PIECES
 
 // generalized formula
-function createRadioElement(name, id, label, f){
+function createRadioElement(name, id, label, f, count=999){
     var radioHtml = '<div class="elem-div elem-0">'
     if (typeof id === 'string' || id instanceof String){
         radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
@@ -56,6 +56,7 @@ function createRadioElement(name, id, label, f){
     }
     radioHtml += '<label for="' + label + '">';
     radioHtml += '<strong>'+ label + "</strong>";
+    radioHtml += '<span class="detailed_info_2"> (' + count +' values)</span>';
     radioHtml += '<span class="detailed_info"> (ID: ' + id +')</span>';
     radioHtml += '</label></div>';
 
@@ -63,24 +64,24 @@ function createRadioElement(name, id, label, f){
 }
 
 // take information from data.js and write it into html
-function createRadioElementTrips( mode, name, checked, label, id ) {
+function createRadioElementTrips( mode, name, count, label, id ) {
     var f = "getSites";
-    return createRadioElement(name, id, label, f);
+    return createRadioElement(name, id, label, f, count[query_type]);
 }
 
-function createRadioElementSites( mode, name, checked, label, id ) {
+function createRadioElementSites( mode, name, count, label, id ) {
     var f = "getSectors";
-    return createRadioElement(name, id, label, f);
+    return createRadioElement(name, id, label, f, count[query_type]);
 }
 // this one is different since it changes for reading and streaming
-function createRadioElementSectors( mode, name, checked, label, id ) {
+function createRadioElementSectors( mode, name, count, label, id ) {
     var f = "getSpots"; // if reading
     if (query_type == 1){ // if streaming
         f = "getStreamingsHosts";
     }
-    return createRadioElement(name, id, label, f);
+    return createRadioElement(name, id, label, f, count[query_type]);
 }
-function createRadioElementSpots( mode, name, checked, label,id ) {
+function createRadioElementSpots( mode, name, count, label,id ) {
     var f = "getReadings";
     //return createRadioElement(name, id, label, f);
     var radioHtml = '<div class="elem-div elem-0">'
@@ -94,6 +95,7 @@ function createRadioElementSpots( mode, name, checked, label,id ) {
     radioHtml += '<label for="' + label + '">';
     radioHtml += '<strong>'+ label + "</strong>";
     radioHtml += '<span class="detailed_info"> (ID: ' + id +')</span>';
+    radioHtml += '<span class="detailed_info_2"> (' + count[query_type] +' values)</span>';
     radioHtml += '</label></div>';
 
     return radioHtml;
@@ -259,19 +261,30 @@ function removeQuery(){
     base = current.split('?')[0];
     location.replace(base);
 }
-function toggleDetails(){
+function toggleDetails(){ // details_mode located in data.js
+    console.log('bruh')
+    console.log(details_mode)
     var all = document.getElementsByClassName('data-catagory');
+    console.log(all)
     for (var i = 0; i < all.length; i++) {
-        if (all[i].classList.contains('data-catagory-simple')){
+        if (details_mode == 0){
+
             all[i].classList.remove('data-catagory-simple');
             all[i].classList.add('data-catagory-detail');
             $("#button_details").css("opacity", "1.0");
-        }else{
-            all[i].classList.add('data-catagory-simple');
+        }else if (details_mode == 1){
+
+            
             all[i].classList.remove('data-catagory-detail');
+            all[i].classList.add('data-catagory-detail-2');
+            $("#button_details").css("opacity", "1.0");
+        }else {
+            all[i].classList.remove('data-catagory-detail-2');
+            all[i].classList.add('data-catagory-simple');
             $("#button_details").css("opacity", "0.5");
-        }    
+        }
     }
+    details_mode = (details_mode + 1) % 3;
 }
 function createCSV(){
     const rows = [["tripid","platformid","sensorid","hostid","recordtime","value_1","quality","latitude","longitude","elevation","accuracy","satellites","value_2","value_3","siteid","sectorid","value_4","value_5","value_6"]];

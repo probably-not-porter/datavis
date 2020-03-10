@@ -23,7 +23,10 @@ const pool = new Pool({
 })
 
 const getTrips = (request, response) => {
-    var query = "SELECT tripName, tripID from fieldday_trip;";
+    var query = "SELECT tripName, tripID, "
+    + "(SELECT COUNT(*) FROM fieldday_streaming WHERE tripid=fieldday_trip.tripid) AS s_count, " // get s_count and r_count as the number of nodes in the subtree of each
+    + "(SELECT COUNT(*) FROM fieldday_reading WHERE tripid=fieldday_trip.tripid) AS r_count" 
+    + " from fieldday_trip;";
     serverOut(query);
 
     pool.query(query, (error, results) => {
@@ -34,7 +37,10 @@ const getTrips = (request, response) => {
     })
 }
 const getSites = (request, response) => {
-    var query = 'SELECT siteName, siteID from fieldday_site where tripid='+ (request.query.id) + ';';
+    var query = 'SELECT siteName, siteID, '
+    + "(SELECT COUNT(*) FROM fieldday_streaming WHERE tripid="+ (request.query.id) +" AND siteid=fieldday_site.siteid) AS s_count, " // get s_count and r_count as the number of nodes in the subtree of each
+    + "(SELECT COUNT(*) FROM fieldday_reading WHERE tripid="+ (request.query.id) +" AND siteid=fieldday_site.siteid) AS r_count"
+    +' from fieldday_site where tripid='+ (request.query.id) + ';';
     serverOut(query);
 
     pool.query(query, (error, results) => {
@@ -45,7 +51,10 @@ const getSites = (request, response) => {
     })
 }
 const getSectors = (request, response) => {
-    var query = 'SELECT sectorname, sectorid from fieldday_sector where tripid='+ (request.query.tripid) 
+    var query = 'SELECT sectorname, sectorid, '
+    + "(SELECT COUNT(*) FROM fieldday_streaming WHERE tripid="+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + " AND sectorid=fieldday_sector.sectorid) AS s_count, " // get s_count and r_count as the number of nodes in the subtree of each
+    + "(SELECT COUNT(*) FROM fieldday_reading WHERE tripid="+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + " AND sectorid=fieldday_sector.sectorid) AS r_count"
+    +' from fieldday_sector where tripid='+ (request.query.tripid) 
     + ' and siteid=' + (request.query.siteid) + ';'
     serverOut(query);
 
@@ -57,7 +66,9 @@ const getSectors = (request, response) => {
     })
 }
 const getSpots = (request, response) => {
-    var query = 'SELECT spotid from fieldday_spot where tripid='+ (request.query.tripid) 
+    var query = 'SELECT spotid, '
+    + "(SELECT COUNT(*) FROM fieldday_reading WHERE tripid="+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + ' and sectorid=' + (request.query.sectorid) +  " AND spotid=fieldday_spot.spotid) AS r_count"
+    +' from fieldday_spot where tripid='+ (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid +';';
     serverOut(query);
