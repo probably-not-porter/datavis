@@ -46,7 +46,14 @@ function switchToData(){
 
 // generalized formula
 function createRadioElement(name, id, label, f, count=999){
-    var radioHtml = '<div class="elem-div elem-0">'
+
+    var radioHtml = '<div class="elem-div elem-'
+    if (count == 0){
+        radioHtml += "1"
+    }else{
+        radioHtml += "0"
+    }
+    radioHtml += '">';
     if (typeof id === 'string' || id instanceof String){
         radioHtml += '<input class="data-radio form-radio" onchange="'+ f +'(';
         radioHtml += "'" + id + "'";
@@ -83,8 +90,15 @@ function createRadioElementSectors( mode, name, count, label, id ) {
 }
 function createRadioElementSpots( mode, name, count, label,id ) {
     var f = "getReadings";
+    var radioHtml = '<div class="elem-div elem-';
     //return createRadioElement(name, id, label, f);
-    var radioHtml = '<div class="elem-div elem-0">'
+    if (count == 0){
+        radioHtml += '1">';
+    }else{
+        radioHtml += '0">';
+    }
+    
+
     if (typeof id === 'string' || id instanceof String){
         radioHtml += '<input class="data-radio form-check" onchange="'+ f +'(';
         radioHtml += "'" + id + "'";
