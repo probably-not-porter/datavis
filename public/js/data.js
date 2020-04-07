@@ -330,12 +330,14 @@ function getStreamingsHosts(sector_id){
         data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var hosts = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 hosts.push(response[x]);
+                s_count.push(response[x].s_count)
             }
             console.info('DATA - HOSTS');
             console.table(response);
-            renderStreamingsHosts(hosts);
+            renderStreamingsHosts(hosts, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -527,7 +529,7 @@ function renderSpots(spotids, r_count, s_count){
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
 }
-function renderStreamingsHosts(hosts){
+function renderStreamingsHosts(hosts,s_count){
     if (streamings.length != 0){
         var container = document.getElementById('streaminghost');
         container.innerHTML = "";
@@ -539,7 +541,7 @@ function renderStreamingsHosts(hosts){
             if (hosts[x].hostname){
                 hostname = hosts[x].hostname.toString()
             }
-            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', false, hosts[x].hostid, hostname ); // util function
+            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', s_count[x], hosts[x].hostid, hostname ); // util function
             streamingshosts_ls.innerHTML += elem;
         }
         container.append(streamingshosts_ls);

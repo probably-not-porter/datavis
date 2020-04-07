@@ -114,9 +114,9 @@ function createRadioElementSpots( mode, name, count, label,id ) {
 
     return radioHtml;
 }
-function createRadioElementStreamingsHosts( mode, name, checked, id, label ) {
+function createRadioElementStreamingsHosts( mode, name, count, id, label ) {
     var f = "getStreamingsPlatforms";   
-    return createRadioElement(name, id, label, f);
+    return createRadioElement(name, id, label, f, count);
 }
 function createRadioElementStreamingsPlatforms( mode, name, checked, id, label ) {
     var f = "getStreamingsDates";   
