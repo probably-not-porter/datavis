@@ -144,10 +144,9 @@ const getReadings = (request, response) => {
     })
 }
 const getStreamingsHosts = (request, response) => {
-    var query = 'SELECT hostid, '
-    + "(SELECT COUNT(*) FROM fieldday_streaming WHERE tripid="+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + " AND sectorid=" + request.query.sectorid + " AND hostid=fieldday_streaming.hostid) AS s_count, "
-    +'(SELECT DISTINCT hostname FROM fieldday_host_temp where hostid=fieldday_streaming.hostid)'
-    +' FROM fieldday_streaming where tripid='+ (request.query.tripid) 
+    var query = 'SELECT hostid, hostname'
+    + "(SELECT COUNT(*) FROM fieldday_streaming WHERE tripid="+ (request.query.tripid) + ' and siteid=' + (request.query.siteid) + " AND sectorid=" + request.query.sectorid + " AND hostid=fieldday_host_temp.hostid) AS s_count, "
+\    +' FROM fieldday_host_temp where tripid='+ (request.query.tripid) 
     +' and siteid='+ (request.query.siteid) 
     +' and sectorid='+ request.query.sectorid + ';';
     serverOut(query);
