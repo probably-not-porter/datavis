@@ -27,14 +27,14 @@ This is the entry point so that both of these options in the descision tree can 
 */
 function setReading(){
     query_type = 0;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['trips','sites','sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['trips','sites','sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
