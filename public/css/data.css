@@ -68,7 +68,7 @@ h1 span{
     }
 }
 .elem-1{
-    background-color: var(--theme4);
+    background-color: #aaa;
 }
 .elem-0{
     background-color: var(--theme4);
@@ -275,8 +275,22 @@ label
 .data-catagory-simple .detailed_info{
     display: none;
 }
+.data-catagory-simple .detailed_info_2{
+  display: none;
+}
+
+
 .data-catagory-detail .detailed_info{
     display: inline;
+}
+.data-catagory-detail .detailed_info_2{
+    display: none;
+}
+.data-catagory-detail-2 .detailed_info{
+  display: none;
+}
+.data-catagory-detail-2 .detailed_info_2{
+  display: inline;
 }
 
 .lds-ellipsis {

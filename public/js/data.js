@@ -12,6 +12,7 @@
 var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot/host, platform, date
 var query_data = null;
+var details_mode = 0;
 
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
@@ -26,14 +27,14 @@ This is the entry point so that both of these options in the descision tree can 
 */
 function setReading(){
     query_type = 0;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['trips','sites','sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
 }
 function setStreaming(){
     query_type = 1;
-    resetElements(['trips','sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['trips','sites','sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     getTrips(); // get top level of data and render to the next block on the form
@@ -64,13 +65,17 @@ function getTrips(){
         success: function(response) { 
             var tripnames = [];
             var tripids = [];
+            var r_count = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 tripids.push(response[x].tripid);
                 tripnames.push(response[x].tripname);
+                r_count.push(response[x].r_count);
+                s_count.push(response[x].s_count);
             }
             console.info('TRIPS');
             console.table(response);
-            renderTrips(tripnames, tripids);
+            renderTrips(tripnames, tripids, r_count, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -98,13 +103,17 @@ function getSites(trip_id){
         success: function(response) { 
             var sitenames = [];
             var siteids = [];
+            var r_count = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 sitenames.push(response[x].sitename);
                 siteids.push(response[x].siteid);
+                r_count.push(response[x].r_count);
+                s_count.push(response[x].s_count);
             }
             console.info('SITES');
             console.table(response);
-            renderSites(sitenames, siteids);
+            renderSites(sitenames, siteids, r_count, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -132,13 +141,17 @@ function getSectors(site_id){
         success: function(response) { 
             var sectornames = [];
             var sectorids = [];
+            var r_count = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 sectornames.push(response[x].sectorname);
                 sectorids.push(response[x].sectorid);
+                r_count.push(response[x].r_count);
+                s_count.push(response[x].s_count);
             }
             console.info('SECTORS');
             console.table(response);
-            renderSectors(sectornames, sectorids);
+            renderSectors(sectornames, sectorids, r_count, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -166,12 +179,16 @@ function getSpots(sector_id){
         data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var spotids = [];
+            var r_count = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 spotids.push(response[x].spotid);
+                r_count.push(response[x].r_count);
+                s_count.push(response[x].s_count);
             }
             console.info('SPOTS');
             console.table(response);
-            renderSpots(spotids);
+            renderSpots(spotids, r_count, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -313,12 +330,14 @@ function getStreamingsHosts(sector_id){
         data: {sectorid: sector_id, siteid: query_selection[1], tripid: query_selection[0]},
         success: function(response) { 
             var hosts = [];
+            var s_count = [];
             for(x = 0; x < response.length; x++){
                 hosts.push(response[x]);
+                s_count.push(response[x].s_count)
             }
             console.info('DATA - HOSTS');
             console.table(response);
-            renderStreamingsHosts(hosts);
+            renderStreamingsHosts(hosts, s_count);
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
@@ -445,7 +464,7 @@ to create a radiobutton.
 
 When a get function returns its data, it sends it to a render function if it needs to be selected from.
 */
-function renderTrips(tripnames, tripids){
+function renderTrips(tripnames, tripids, r_count, s_count){
     var container = document.getElementById('trips');
     container.innerHTML = '';
     if (container.childElementCount == 0){ // dont override selections with navigation
@@ -454,13 +473,13 @@ function renderTrips(tripnames, tripids){
         trips_ls.id = 'trips-ls';
 
         for(x = 0; x < tripnames.length; x++){
-            var elem = createRadioElementTrips((x % 2),'trips', false, tripnames[x],tripids[x]); // util function
+            var elem = createRadioElementTrips((x % 2),'trips', [r_count[x], s_count[x]], tripnames[x],tripids[x]); // util function
             trips_ls.innerHTML += elem;
         }
         container.append(trips_ls);
     }
 }
-function renderSites(sitenames, siteids){
+function renderSites(sitenames, siteids, r_count, s_count){
     var container = document.getElementById('sites');
     container.innerHTML = "";
     container.innerHTML += "<div onclick='togglediv(" + '"#sites-ls","sites-button"' + ")' class='data-header'><h1>Sites <span id='sites-button'>-</span></h1></div>";
@@ -468,12 +487,12 @@ function renderSites(sitenames, siteids){
     sites_ls.id = 'sites-ls';
     
     for(x = 0; x < sitenames.length; x++){
-        var elem = createRadioElementSites((x % 2),'sites', false, sitenames[x],siteids[x]); // util function
+        var elem = createRadioElementSites((x % 2),'sites', [r_count[x], s_count[x]], sitenames[x],siteids[x]); // util function
         sites_ls.innerHTML += elem;
     }
     container.append(sites_ls);
 }
-function renderSectors(sectornames, sectorids){
+function renderSectors(sectornames, sectorids, r_count, s_count){
     var container = document.getElementById('sectors');
     container.innerHTML = "";
 
@@ -483,7 +502,7 @@ function renderSectors(sectornames, sectorids){
         sectors_ls.id = 'sectors-ls';
 
         for(x = 0; x < sectornames.length; x++){
-            var elem = createRadioElementSectors((x % 2),'sectors', false, sectornames[x], sectorids[x]); // util function
+            var elem = createRadioElementSectors((x % 2),'sectors', [r_count[x], s_count[x]], sectornames[x], sectorids[x]); // util function
             sectors_ls.innerHTML += elem;
         }
         container.append(sectors_ls);
@@ -493,7 +512,7 @@ function renderSectors(sectornames, sectorids){
     
     
 }
-function renderSpots(spotids){
+function renderSpots(spotids, r_count, s_count){
     var container = document.getElementById('spots');
     container.innerHTML = "";
     if (spotids.length != 0){
@@ -502,7 +521,7 @@ function renderSpots(spotids){
         spots_ls.id = 'spots-ls';
 
         for(x = 0; x < spotids.length; x++){
-            var elem = createRadioElementSpots((x % 2),'spots', false, spotids[x], spotids[x]); // util function
+            var elem = createRadioElementSpots((x % 2),'spots', [r_count[x], s_count[x]], spotids[x], spotids[x]); // util function
             spots_ls.innerHTML += elem;
         }
         container.append(spots_ls);
@@ -510,7 +529,7 @@ function renderSpots(spotids){
         document.getElementById('data-prompt').innerHTML = "No Spots found for this sector"
     }
 }
-function renderStreamingsHosts(hosts){
+function renderStreamingsHosts(hosts,s_count){
     if (streamings.length != 0){
         var container = document.getElementById('streaminghost');
         container.innerHTML = "";
@@ -522,7 +541,7 @@ function renderStreamingsHosts(hosts){
             if (hosts[x].hostname){
                 hostname = hosts[x].hostname.toString()
             }
-            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', false, hosts[x].hostid, hostname ); // util function
+            var elem = createRadioElementStreamingsHosts((x % 2),'hosts', s_count[x], hosts[x].hostid, hostname ); // util function
             streamingshosts_ls.innerHTML += elem;
         }
         container.append(streamingshosts_ls);
