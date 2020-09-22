@@ -71,7 +71,7 @@ function createRadioElement(name, id, label, f, count=999){
 }
 
 // take information from data.js and write it into html
-function createRadioElementTrips( mode, name, count, label, id ) {
+function createRadioElementTrips( name, count, label, id ) {
     var f = "getSites";
     return createRadioElement(name, id, label, f, count[query_type]);
 }

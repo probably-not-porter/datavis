@@ -473,7 +473,7 @@ function renderTrips(tripnames, tripids, r_count, s_count){
         trips_ls.id = 'trips-ls';
 
         for(x = 0; x < tripnames.length; x++){
-            var elem = createRadioElementTrips((x % 2),'trips', [r_count[x], s_count[x]], tripnames[x],tripids[x]); // util function
+            var elem = createRadioElementTrips('trips', [r_count[x], s_count[x]], tripnames[x],tripids[x]); // util function
             trips_ls.innerHTML += elem;
         }
         container.append(trips_ls);
