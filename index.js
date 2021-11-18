@@ -7,12 +7,14 @@ const app = express();
 const q = require('./queries');
 var path = require('path');
 var rest = new require('restful-api')(app);
+var favicon = require('serve-favicon');
 
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
     res.render("index",{
     })
 });
+app.use(favicon(__dirname + '/public/img/ec-ifs.png'));
 app.use(express.static(__dirname + '/public'));
 
 
