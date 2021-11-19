@@ -33,7 +33,11 @@ app.get('/streamings', q.getStreamings);
 
 
 // LISTEN
-app.listen(process.env.PORT || 9900, function(){
-    console.log("Server: Running on port %d in %s mode", this.address().port, app.settings.env);
-});
+app.listen(9900, '0.0.0.0', function (err) {
+    if (err) {
+     console.log(err)
+     return
+    }
+    console.log('Listening at http://localhost:' + "9900" + '\n')
+   })
 
