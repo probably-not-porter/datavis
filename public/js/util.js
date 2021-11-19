@@ -276,19 +276,13 @@ function removeQuery(){
     location.replace(base);
 }
 function toggleDetails(){ // details_mode located in data.js
-    console.log('bruh')
-    console.log(details_mode)
     var all = document.getElementsByClassName('data-catagory');
-    console.log(all)
     for (var i = 0; i < all.length; i++) {
         if (details_mode == 0){
-
             all[i].classList.remove('data-catagory-simple');
             all[i].classList.add('data-catagory-detail');
             $("#button_details").css("opacity", "1.0");
         }else if (details_mode == 1){
-
-            
             all[i].classList.remove('data-catagory-detail');
             all[i].classList.add('data-catagory-detail-2');
             $("#button_details").css("opacity", "1.0");
@@ -299,7 +293,9 @@ function toggleDetails(){ // details_mode located in data.js
         }
     }
     details_mode = (details_mode + 1) % 3;
+    console.log("Data Detail Mode: " + details_mode);
 }
+
 function createCSV(){
     const rows = [["tripid","platformid","sensorid","hostid","recordtime","value_1","quality","latitude","longitude","elevation","accuracy","satellites","value_2","value_3","siteid","sectorid","value_4","value_5","value_6"]];
     console.log(query_data[0]);

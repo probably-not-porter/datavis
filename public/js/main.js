@@ -30,4 +30,5 @@ function ready(){
     document.getElementById('loading').style.display = 'none';
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
+    toggleDetails(); // starts out in detail 2 mode.
 }

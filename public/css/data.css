@@ -68,10 +68,13 @@ h1 span{
     }
 }
 .elem-1{
-    background-color: #aaa;
+    background-color: var(--theme2);
+}
+.elem-1 label{
+  color: #555;
 }
 .elem-0{
-    background-color: var(--theme4);
+    background-color: var(--theme2);
 }
 input[type="radio"]:checked+label{ 
     font-weight: bold; 

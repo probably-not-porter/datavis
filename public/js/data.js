@@ -12,7 +12,7 @@
 var query_type = null; // 0 = reading, 1 = streaming
 var query_selection = [null,null,null,null,null,null]; // trip, site, sector, spot/host, platform, date
 var query_data = null;
-var details_mode = 0;
+var details_mode = 1;
 
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
