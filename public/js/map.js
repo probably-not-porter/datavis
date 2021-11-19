@@ -64,16 +64,18 @@ function createPoints(points,color){
         } 
     }
     points = new_points
+    console.log(points);
     console.info("Pruned " + prunes + " duplicate map points.");
     console.warn('UPDATING MAP: this might take a minute!');
-    require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
+    require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate", "esri/layers/FeatureLayer" ], function(
     Map,
     SceneView,
     MapView,
     Graphic,
     BasemapToggle,
     CoordinateConversion,
-    PopupTemplate
+    PopupTemplate,
+    FeatureLayer
     ){
         if (prev_points.length != 0){
             view.graphics.removeMany(prev_points);
@@ -95,11 +97,66 @@ function createPoints(points,color){
                 longitude: points[x].longitude,
                 latitude: points[x].latitude
             };
+
+            let timedate = new Date(points[x].recordtime).toString().split(" ")
+            let date = timedate[0] + " " + timedate[1] + " " + timedate[2] + ", " + timedate[3];
+            let time = timedate[4] + " " + timedate[6] + " " + timedate[7] + " " + timedate[8];
+
+            var pointAttr = {
+                Longitude: points[x].longitude,
+                Latitude: points[x].latitude,
+                Elevation: points[x].elevation,
+                Accuracy: points[x].accuracy,
+                Time: time,
+                Date: date,
+                Platform: points[x].platformid,
+                SensorType: points[x].sensortype,
+                SensorValue: points[x].value_1 + " " + points[x].sensorunits,
+            }
             
             // Create a graphic and add the geometry and symbol to it
             var pointGraphic = new Graphic({
                 geometry: point,
-                symbol: markerSymbol
+                symbol: markerSymbol,
+                attributes: pointAttr,
+                popupTemplate: { // NEW
+                    // autocasts as new PopupTemplate()
+                    title: "{Platform} - {Time}",
+                    content: [
+                      {
+                        type: "fields",
+                        fieldInfos: [
+                          {
+                            fieldName: "Longitude"
+                          },
+                          {
+                            fieldName: "Latitude"
+                          },
+                          {
+                            fieldName: "Elevation"
+                          },
+                          {
+                            fieldName: "Accuracy"
+                          },
+                          {
+                            fieldName: "Time"
+                          },
+                          {
+                            fieldName: "Date"
+                          },
+                          {
+                            fieldName: "Platform"
+                          },
+                          {
+                            fieldName: "SensorType"
+                          },
+                          {
+                            fieldName: "SensorValue"
+                          }
+                        ]
+                      }
+                    ]
+                  }
             });
             
             out_points.push(pointGraphic);
