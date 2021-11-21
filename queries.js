@@ -2,6 +2,7 @@
 #
 # Datavis 2.0
 # Porter Libby - 2019 - initial setup
+# Porter Libby - 2021 - improve some systems for more flexibility
 # pelibby16@earlham.edu
 #
 # Query functions for database
@@ -9,18 +10,36 @@
 */
 
 // IMPORTANT: The .ENV file must be setup before running, see README for template
+
 const dotenv = require('dotenv');
 dotenv.config();
 
 const Pool = require('pg').Pool
+var pool = null;
 
-const pool = new Pool({
-    user: `${process.env.DB_NAME}`,
-    host: `${process.env.DB_HOST}`,
-    database: `${process.env.DB_DATABASE}`,
-    password: `${process.env.DB_PASSWORD}`,
-    port: `${process.env.DB_PORT}`,
-})
+if (process.env.DB_NAME != null && process.env.DB_HOST != null && process.env.DB_DATABASE != null && process.env.DB_PASSWORD != null && process.env.DB_PORT != null){
+    pool = new Pool({
+        user: `${process.env.DB_NAME}`,
+        host: `${process.env.DB_HOST}`,
+        database: `${process.env.DB_DATABASE}`,
+        password: `${process.env.DB_PASSWORD}`,
+        port: `${process.env.DB_PORT}`,
+    })
+}
+
+
+function updatePool(user, host, database, password, port){
+    if (user != null && host != null && database != null && password != null && port != null){
+        pool = new Pool({
+            user: `${process.env.DB_NAME}`,
+            host: `${process.env.DB_HOST}`,
+            database: `${process.env.DB_DATABASE}`,
+            password: `${process.env.DB_PASSWORD}`,
+            port: `${process.env.DB_PORT}`,
+        })
+        console.log("DATABASE: Updating DB pool...");
+    }
+}
 
 const getTrips = (request, response) => {
     var query = "SELECT tripName, tripID, "
@@ -213,11 +232,11 @@ function serverOut(querytext){
     console.info("DATABASE: " + querytext + "\n");
 }
 function checkConnection(){
-    console.log('Database: starting connection...');
+    console.log('DATABASE: starting connection...');
     pool.query("SELECT * FROM fieldday_trip;", (error, results) => {
         if (error) {
-            console.log('Database: connection to database failed, check .ENV file.');
-            console.log('Halting...');
+            console.log('DATABASE: connection to database failed, check .ENV file.');
+            console.log('SERVER: Halting...');
             process.exit(1);
         }else{
             console.log('Database: connection successful!\n');

@@ -1,13 +1,21 @@
-console.log("\n==================================");
-console.log("|         IFS DATAVIS 2          |");
-console.log("==================================\n");
-
 const express = require('express');
-const app = express();
 const q = require('./queries');
+var pjson = require('./package.json');
 var path = require('path');
-var rest = new require('restful-api')(app);
 var favicon = require('serve-favicon');
+const app = express();
+var rest = new require('restful-api')(app);
+
+console.log("================================================================================");
+console.log("|                                                                              |");
+console.log("|██ ██████ ██████   ██████   █████ ██████ █████   ██    ██ ██ ██████   ██████  |");
+console.log("|██ ██     ██       ██   ██ ██   ██  ██  ██   ██  ██    ██ ██ ██            ██ |");
+console.log("|██ █████  ██████   ██   ██ ███████  ██  ███████  ██    ██ ██ ██████    █████  |");
+console.log("|██ ██         ██   ██   ██ ██   ██  ██  ██   ██   ██  ██  ██     ██   ██      |");
+console.log("|██ ██     ██████   ██████  ██   ██  ██  ██   ██    ████   ██ ██████   ███████ |");
+console.log("|                                                                              |");
+console.log("====================================================================== v" + pjson.version + " ==");
+console.log("\n");
 
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
@@ -30,6 +38,9 @@ app.get('/streamingshosts', q.getStreamingsHosts);
 app.get('/streamingsplatforms', q.getStreamingsPlatforms);
 app.get('/streamingsdates', q.getStreamingsDates);
 app.get('/streamings', q.getStreamings);
+app.get('/v', function (res, req){
+    req.status(200).json(pjson.version);
+});
 
 
 // LISTEN
@@ -38,6 +49,6 @@ app.listen(9900, '0.0.0.0', function (err) {
      console.log(err)
      return
     }
-    console.log('Listening at http://localhost:' + "9900" + '\n')
+    console.log('SERVER: Listening at http://localhost:' + "9900" + '\n')
    })
 

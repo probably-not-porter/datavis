@@ -9,6 +9,16 @@
 
 function ready(){
     switchToData() // set screen to data
+    $.ajax({
+        type: 'GET',
+        url: '/v',
+        success: function(response) { 
+            document.getElementById("version-tag").innerText = "IFS Datavis Tool v" + response;
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
 
     base_url = document.location.href; // get base url
 
