@@ -45,7 +45,7 @@ function switchToData(){
 // TEAMPLATES FOR DOM PIECES
 
 // generalized formula
-function createRadioElement(name, id, label, f, count=999){
+function createRadioElement(name, id, label, f, count=999){ // assign 999 if no value present.
 
     var radioHtml = '<div class="elem-div elem-'
     if (count == 0){

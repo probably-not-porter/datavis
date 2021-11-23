@@ -336,7 +336,7 @@ function getStreamingsHosts(sector_id){
                 s_count.push(response[x].s_count)
             }
             console.info('DATA - HOSTS');
-            console.table(response);
+            console.log(response);
             renderStreamingsHosts(hosts, s_count);
         },
         error: function(xhr, status, err) {
