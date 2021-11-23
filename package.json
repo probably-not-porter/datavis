@@ -2,10 +2,10 @@
   "name": "datavis",
   "version": "0.1.7",
   "description": "A tool for visualizing the data collected from the IFS Earlham trip",
-  "main": "index.js",
+  "main": "datavis.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node datavis.js"
   },
   "repository": {
     "type": "git",
