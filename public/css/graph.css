@@ -31,15 +31,20 @@ table {
     border-collapse: collapse;
     min-width:99%;
 
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
+}
+
+td, th {
+    border: 1px solid var(--theme1);
     text-align: left;
     padding: 8px;
     min-width: 120px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+}
+tr:nth-child(even) {
+    background-color: var(--theme2);
+}
+tr:nth-child(odd) {
+    background-color: var(--theme3);
+}
+tr:first-child{
+    background-color: var(--theme4);
+}

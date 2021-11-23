@@ -7,10 +7,11 @@
     
     --theme1: rgb(64, 109, 74);
     --theme2: rgb(109, 156, 111);
-    --theme3: rgb(162, 216, 169);
-    --theme4: rgb(188, 219, 194);
+    --theme3: rgb(168, 216, 162);
+    --theme4: rgb(197, 219, 188);
     --themeh: white;
     --themep: black;
+    --themebg: rgb(233, 229, 222);
   }
 
 html, body, #viewDiv{
@@ -18,6 +19,7 @@ html, body, #viewDiv{
     margin: 0;
     height: 100%;
     width: 100%;
+    background-color: var(--themebg);
 }
 
 #navcontrols{

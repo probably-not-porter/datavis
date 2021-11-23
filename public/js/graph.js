@@ -8,6 +8,7 @@
 */
 
 var lineChart;
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 // create null chart for no data case
 $( document ).ready(function() {
@@ -41,7 +42,7 @@ function createGraphReading(dataset, q_arr, color){
         var sector = dataset[0].sectorname;
 
         var title = document.createElement('h');
-        title.innerHTML = "Spots from " + trip + ", " + site + ", " + sector; 
+        title.innerHTML = "Spots from " + trip + " (trip), " + site + " (site), " + sector + " (sector)"; 
         parent.append(title);
 
         const table = document.createElement('table');
@@ -59,7 +60,7 @@ function createGraphReading(dataset, q_arr, color){
             for (y=0;y<keys.length;y++){
                 if (keys[y] == "Date"){
                     date = new Date(dataset[x]["recordtime"]);
-                    prop_arr.push(date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate());
+                    prop_arr.push(months[date.getMonth()] + ' ' +date.getDate() + ", " + date.getFullYear());
                     prop_arr.push(date.toLocaleTimeString('en-US'));
                     y++;
 
