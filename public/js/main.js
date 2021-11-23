@@ -7,15 +7,15 @@
 # Starts the program + general stuff
 */
 
-function ready() {
+function ready(){
     switchToData() // set screen to data
     $.ajax({
         type: 'GET',
         url: '/v',
-        success: function (response) {
+        success: function(response) { 
             document.getElementById("version-tag").innerText = "IFS Datavis Tool v" + response;
         },
-        error: function (xhr, status, err) {
+        error: function(xhr, status, err) {
             console.log(xhr.responseText);
         }
     });
@@ -25,18 +25,18 @@ function ready() {
     url_parts = base_url.split('?')
     url_params = null;
 
-    if (url_parts[1]) { // selection exists
-        if (url_parts[1].length > 0) { // params exist
+    if (url_parts[1]){ // selection exists
+        if (url_parts[1].length > 0){ // params exist
             url_params = url_parts[1].split('/');
             console.log(url_params);
         }
-        if ((url_params[0] == 'query') && (url_params.length > 5)) { // load premade query
+        if ((url_params[0] == 'query') && (url_params.length > 5)){ // load premade query
             loadQuery(url_params);
-        } else {
+        }else{
             console.warn('Query incomplete; Ignored.');
         }
     }
-
+    
     document.getElementById('loading').style.display = 'none';
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
