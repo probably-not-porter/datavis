@@ -55,7 +55,7 @@ function getTrips(){
         document.getElementById('data-prompt').innerHTML = "Pick a trip, site, and sector to see data."
     }
     document.getElementById('trips').innerHTML = placeholderHTML;
-    resetElements(['sites','sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['sites','sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -89,7 +89,7 @@ function getSites(trip_id){
         document.getElementById('data-prompt').innerHTML = "Pick a site and sector to see data."
     }
     document.getElementById('sites').innerHTML = placeholderHTML;
-    resetElements(['sectors','spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['sectors','spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -127,7 +127,7 @@ function getSectors(site_id){
         document.getElementById('data-prompt').innerHTML = "Pick a sector to see data."
     }
     document.getElementById('sectors').innerHTML = placeholderHTML;
-    resetElements(['spots','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['spots','streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
 
@@ -163,7 +163,7 @@ function getSpots(sector_id){
     document.getElementById('data-prompt').innerHTML = "Pick some spots to compare!"
     document.getElementById('spots').innerHTML = placeholderHTML;
 
-    resetElements(['streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
+    resetElements(['streaminghost','streamingplatform','streamingdates','streaming','readingplatform','readingdates','reading']);
     document.getElementById('streamingplatform').innerHTML = "";
     document.getElementById('streaming').innerHTML = "";
     document.getElementById('reading').innerHTML = "";
