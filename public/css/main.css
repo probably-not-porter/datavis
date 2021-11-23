@@ -2,13 +2,13 @@
     /*
         These are the themes for the program. Modifying these here should affect the color scheme of the whole tool
     */
-    --datacolor1: #1D976C;
-    --datacolor2:#93F9B9;
+    --datacolor1: #5971db;
+    --datacolor2:#939af9;
     
-    --theme1: #444;
-    --theme2: #888;
-    --theme3: #bbb;
-    --theme4: #ddd;
+    --theme1: rgb(64, 109, 74);
+    --theme2: rgb(109, 156, 111);
+    --theme3: rgb(162, 216, 169);
+    --theme4: rgb(188, 219, 194);
     --themeh: white;
     --themep: black;
   }
