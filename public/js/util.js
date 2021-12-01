@@ -266,7 +266,7 @@ function buildQuery(){
             query_string += query_selection[3][x];
         }
     }
-    document.getElementById('data-prompt').innerHTML = "Query Permalink: " + query_string;
+    document.getElementById('data-prompt').innerHTML = "<span class='copy-link' onclick='copyToClipboard(" + '"' + query_string + '"' + ")'>" + query_string + "</span>";
 }
 function removeQuery(){
     query_type = null;
@@ -338,4 +338,15 @@ function createCSV(){
     document.body.appendChild(link); // Required for FF
     
     link.click(); // This will download the data file named "my_data.csv".
+}
+
+// for copying permalinks
+function copyToClipboard(text)
+{
+    var dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute('value', text);
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
 }

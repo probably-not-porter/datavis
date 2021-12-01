@@ -44,6 +44,14 @@ html, body, #viewDiv{
     -moz-box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.15);
     box-shadow: 10px 10px 5px -4px rgba(0,0,0,0.15);
 }
+.copy-link{
+    background-color: var(--theme2);
+    -webkit-text-fill-color:white;
+    padding: 10px;
+}
+.copy-link:hover{
+    background-color: var(--theme3);
+}
 .nav-view-button:hover{
     background-color: var(--theme3);
 }
@@ -158,3 +166,4 @@ html, body, #viewDiv{
     50% { background-color: var(--datacolor1);; box-shadow: 0 0 20px var(--datacolor1);; }
     100% { background-color: var(--datacolor2);; box-shadow: 0 0 3px var(--datacolor2);; }
   }
+
