@@ -42,6 +42,10 @@ app.get('/v', function (res, req){
     req.status(200).json(pjson.version);
 });
 
+setTimeout((function() {
+    console.log("SERVER: Restarting...")
+    return process.exit();
+}), 86400000);
 
 // LISTEN
 app.listen(9900, '0.0.0.0', function (err) {
