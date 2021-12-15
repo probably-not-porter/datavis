@@ -25,6 +25,10 @@ if (process.env.DB_NAME != null && process.env.DB_HOST != null && process.env.DB
         password: `${process.env.DB_PASSWORD}`,
         port: `${process.env.DB_PORT}`,
     })
+    checkConnection();
+}
+else{
+    console.log('DATABASE: connection to database failed, check .ENV file.');
 }
 
 
@@ -244,7 +248,7 @@ function checkConnection(){
         }
     })
 }
-checkConnection();
+
 
 module.exports = { // export routes to server side.
     getTrips,

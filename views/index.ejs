@@ -116,11 +116,9 @@
 
         <div id='dataView'>
             <div id='title'>
-                <span id='version-tag' style='font-size:20px;'></span><br><br>
-                <span class='title-links'><a href='https://code.cs.earlham.edu/field-science/datavis'>Code</a></span>
-                <br>
-                <span class='title-links'><a href='https://code.cs.earlham.edu/field-science/datavis/-/wikis/home'>Wiki</a></span>
+                <span id='version-tag' style='font-size:20px;'></span>
             </div>
+                
             <div id='data'>
                 <div class='data-catagory' id='query_type'>
                     <div class='data-header' style='padding-bottom:15px;''>
@@ -143,7 +141,18 @@
                 <div class='data-catagory data-catagory-simple' id='readingdates'></div>
                 <div class='data-catagory data-catagory-simple' id='reading'></div>
                 <div id='data-prompt-box'>
-            
+
+                    <div id='meta-links'>
+                        <div class='tooltip' style='position:absolute; top: 0px; left: 0px;'>
+                            <button class='meta-link' onclick="window.open('https://code.cs.earlham.edu/field-science/datavis','_blank')"><img src="img/git-icon.png"></button>
+                            <span class="tooltiptext">Visit Git Repo</span>
+                        </div>
+                        <div class='tooltip' style='position:absolute; top: 0px; left: 40px;'>
+                            <button class='meta-link' onclick="window.open('https://code.cs.earlham.edu/field-science/datavis/-/wikis/home','_blank')"><img src="img/help-icon.png"></button>
+                            <span class="tooltiptext">Visit Wiki</span>
+                        </div>  
+                    </div>
+
                     <div id='text'>
                         <strong id='prompt-text'>
                             <span id='data-prompt'>Select a data type</span>
