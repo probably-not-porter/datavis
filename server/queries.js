@@ -234,7 +234,7 @@ const getStreamings = (request, response) => {
     })
 }
 function serverOut(querytext){
-    console.info("DATABASE: " + querytext + "\n");
+    console.info("DATABASE: " + querytext);
 }
 function checkConnection(){
     console.log('DATABASE: starting connection...');
@@ -244,7 +244,7 @@ function checkConnection(){
             console.log('SERVER: Halting...');
             process.exit(1);
         }else{
-            console.log('Database: connection successful!\n');
+            console.log('Database: connection successful!');
         }
     })
 }

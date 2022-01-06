@@ -1,11 +1,4 @@
-const express = require('express');
-const q = require('./queries');
 var pjson = require('./package.json');
-var path = require('path');
-var favicon = require('serve-favicon');
-const app = express();
-var rest = new require('restful-api')(app);
-
 console.log("================================================================================");
 console.log("|                                                                              |");
 console.log("|██ ██████ ██████   ██████   █████ ██████ █████   ██    ██ ██ ██████   ██████  |");
@@ -16,6 +9,13 @@ console.log("|██ ██     ██████   ██████  ██ 
 console.log("|                                                                              |");
 console.log("====================================================================== v" + pjson.version + " ==");
 console.log("\n");
+
+const express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+const app = express();
+var rest = new require('restful-api')(app);
+const q = require('./server/queries');
 
 app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
@@ -53,6 +53,6 @@ app.listen(9900, '0.0.0.0', function (err) {
      console.log(err)
      return
     }
-    console.log('SERVER: Listening at http://localhost:' + "9900" + '\n')
+    console.log('SERVER: Listening at http://localhost:' + "9900")
    })
 
