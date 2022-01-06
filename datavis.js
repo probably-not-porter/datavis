@@ -48,7 +48,7 @@ setTimeout((function() {
 }), 86400000);
 
 // LISTEN
-app.listen(9900, '0.0.0.0', function (err) {
+app.listen(process.env.PORT || 9900, '0.0.0.0', function (err) {
     if (err) {
      console.log(err)
      return
