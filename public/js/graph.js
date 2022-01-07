@@ -243,14 +243,19 @@ function addData(chart,times,data,types,color,title) {
     chart.data.labels = times;
 
     for (x = 0;x<data.length;x++){ // create plot for each set of data [elevation,pressure,etc...]
+        var newdata = data[x].sort((a, b) => {
+            return moment(a.x).diff(b.x);
+        });
         var dataset = {
             label: types[x],
             borderColor: getRandomColor(), // choose random color for now
             borderWidth: 3,
             fill: false,
-            data: data[x],
+            data: newdata,
         }
         chart.data.datasets.push(dataset);
+        console.log(data[x][0]["x"])
     }
+
     chart.update();
 }
