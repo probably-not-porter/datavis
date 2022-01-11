@@ -13,7 +13,7 @@ function ready(){
         type: 'GET',
         url: '/v',
         success: function(response) { 
-            document.getElementById("version-tag").innerText = "IFS Datavis Tool v" + response;
+            document.getElementById("version-tag").innerHTML = "IFS Datavis Tool<br>v" + response;
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
