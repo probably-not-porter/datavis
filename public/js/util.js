@@ -20,6 +20,7 @@ function switchToMap(){
     document.getElementById("mapView").style.display = "block";
     console.log('switched to map view');
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
+    renderMap();
 }
 function switchToGraph(){
     var dataview = document.getElementById("dataView");
