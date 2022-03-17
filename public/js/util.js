@@ -189,6 +189,7 @@ function processReadings(readings){
             out_node = {};
             for(j=0;j<current_data.length;j++){
                 if (current_data[j].recordtime = min || !out_node.recordtime){
+                    out_node.spotid = current_data[j].spotid;
                     out_node.Spot = current_data[j].spotid;
                     out_node.recordtime = current_data[j].recordtime;
                     out_node.tripname = current_data[j].tripname;
@@ -198,6 +199,15 @@ function processReadings(readings){
                     out_node.longitude = current_data[j].longitude;
                     out_node.latitude = current_data[j].latitude;
                     out_node.accuracy = current_data[j].accuracy; // 0 to 8
+                    out_node.tripid = current_data[j].tripid;
+                    out_node.siteid = current_data[j].siteid;
+                    out_node.sectorid = current_data[j].sectorid;
+                    out_node.platformid = current_data[j].platformid;
+                    out_node.sensorid = current_data[j].sensorid;
+                    out_node.hostid = current_data[j].hostid;
+                    out_node.quality = current_data[j].quality;
+                    out_node.satellites = current_data[j].satellites;
+                    //"platformid","sensorid","hostid"
 
                     if (!out_node[current_data[j].sensortype]){
                         out_node[current_data[j].sensortype] = current_data[j].value_1;
@@ -297,31 +307,62 @@ function toggleDetails(){ // details_mode located in data.js
 }
 
 function createCSV(){
-    const rows = [["tripid","platformid","sensorid","hostid","recordtime","value_1","quality","latitude","longitude","elevation","accuracy","satellites","value_2","value_3","siteid","sectorid","value_4","value_5","value_6"]];
-    console.log(query_data[0]);
+    const rows = [];
+    if (query_data[0].spotid){ // reading
+        rows.push(["tripid","siteid","sectorid","spotid","platformid","sensorid","hostid","recordtime","elevation","logitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
+    }else{ // streaming
+        rows.push(["tripid","siteid","sectorid","platformid","sensorid","hostid","recordtime","elevation","logitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
+    }
+    console.log(query_data);
     for (x=0; x< query_data.length; x++){
         // ROW STRUCTURE
-        current_row = [ 
-            query_data[x].tripid.toString(),
-            query_data[x].platformid.toString(),
-            query_data[x].sensorid.toString(),
-            query_data[x].hostid.toString(),
-            query_data[x].recordtime.toString(),
-            query_data[x].value_1 || "Null",
-            query_data[x].quality.toString(),
-            query_data[x].latitude.toString(),
-            query_data[x].longitude.toString(),
-            query_data[x].elevation.toString(),
-            query_data[x].accuracy.toString(),
-            query_data[x].satellites.toString(),
-            query_data[x].value_2 || "Null",
-            query_data[x].value_3 || "Null",
-            query_data[x].siteid.toString(),
-            query_data[x].sectorid.toString(),
-            query_data[x].value_4 || "Null",
-            query_data[x].value_5 || "Null",
-            query_data[x].value_6 || "Null",
-        ];
+        let current_row = [];
+        if (query_data[0].spotid){ // reading
+            current_row = [ 
+                query_data[x].tripid.toString(),
+                query_data[x].siteid.toString(),
+                query_data[x].sectorid.toString(),
+                query_data[x].spotid.toString(),
+                query_data[x].platformid.toString(),
+                query_data[x].sensorid.toString(),
+                query_data[x].hostid.toString(),
+                query_data[x].recordtime.toString(),
+                query_data[x].elevation.toString(),
+                query_data[x].longitude.toString(),
+                query_data[x].latitude.toString(),
+                query_data[x].accuracy.toString(),
+                query_data[x].satellites.toString(),
+                query_data[x].quality.toString(),
+                query_data[x].value_1 || "Null",
+                query_data[x].value_2 || "Null",
+                query_data[x].value_3 || "Null",
+                query_data[x].value_4 || "Null",
+                query_data[x].value_5 || "Null",
+                query_data[x].value_6 || "Null",
+            ];
+        }else{
+            current_row = [ 
+                query_data[x].tripid.toString(),
+                query_data[x].siteid.toString(),
+                query_data[x].sectorid.toString(),
+                query_data[x].platformid.toString(),
+                query_data[x].sensorid.toString(),
+                query_data[x].hostid.toString(),
+                query_data[x].recordtime.toString(),
+                query_data[x].elevation.toString(),
+                query_data[x].longitude.toString(),
+                query_data[x].latitude.toString(),
+                query_data[x].accuracy.toString(),
+                query_data[x].satellites.toString(),
+                query_data[x].quality.toString(),
+                query_data[x].value_1 || "Null",
+                query_data[x].value_2 || "Null",
+                query_data[x].value_3 || "Null",
+                query_data[x].value_4 || "Null",
+                query_data[x].value_5 || "Null",
+                query_data[x].value_6 || "Null",
+            ];
+        }
         rows.push(current_row)
     }
     console.log(rows);
@@ -329,7 +370,7 @@ function createCSV(){
     let csvContent = "data:text/csv;charset=utf-8," 
         + rows.map(e => e.join(",")).join("\n");
     
-    name = "data_" + query_selection[4] + "_" + query_selection[5];
+    name = "data_export";
     
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
