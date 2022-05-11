@@ -17,6 +17,7 @@ var details_mode = 1;
 
 var placeholderHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Organizing numbers...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
 var placeholder2HTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>Adding points to Chart and Map...</div><div class='lds-ellipsis'><div></div><div></div><div></div><div></div></div>";
+var nodbHTML = "<div style='float: left; width: 100%; height: 100%; text-align:center; padding-top:20px;color: var(--themep)'>No database connection: Check .env file and internet connection.\n(You can still load data from files.)</div>";
 
 /*
 Streamings/Readings
@@ -79,6 +80,7 @@ function getTrips(){
         },
         error: function(xhr, status, err) {
             console.log(xhr.responseText);
+            document.getElementById('trips').innerHTML = nodbHTML;
         }
     });
 }

@@ -257,6 +257,18 @@ label
     border-top-left-radius: 10px;
     padding: 5px;
 }
+#button_import{
+  margin-left: 20px;
+  position: absolute;
+  bottom:0px;
+  color: gray;
+  font-size: 20px;
+  background-color: #ddd;
+  opacity:1.0;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding: 5px;
+}
 #button_csv:disabled
 {
     background-color: #999;
