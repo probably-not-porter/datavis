@@ -27,6 +27,7 @@ app.use(express.static(__dirname + '/public'));
 
 
 // Create routes for aquiring DB information from server-side
+app.get('/poolstatus', q.getPool);
 app.get('/trips', q.getTrips);
 app.get('/sites', q.getSites);
 app.get('/sectors', q.getSectors);
@@ -53,6 +54,6 @@ app.listen(process.env.PORT || 9900, '0.0.0.0', function (err) {
      console.log(err)
      return
     }
-    console.log('SERVER: Listening at http://localhost:' + "9900")
-   })
+    console.log('SERVER: Listening on port ' + "9900")
+})
 

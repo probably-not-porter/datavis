@@ -19,6 +19,20 @@ function ready(){
             console.log(xhr.responseText);
         }
     });
+    $.ajax({
+        type: 'GET',
+        url: '/poolstatus',
+        success: function(response) { 
+            console.log(response);
+            if (response == false){
+                document.getElementById("nodb").style.display = "block";
+            }
+            
+        },
+        error: function(xhr, status, err) {
+            console.log(xhr.responseText);
+        }
+    });
 
     base_url = document.location.href; // get base url
 
