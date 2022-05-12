@@ -105,7 +105,7 @@ html, body, #viewDiv{
     
 }
 #nodb{
-    position:absolute;
+    position:fixed;
     font-weight: bold;
     z-index: 1000;
     width: 100vw;
