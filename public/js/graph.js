@@ -42,13 +42,20 @@ function createGraphReading(dataset, q_arr, color){
         var sector = dataset[0].sectorname;
 
         var title = document.createElement('h');
-        title.innerHTML = "Spots from " + trip + " (trip), " + site + " (site), " + sector + " (sector)"; 
+        if (trip != undefined && site != undefined && sector != undefined){
+            title.innerHTML = "Spots from " + trip + " (trip), " + site + " (site), " + sector + " (sector)"; 
+        }
+        else{
+            title.innerHTML = "Spots from File Import"; 
+        }
+        
         parent.append(title);
 
         const table = document.createElement('table');
         var tableHTML = "";
-        var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy"];
-        for(x=9;x<Object.keys(dataset[0]).length;x++){
+        //var keys = ["Spot","Date","Time","elevation","longitude","latitude","accuracy"];
+        var keys = [];
+        for(x=0;x<Object.keys(dataset[0]).length;x++){
             keys.push(Object.keys(dataset[0])[x]);
         }
 

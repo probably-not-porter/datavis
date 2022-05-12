@@ -7,6 +7,8 @@
 # DOM basics
 */
 
+const { constant, split } = require("lodash");
+
 // NAVIGATION / UTIL //
 function switchToMap(){ 
     var dataview = document.getElementById("dataView");
@@ -305,7 +307,74 @@ function toggleDetails(){ // details_mode located in data.js
     details_mode = (details_mode + 1) % 3;
     console.log("Data Detail Mode: " + details_mode);
 }
+function importCSV(){
+    var input = document.createElement('input');
+    input.type = 'file';
 
+    input.onchange = e => { 
+        // getting a hold of the file reference
+        var file = e.target.files[0]; 
+
+        // setting up the reader
+        var reader = new FileReader();
+        reader.readAsText(file);
+
+        // here we tell the reader what to do when it's done reading...
+        reader.onload = readerEvent => {
+            var data_out = [];
+            var content = readerEvent.target.result.split("\n"); // this is the content!
+            var headers = content[0].split(",");
+
+            // fix some headers for odk imports
+            for (h = 0; h < headers.length; h++){
+                if (headers[h].includes("longitude") || headers[h].includes("Longitude")){
+                    headers[h] = "longitude";
+                }
+                if (headers[h].includes("latitude") || headers[h].includes("Latitude")){
+                    headers[h] = "latitude";
+                }
+                if (headers[h].includes("altitude") || headers[h].includes("Altitude")){
+                    headers[h] = "elevation";
+                }
+                if (headers[h].includes("accuracy") || headers[h].includes("Accuracy")){
+                    headers[h] = "accuracy";
+                }
+            }
+            if (headers.includes("FormVersion")){
+                console.info("> ODK Import");
+            }
+
+
+            for (x = 1; x < content.length; x++){
+                let splitrow = content[x].split(",");
+                if (splitrow.length > 1){
+                    let new_obj = {};
+                    for (y = 0; y < splitrow.length; y++){
+                        new_obj[headers[y]] = splitrow[y];
+                    }
+                    data_out.push(new_obj);
+                }
+                
+            }
+            console.info('DATA - readings');
+            console.info('Loaded ' + data_out.length + " data points.");
+            console.table(data_out);
+            var color = getRandomColor();
+            createPoints(data_out, color);
+            createGraphReading(data_out, null, color);
+
+            var dataview = document.getElementById("dataView")
+            dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+            dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+
+            document.getElementById('reading').innerHTML = "";
+            document.getElementById('data-prompt').innerHTML = "Loaded "+data_out.length+" spots to the graph and map! <br> Pick some more?";
+    }
+
+    }
+
+    input.click();
+}
 function createCSV(){
     const rows = [];
     if (query_data[0].spotid){ // reading
