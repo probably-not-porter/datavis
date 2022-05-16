@@ -64,7 +64,6 @@ function createPoints(points,color){
         } 
     }
     points = new_points
-    console.log(points);
     console.info("Pruned " + prunes + " duplicate map points.");
     console.warn('UPDATING MAP: this might take a minute!');
     require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate", "esri/layers/FeatureLayer" ], function(

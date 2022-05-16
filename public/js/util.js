@@ -185,7 +185,6 @@ function processReadings(readings){
         }
         if (current_data.length != 0){
             const timestamps = [...new Set(current_data.map(item => item.recordtime))]; // use earlier date to base data on;
-            console.log(timestamps);
             var min = timestamps.reduce(function (a, b) { return a < b ? a : b; }); 
     
             out_node = {};
@@ -340,8 +339,10 @@ function importCSV(){
                     headers[h] = "accuracy";
                 }
             }
-            if (headers.includes("FormVersion")){
+            if (headers.includes("AttachmentsExpected")){
                 console.info("> ODK Import");
+            }else{
+                console.info("> DATAVIS Import (exported PSQL)")
             }
 
 
@@ -356,19 +357,36 @@ function importCSV(){
                 }
                 
             }
-            console.info('DATA - readings');
-            console.info('Loaded ' + data_out.length + " data points.");
-            console.table(data_out);
-            var color = getRandomColor();
-            createPoints(data_out, color);
-            createGraphReading(data_out, null, color);
+            if (headers.includes("spotid")){ // import as reading set
+                console.info('DATA - readings');
+                console.info('Loaded ' + data_out.length + " data points.");
+                console.table(data_out);
+                var color = getRandomColor();
+                createPoints(data_out, color);
+                createGraphReading(data_out, null, color);
+    
+                var dataview = document.getElementById("dataView")
+                dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+                dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+    
+                document.getElementById('reading').innerHTML = "";
+                document.getElementById('data-prompt').innerHTML = "Loaded "+data_out.length+" spots to the graph and map! <br> Pick some more?";
+            }else{      // import as streaming set
+                console.info('DATA - streaming');
+                console.info('Loaded ' + data_out.length + " data points.");
+                console.table(data_out);
+                var color = getRandomColor();
+                createPoints(data_out, color);
+                createGraphStreaming(data_out, "test title", color);
 
-            var dataview = document.getElementById("dataView")
-            dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
-            dataview.querySelector("#nav-button-map").classList.add("new_data_button");
-
-            document.getElementById('reading').innerHTML = "";
-            document.getElementById('data-prompt').innerHTML = "Loaded "+data_out.length+" spots to the graph and map! <br> Pick some more?";
+                var dataview = document.getElementById("dataView")
+                dataview.querySelector("#nav-button-graph").classList.add("new_data_button");
+                dataview.querySelector("#nav-button-map").classList.add("new_data_button");
+    
+                document.getElementById('streaming').innerHTML = "";
+                document.getElementById('data-prompt').innerHTML = "Loaded "+data_out.length+" streaming points to the graph and map!";
+            }
+            
     }
 
     }
@@ -380,9 +398,8 @@ function createCSV(){
     if (query_data[0].spotid){ // reading
         rows.push(["tripid","siteid","sectorid","spotid","platformid","sensorid","hostid","recordtime","elevation","logitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
     }else{ // streaming
-        rows.push(["tripid","siteid","sectorid","platformid","sensorid","hostid","recordtime","elevation","logitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
+        rows.push(["tripid","siteid","sectorid","platformid","sensorid","sensortype","sensorunits","hostid","recordtime","elevation","longitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
     }
-    console.log(query_data);
     for (x=0; x< query_data.length; x++){
         // ROW STRUCTURE
         let current_row = [];
@@ -416,6 +433,8 @@ function createCSV(){
                 query_data[x].sectorid.toString(),
                 query_data[x].platformid.toString(),
                 query_data[x].sensorid.toString(),
+                query_data[x].sensortype.toString(),
+                query_data[x].sensorunits.toString(),
                 query_data[x].hostid.toString(),
                 query_data[x].recordtime.toString(),
                 query_data[x].elevation.toString(),
@@ -434,8 +453,6 @@ function createCSV(){
         }
         rows.push(current_row)
     }
-    console.log(rows);
-    
     let csvContent = "data:text/csv;charset=utf-8," 
         + rows.map(e => e.join(",")).join("\n");
     
