@@ -1,7 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
 # Map functions
@@ -17,7 +16,7 @@ var prev_points = [];
 maptype1 = "topo";
 maptype2 = "satellite";
 
-
+// Set up base map, map settings
 require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate" ], function(
     Map,
     SceneView,
@@ -55,6 +54,8 @@ require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic
 
 function createPoints(points,color){
     new_points = [points[0]];
+
+    // Prune duplicate points to improve map performance
     prunes = 0;
     for(x=1;x<points.length;x++){
         if ((points[x].latitude == points[x-1].latitude) && (points[x].longitude == points[x-1].longitude) && (points[x].recordtime == points[x-1].recordtime)){
@@ -64,8 +65,10 @@ function createPoints(points,color){
         } 
     }
     points = new_points
-    console.info("Pruned " + prunes + " duplicate map points.");
-    console.warn('UPDATING MAP: this might take a minute!');
+    console.info("MAP: Pruned " + prunes + " duplicate map points.");
+
+    // User ESRI library to render points
+    console.warn('MAP: Updating! This might take a minute!');
     require(["esri/Map", "esri/views/SceneView", "esri/views/MapView", "esri/Graphic", "esri/widgets/BasemapToggle", "esri/widgets/CoordinateConversion", "esri/PopupTemplate", "esri/layers/FeatureLayer" ], function(
     Map,
     SceneView,
@@ -96,12 +99,13 @@ function createPoints(points,color){
                 longitude: points[x].longitude,
                 latitude: points[x].latitude
             };
-
+            
+            // Convert time for display (should work with both ODK and Fieldday dat formats)
             let timedate = new Date(points[x].recordtime).toString().split(" ");
-            console.log(timedate);
             let date = timedate[0] + " " + timedate[1] + " " + timedate[2] + ", " + timedate[3];
             let time = timedate[4] + " " + timedate[6] + " " + timedate[7] + " " + timedate[8];
 
+            // Define attributes for a map point
             var pointAttr = {
                 Longitude: points[x].longitude,
                 Latitude: points[x].latitude,
@@ -161,7 +165,7 @@ function createPoints(points,color){
             
             out_points.push(pointGraphic);
         }
-        prev_points = prev_points.concat(out_points);
-        view.graphics.addMany(out_points);
+        prev_points = prev_points.concat(out_points); // add previous points to current (for multiple spots)
+        view.graphics.addMany(out_points); // add all points
     });
 }

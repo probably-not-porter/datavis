@@ -1,7 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
 # Starts the program + general stuff
@@ -16,21 +15,20 @@ function ready(){
             document.getElementById("version-tag").innerHTML = "IFS Datavis Tool<br>v" + response;
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
     $.ajax({
         type: 'GET',
         url: '/poolstatus',
         success: function(response) { 
-            console.log(response);
             if (response == false){
                 document.getElementById("nodb").style.display = "block";
             }
             
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 
@@ -42,12 +40,11 @@ function ready(){
     if (url_parts[1]){ // selection exists
         if (url_parts[1].length > 0){ // params exist
             url_params = url_parts[1].split('/');
-            console.log(url_params);
         }
         if ((url_params[0] == 'query') && (url_params.length > 5)){ // load premade query
             loadQuery(url_params);
         }else{
-            console.warn('Query incomplete; Ignored.');
+            console.warn('MAIN: Query incomplete; Ignored.');
         }
     }
     

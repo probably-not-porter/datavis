@@ -1,7 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
 # DOM basics
@@ -20,7 +19,7 @@ function switchToMap(){
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("mapView").style.display = "block";
-    console.log('switched to map view');
+    console.log('UTIL: Switched to map view');
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToGraph(){
@@ -33,7 +32,7 @@ function switchToGraph(){
     document.getElementById("mapView").style.display = "none";
     document.getElementById("dataView").style.display = "none";
     document.getElementById("graphView").style.display = "block";
-    console.log('switched to graph view');
+    console.log('UTIL: Switched to graph view');
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);
 }
 function switchToData(){
@@ -41,7 +40,7 @@ function switchToData(){
     document.getElementById("mapView").style.display = "none";
     document.getElementById("graphView").style.display = "none";
     document.getElementById("dataView").style.display = "block";
-    console.log('switched to data view');
+    console.log('UTIL: Switched to data view');
     setTimeout(function(){ document.getElementById("loading").style.display = "none"; }, 10);}
 
 // TEAMPLATES FOR DOM PIECES
@@ -223,12 +222,10 @@ function processReadings(readings){
     return spots_out;
 }
 function loadQuery(params){
-    console.info('Loading query from permalink...')
+    console.info('UTIL: Loading query from permalink...')
     document.getElementById("button_permalink").disabled = true;
     document.getElementById("button_csv").disabled = true;
     if (params.length == 8 && params[1] == 1){ // streaming query
-        console.log("PARAMS");
-        console.log(params);
         query_type = params[1]
         query_selection[0] = params[2]; // load trip
         query_selection[1] = params[3]; // load site
@@ -245,16 +242,12 @@ function loadQuery(params){
         query_selection[1] = params[3]; // load site
         query_selection[2] = params[4]; // load sector (skip spot)
         query_selection[3] = params[5].split('$'); // load spots
-
-        console.log(query_selection[3]);
-        console.log(query_selection);
         document.getElementById('query_type').innerHTML = "<label><div style='padding-top:10px;padding-bottom:10px;'><strong>Query loaded from permalink!</br><button onclick='removeQuery()'>Return to regular selection</button></strong></div></label>";
         getReadings(query_selection[0],true);
     }
     
 }
 function buildQuery(){
-    console.log(query_selection);
     query_string = document.location.href.split('/?')[0];
     query_string += "?" + "query" 
     query_string += "/" + query_type
@@ -304,7 +297,7 @@ function toggleDetails(){ // details_mode located in data.js
         }
     }
     details_mode = (details_mode + 1) % 3;
-    console.log("Data Detail Mode: " + details_mode);
+    console.log("UTIL: Data Detail Mode: " + details_mode);
 }
 function importCSV(){
     var input = document.createElement('input');
@@ -343,9 +336,9 @@ function importCSV(){
                 }
             }
             if (headers.includes("AttachmentsExpected")){
-                console.info("> ODK Import");
+                console.info("UTIL: Started ODK import.");
             }else{
-                console.info("> DATAVIS Import (exported PSQL)")
+                console.info("UTIL: Started DATAVIS Import (exported PSQL).")
             }
 
 
@@ -360,11 +353,8 @@ function importCSV(){
                 }
                 
             }
-            console.log(headers);
             if ( (headers.includes("spotid")) || (headers.includes("id")) ){ // import as reading set
-                console.info('DATA - readings');
-                console.info('Loaded ' + data_out.length + " data points.");
-                console.table(data_out);
+                console.info('UTIL: Loaded ' + data_out.length + " readings.");
                 var color = getRandomColor();
                 createPoints(data_out, color);
                 createGraphReading(data_out, null, color);
@@ -376,9 +366,7 @@ function importCSV(){
                 document.getElementById('reading').innerHTML = "";
                 document.getElementById('data-prompt').innerHTML = "Loaded "+data_out.length+" spots to the graph and map! <br> Pick some more?";
             }else{      // import as streaming set
-                console.info('DATA - streaming');
-                console.info('Loaded ' + data_out.length + " data points.");
-                console.table(data_out);
+                console.info('UTIL: Loaded ' + data_out.length + " streaming points.");
                 var color = getRandomColor();
                 createPoints(data_out, color);
                 createGraphStreaming(data_out, "test title", color);

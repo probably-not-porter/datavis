@@ -1,7 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
 # Data functions
@@ -74,12 +73,11 @@ function getTrips(){
                 r_count.push(response[x].r_count);
                 s_count.push(response[x].s_count);
             }
-            console.info('TRIPS');
-            console.table(response);
+            console.info('DATA: Got trips.');
             renderTrips(tripnames, tripids, r_count, s_count);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
             document.getElementById('trips').innerHTML = nodbHTML;
         }
     });
@@ -113,12 +111,11 @@ function getSites(trip_id){
                 r_count.push(response[x].r_count);
                 s_count.push(response[x].s_count);
             }
-            console.info('SITES');
-            console.table(response);
+            console.info('DATA: Got sites.');
             renderSites(sitenames, siteids, r_count, s_count);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -151,12 +148,11 @@ function getSectors(site_id){
                 r_count.push(response[x].r_count);
                 s_count.push(response[x].s_count);
             }
-            console.info('SECTORS');
-            console.table(response);
+            console.info('DATA: Got sectors.');
             renderSectors(sectornames, sectorids, r_count, s_count);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -188,17 +184,15 @@ function getSpots(sector_id){
                 r_count.push(response[x].r_count);
                 s_count.push(response[x].s_count);
             }
-            console.info('SPOTS');
-            console.table(response);
+            console.info('DATA: Got spots.');
             renderSpots(spotids, r_count, s_count);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
 // Reading-specific routes
-// NOT SET UP YET
 function getReadingsPlatforms(spot_id){
     document.getElementById('data-prompt').innerHTML = "Select a platform to see recorded data.";
     document.getElementById('readingplatform').innerHTML = placeholderHTML;
@@ -219,12 +213,11 @@ function getReadingsPlatforms(spot_id){
             for(x = 0; x < response.length; x++){
                 plats.push(response[x]);
             }
-            console.info('DATA - PLATFORMS');
-            console.table(response);
+            console.info('DATA: Got platforms.');
             renderStreamingsPlatforms(plats);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -248,13 +241,12 @@ function getReadingsDates(platformid){
             for(x = 0; x < response.length; x++){
                 dates.push(response[x]);
             }
-            console.info('DATA - DATES');
+            console.info('DATA: Got dates.');
             dates = [...new Set(dates.map(item => (item.recordtime.substring(0, 10))))];
-            console.table(dates);
             renderStreamingsDates(dates);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -286,10 +278,8 @@ function getReadings(spot_id,value){
                     readings.push(response[x]);
                 }
     
-                console.info('DATA - readings');
-                console.info('Loaded ' + readings.length + " data points.");
-                console.table(readings);
-    
+                console.info('DATA: Got readings.');
+                console.info('Loaded ' + readings.length + " readings.");    
                 var color = getRandomColor();
                 query_data = processReadings(readings);
     
@@ -307,7 +297,7 @@ function getReadings(spot_id,value){
                 document.getElementById("button_csv").disabled = false;
             },
             error: function(xhr, status, err) {
-                console.log(xhr.responseText);
+                console.error('DATA: XHR Error.');
             }
         });
     }else{
@@ -337,12 +327,11 @@ function getStreamingsHosts(sector_id){
                 hosts.push(response[x]);
                 s_count.push(response[x].s_count)
             }
-            console.info('DATA - HOSTS');
-            console.log(response);
+            console.info('DATA: Got hosts.');
             renderStreamingsHosts(hosts, s_count);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -366,12 +355,11 @@ function getStreamingsPlatforms(host_id){
             for(x = 0; x < response.length; x++){
                 plats.push(response[x]);
             }
-            console.info('DATA - PLATFORMS');
-            console.table(response);
+            console.info('DATA: Got platforms');
             renderStreamingsPlatforms(plats);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -394,13 +382,12 @@ function getStreamingsDates(platformid){
             for(x = 0; x < response.length; x++){
                 dates.push(response[x]);
             }
-            console.info('DATA - DATES');
+            console.info('DATA: Got dates.');
             dates = [...new Set(dates.map(item => (item.recordtime.substring(0, 10))))];
-            console.table(dates);
             renderStreamingsDates(dates);
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }
@@ -423,8 +410,7 @@ function getStreamings(date){
                 streamings.push(response[x]);
             }
 
-            console.info('DATA - STREAMINGS');
-            console.info('Loaded ' + streamings.length + " points.");
+            console.info('DATA: Loaded ' + streamings.length + " streaming points.");
 
             var color = getRandomColor();
             query_data = streamings;
@@ -444,7 +430,7 @@ function getStreamings(date){
                 document.getElementById("button_csv").disabled = false;
             }
             else{
-                console.error('ERR: empty set');
+                console.error('DATA: Error - empty set');
                 document.getElementById('streaming').innerHTML = "";
                 document.getElementById('data-prompt').innerHTML = "Selected set contains no valid points";
             }
@@ -453,7 +439,7 @@ function getStreamings(date){
             
         },
         error: function(xhr, status, err) {
-            console.log(xhr.responseText);
+            console.error('DATA: XHR Error.');
         }
     });
 }

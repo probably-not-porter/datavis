@@ -1,7 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
 # pelibby16@earlham.edu
 #
 # Graph functions
@@ -26,7 +25,6 @@ $( document ).ready(function() {
     });
 });
 function createGraphReading(dataset, q_arr, color){
-    console.log(dataset);
     //reset containers
     document.getElementById('readingStats').style.display = 'block';
     document.getElementById('line-chart').style.display = 'none';
@@ -152,7 +150,7 @@ function createGraphStreaming(dataset, title,color){
     addData(lineChart, times_arr, data,types,color,title);
 }
 function addData(chart,times,data,types,color,title) {
-    console.warn('UPDATING CHART: this might take a minute!');
+    console.warn('GRAPH: Updating chart! This might take a minute!');
     
     if (chart){
         chart.destroy(); // clear old information so it doesnt overflow
@@ -172,9 +170,9 @@ function addData(chart,times,data,types,color,title) {
                         mode: 'x',
             
                         // Function called while the user is panning
-                        onPan: function({chart}) { console.log(`I'm panning!!!`); },
+                        onPan: function({chart}) {},
                         // Function called once panning is completed
-                        onPanComplete: function({chart}) { console.log(`I was panned!!!`); }
+                        onPanComplete: function({chart}) {}
                     },
             
                     // Container for zoom options
@@ -185,9 +183,9 @@ function addData(chart,times,data,types,color,title) {
                         speed: 0.1,
             
                         // Function called while the user is zooming
-                        onZoom: function({chart}) { console.log(`I'm zooming!!!`); },
+                        onZoom: function({chart}) {},
                         // Function called once zooming is completed
-                        onZoomComplete: function({chart}) { console.log(`I was zoomed!!!`); }
+                        onZoomComplete: function({chart}) {}
                     }
                 }
             },
@@ -261,7 +259,6 @@ function addData(chart,times,data,types,color,title) {
             data: newdata,
         }
         chart.data.datasets.push(dataset);
-        console.log(data[x][0]["x"])
     }
 
     chart.update();

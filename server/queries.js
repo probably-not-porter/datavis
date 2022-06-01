@@ -1,8 +1,6 @@
 /*
 #
 # Datavis 2.0
-# Porter Libby - 2019 - initial setup
-# Porter Libby - 2021 - improve some systems for more flexibility
 # pelibby16@earlham.edu
 #
 # Query functions for database
