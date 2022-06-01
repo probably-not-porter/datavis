@@ -279,7 +279,7 @@ function getReadings(spot_id,value){
                 }
     
                 console.info('DATA: Got readings.');
-                console.info('Loaded ' + readings.length + " readings.");    
+                console.info('DATA: Loaded ' + readings.length + " readings.");    
                 var color = getRandomColor();
                 query_data = processReadings(readings);
     
