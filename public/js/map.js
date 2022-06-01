@@ -97,7 +97,8 @@ function createPoints(points,color){
                 latitude: points[x].latitude
             };
 
-            let timedate = new Date(points[x].recordtime).toString().split(" ")
+            let timedate = new Date(points[x].recordtime).toString().split(" ");
+            console.log(timedate);
             let date = timedate[0] + " " + timedate[1] + " " + timedate[2] + ", " + timedate[3];
             let time = timedate[4] + " " + timedate[6] + " " + timedate[7] + " " + timedate[8];
 

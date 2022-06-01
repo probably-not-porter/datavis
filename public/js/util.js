@@ -338,6 +338,9 @@ function importCSV(){
                 if (headers[h].includes("accuracy") || headers[h].includes("Accuracy")){
                     headers[h] = "accuracy";
                 }
+                if (headers[h] == "SubmissionDate" && !(headers.includes("recordtime"))){
+                    headers[h] = "recordtime";
+                }
             }
             if (headers.includes("AttachmentsExpected")){
                 console.info("> ODK Import");
@@ -357,7 +360,8 @@ function importCSV(){
                 }
                 
             }
-            if (headers.includes("spotid")){ // import as reading set
+            console.log(headers);
+            if ( (headers.includes("spotid")) || (headers.includes("id")) ){ // import as reading set
                 console.info('DATA - readings');
                 console.info('Loaded ' + data_out.length + " data points.");
                 console.table(data_out);
@@ -396,7 +400,7 @@ function importCSV(){
 function createCSV(){
     const rows = [];
     if (query_data[0].spotid){ // reading
-        rows.push(["tripid","siteid","sectorid","spotid","platformid","sensorid","hostid","recordtime","elevation","logitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
+        rows.push(["tripid","siteid","sectorid","spotid","platformid","sensorid","hostid","recordtime","elevation","longitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
     }else{ // streaming
         rows.push(["tripid","siteid","sectorid","platformid","sensorid","sensortype","sensorunits","hostid","recordtime","elevation","longitude","latitude","accuracy","satellites","quality","value_1","value_2","value_3","value_4","value_5","value_6"])
     }
